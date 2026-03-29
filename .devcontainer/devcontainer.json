@@ -1,21 +1,22 @@
 {
-    "name": "Dashboard Frontend Environment",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "frontend",
-    "workspaceFolder": "/workspace",
-    "customizations": {
-      "vscode": {
-        "settings": {
-          "editor.formatOnSave": true,
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-        },
-        "extensions": [
-          "esbenp.prettier-vscode",
-          "dbaeumer.vscode-eslint",
-          "bradlc.vscode-tailwindcss"
-        ]
-      }
-    },
-    "remoteUser": "node",
-    "postCreateCommand": "npm --version"
-  }
+  "name": "Dashboard Frontend Environment",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "frontend",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss",
+        "anthropic.claude-code"
+      ]
+    }
+  },
+  "remoteUser": "node",
+  "postCreateCommand": "npm --version"
+}
