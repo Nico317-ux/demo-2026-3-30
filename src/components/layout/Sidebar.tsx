@@ -8,7 +8,7 @@ import { navCrossModules, navExtra, navHome, navCoreModules } from '../../utils/
 function NavSection({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="mb-6">
-      <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+      <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-wider text-[#F1EEEE]/40">
         {title}
       </p>
       <nav className="space-y-0.5">{children}</nav>
@@ -35,8 +35,8 @@ function Item({
         cn(
           'flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
           isActive
-            ? 'bg-sky-600 text-white shadow-sm'
-            : 'text-slate-300 hover:bg-slate-800 hover:text-white',
+            ? 'bg-[#DC3920]/20 text-[#DC3920] border-l-2 border-[#DC3920]'
+            : 'text-[#F1EEEE]/70 hover:bg-[#032C61] hover:text-[#F1EEEE]',
         )
       }
     >
@@ -63,26 +63,25 @@ export function Sidebar() {
       />
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-slate-800 bg-slate-950 text-slate-100',
+          'fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-[#032C61] bg-[#0A204E] text-[#F1EEEE]',
           'transition-transform duration-200 lg:static lg:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         )}
       >
-        <div className="flex items-center gap-2 border-b border-slate-800 px-4 py-4">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-600 font-bold text-white">
-            BI
-          </span>
-          <div>
-            <p className="text-sm font-semibold leading-tight">Operations dashboard</p>
-            <p className="text-[10px] uppercase tracking-wide text-slate-500">Demo · USD · B2B</p>
-          </div>
+        {/* Logo SUPER A */}
+        <div className="flex items-center justify-center border-b border-[#032C61] px-4 py-4">
+          <img
+            src="/1724819364 (1) (1).svg"
+            alt="Super A"
+            className="h-10 w-auto object-contain"
+          />
         </div>
 
         <div className="flex-1 overflow-y-auto px-2 py-4">
           <NavSection title="General">
             <Item to={navHome.to} label={navHome.label} icon={navHome.icon} onNavigate={close} />
           </NavSection>
-          <NavSection title="Core modules">
+          <NavSection title="Módulos individuales">
             {navCoreModules.map((item) => (
               <Item
                 key={item.to}
@@ -93,7 +92,7 @@ export function Sidebar() {
               />
             ))}
           </NavSection>
-          <NavSection title="Cross analysis">
+          <NavSection title="Análisis cruzados">
             {navCrossModules.map((item) => (
               <Item
                 key={item.to}
@@ -104,7 +103,7 @@ export function Sidebar() {
               />
             ))}
           </NavSection>
-          <NavSection title="More">
+          <NavSection title="Más">
             {navExtra.map((item) => (
               <Item
                 key={item.to}
@@ -117,10 +116,10 @@ export function Sidebar() {
           </NavSection>
         </div>
 
-        <div className="border-t border-slate-800 p-3 text-[10px] text-slate-500">
-          <p className="flex items-center gap-1 text-amber-400/90">
+        <div className="border-t border-[#032C61] p-3 text-[10px] text-[#F1EEEE]/40">
+          <p className="flex items-center gap-1 text-amber-400/80">
             <AlertTriangle className="h-3.5 w-3.5" aria-hidden />
-            Mock data · Mar 2026
+            Datos demo · Mar 2026
           </p>
         </div>
       </aside>

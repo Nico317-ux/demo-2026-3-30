@@ -13,10 +13,10 @@ export function LineChartCard({
   className?: string;
 }) {
   return (
-    <div className={cn('rounded-xl border border-slate-200/80 bg-white p-4 shadow-sm', className)}>
+    <div className={cn('rounded-xl border border-[#0A204E] bg-[#032C61] p-4 shadow-sm', className)}>
       <div className="mb-4">
-        <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
-        {subtitle && <p className="text-xs text-slate-500">{subtitle}</p>}
+        <h3 className="text-sm font-semibold text-[#F1EEEE]">{title}</h3>
+        {subtitle && <p className="text-xs text-[#F1EEEE]/60">{subtitle}</p>}
       </div>
       <div className="h-64 w-full min-w-0">{children}</div>
     </div>

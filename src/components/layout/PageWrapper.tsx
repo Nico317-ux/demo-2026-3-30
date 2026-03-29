@@ -12,9 +12,9 @@ export function PageWrapper({
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-xl font-semibold tracking-tight text-slate-900 md:text-2xl">{title}</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-[#F1EEEE] md:text-2xl">{title}</h1>
         {description && (
-          <p className="mt-1 max-w-3xl text-sm text-slate-600">{description}</p>
+          <p className="mt-1 max-w-3xl text-sm text-[#F1EEEE]/60">{description}</p>
         )}
       </header>
       {children}
