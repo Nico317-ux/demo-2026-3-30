@@ -1,88 +1,171 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { PageWrapper } from '../components/layout/PageWrapper';
-import { navCrossModules, navExtra, navCoreModules } from '../utils/navConfig';
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  BrainCircuit,
+  TrendingDown,
+  TrendingUp,
+} from "lucide-react";
+import { navCrossModules, navExtra, navCoreModules } from "../utils/navConfig";
+import type { NavItem } from "../utils/navConfig";
 
-function Card({
-  to,
-  title,
-  subtitle,
-}: {
-  to: string;
-  title: string;
-  subtitle?: string;
-}) {
+// KPI Strip — mock data representative of the business
+const kpiData = [
+  {
+    label: "Ventas del período",
+    value: "$2.4M",
+    trend: +8.3,
+    icon: TrendingUp,
+  },
+  {
+    label: "Galones despachados",
+    value: "184,200",
+    trend: +5.1,
+    icon: TrendingUp,
+  },
+  {
+    label: "Backorders activos",
+    value: "37",
+    trend: -12.4,
+    icon: TrendingDown,
+    invertTrend: true,
+  },
+  {
+    label: "Alertas críticas",
+    value: "8",
+    trend: +2,
+    icon: TrendingDown,
+    invertTrend: true,
+  },
+];
+
+function KpiStrip() {
+  return (
+    <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
+      {kpiData.map((kpi) => {
+        const isGood = kpi.invertTrend ? kpi.trend < 0 : kpi.trend >= 0;
+        const trendColor = isGood ? "text-[#22C55E]" : "text-[#DC3920]";
+        const TrendIcon = kpi.trend >= 0 ? TrendingUp : TrendingDown;
+        return (
+          <div
+            key={kpi.label}
+            className="bg-[#0D1E3D] border border-[#1C3260] rounded-xl p-4 hover:border-[#DC3920]/30 transition-colors"
+          >
+            <p className="text-xs font-medium text-white/80 uppercase tracking-wider mb-2">
+              {kpi.label}
+            </p>
+            <p className="text-2xl font-semibold text-white tabular-nums">
+              {kpi.value}
+            </p>
+            <div
+              className={`flex items-center gap-1 mt-1.5 text-xs font-medium ${trendColor}`}
+            >
+              <TrendIcon className="w-3 h-3" />
+              <span>
+                {kpi.trend > 0 ? "+" : ""}
+                {kpi.trend}% vs período ant.
+              </span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function PredictiveBanner() {
+  return (
+    <div className="bg-linear-to-r from-[#DC3920]/10 to-transparent border border-[#DC3920]/20 rounded-xl p-4 flex items-center justify-between gap-4">
+      <div className="flex items-center gap-3">
+        <div className="p-2 rounded-lg bg-[#DC3920]/15 shrink-0">
+          <BrainCircuit className="w-5 h-5 text-[#DC3920]" />
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-[#0A204E]">
+            Inteligencia Predictiva
+          </p>
+          <p className="text-xs text-[#0A204E]/60 mt-0.5">
+            8 alertas activas · Última actualización: hace 5 min
+          </p>
+        </div>
+      </div>
+      <Link
+        to="/predictive"
+        className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-[#F1EEEE]"
+        style={{
+          background: "linear-gradient(135deg, #DC3920 0%, #B02E18 100%)",
+        }}
+      >
+        Ver alertas
+        <ArrowRight className="w-3.5 h-3.5" />
+      </Link>
+    </div>
+  );
+}
+
+function ModuleCard({ item }: { item: NavItem }) {
+  const Icon = item.icon;
   return (
     <Link
-      to={to}
-      className="group flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white p-4 shadow-sm transition hover:border-sky-300 hover:shadow-md"
+      to={item.to}
+      className="group bg-white border border-[#0A204E]/10 shadow-sm rounded-xl p-5
+        hover:border-[#DC3920]/40 cursor-pointer
+        transition-all duration-200"
     >
-      <div>
-        <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
-        {subtitle && <p className="mt-1 text-xs text-slate-600">{subtitle}</p>}
+      <div className="flex items-start justify-between mb-3">
+        <div className="p-2 rounded-lg bg-[#0A204E]/5 group-hover:bg-[#DC3920]/10 transition-colors">
+          <Icon className="w-5 h-5 text-[#032C61] group-hover:text-[#DC3920] transition-colors" />
+        </div>
+        <ArrowRight className="w-4 h-4 text-[#0A204E]/30 group-hover:text-[#DC3920] translate-x-0 group-hover:translate-x-1 transition-all" />
       </div>
-      <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-sky-600">
-        Open
-        <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-      </span>
+      <h3 className="text-[#0A204E] text-base font-semibold mb-1">
+        {item.label}
+      </h3>
+      {item.description && (
+        <p className="text-[#0A204E]/60 text-sm">{item.description}</p>
+      )}
     </Link>
   );
 }
 
 export function Home() {
   return (
-    <PageWrapper
-      title="Home"
-      description="Operational and executive dashboard demo with mock USD B2B data. Use the sidebar or quick links."
-    >
-      <section className="rounded-xl border border-sky-200 bg-gradient-to-br from-sky-50 to-white p-4 md:p-5">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <h2 className="text-sm font-semibold text-sky-900">Predictive intelligence center</h2>
-            <p className="mt-1 max-w-2xl text-sm text-sky-800/90">
-              Simulated alerts for stockouts, sales anomalies, backorder risk, and at-risk customers.
-            </p>
-          </div>
-          <Link
-            to="/predictive"
-            className="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700"
-          >
-            <Sparkles className="h-4 w-4" aria-hidden />
-            View alerts
-          </Link>
-        </div>
-      </section>
+    <div className="space-y-6">
+      {/* Zona 1 — KPI Strip */}
+      <KpiStrip />
 
-      <div>
-        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
-          Core modules (01–05)
-        </h2>
+      {/* Zona 2 — Predictive Banner */}
+      <PredictiveBanner />
+
+      {/* Zona 3 — Module Grid */}
+      <div className="space-y-4">
+        <p className="text-[#0A204E]/50 text-xs font-semibold uppercase tracking-widest">
+          Módulos
+        </p>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {navCoreModules.map((n) => (
-            <Card key={n.to} to={n.to} title={n.label} />
+            <ModuleCard key={n.to} item={n} />
           ))}
         </div>
-      </div>
 
-      <div>
-        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
-          Cross analysis (06–12)
-        </h2>
+        <hr className="border-[#0A204E]/10 my-6" />
+
+        <p className="text-[#0A204E]/50 text-xs font-semibold uppercase tracking-widest">
+          Análisis
+        </p>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {navCrossModules.map((n) => (
-            <Card key={n.to} to={n.to} title={n.label} />
+            <ModuleCard key={n.to} item={n} />
           ))}
         </div>
-      </div>
 
-      <div>
-        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500">More</h2>
+        <hr className="border-[#0A204E]/10 my-6" />
+
         <div className="grid gap-3 sm:grid-cols-2">
           {navExtra.map((n) => (
-            <Card key={n.to} to={n.to} title={n.label} />
+            <ModuleCard key={n.to} item={n} />
           ))}
         </div>
       </div>
-    </PageWrapper>
+    </div>
   );
 }

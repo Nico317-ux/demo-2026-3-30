@@ -1,4 +1,4 @@
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef } from "@tanstack/react-table";
 import {
   Bar,
   BarChart,
@@ -7,21 +7,22 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
-import { BarChartCard } from '../components/charts/BarChartCard';
-import { PageWrapper } from '../components/layout/PageWrapper';
-import { DataTable } from '../components/tables/DataTable';
-import { KpiCard } from '../components/shared/KpiCard';
-import { rawMaterialsMock } from '../data/rawMaterials.mock';
-import { formatNumber, formatUSD } from '../utils/predictiveModel';
-import type { RawMaterial } from '../types';
+} from "recharts";
+import { BarChartCard } from "../components/charts/BarChartCard";
+import { PageWrapper } from "../components/layout/PageWrapper";
+import { DataTable } from "../components/tables/DataTable";
+import { KpiCard } from "../components/shared/KpiCard";
+import { rawMaterialsMock } from "../data/rawMaterials.mock";
+import { formatNumber, formatUSD } from "../utils/predictiveModel";
+import type { RawMaterial } from "../types";
 
 export function RawMaterials() {
   const avgRotation =
     rawMaterialsMock.length === 0
       ? 0
       : Math.round(
-          rawMaterialsMock.reduce((s, m) => s + m.rotationDays, 0) / rawMaterialsMock.length,
+          rawMaterialsMock.reduce((s, m) => s + m.rotationDays, 0) /
+            rawMaterialsMock.length,
         );
   const slowMoving = rawMaterialsMock.filter((m) => m.rotationDays > 45).length;
   const stockoutRisk = rawMaterialsMock.filter(
@@ -34,32 +35,38 @@ export function RawMaterials() {
     .map((m) => ({ code: m.code, days: m.rotationDays }));
 
   const columns: ColumnDef<RawMaterial>[] = [
-    { accessorKey: 'code', header: 'Code' },
-    { accessorKey: 'description', header: 'Material' },
-    { accessorKey: 'rotationDays', header: 'Rotation (days)' },
-    { accessorKey: 'currentStock', header: 'Stock' },
-    { accessorKey: 'monthlyConsumption', header: 'Monthly use' },
+    { accessorKey: "code", header: "Código" },
+    { accessorKey: "description", header: "Material" },
+    { accessorKey: "rotationDays", header: "Rotación (días)" },
+    { accessorKey: "currentStock", header: "Stock" },
+    { accessorKey: "monthlyConsumption", header: "Uso mensual" },
     {
-      accessorKey: 'inventoryValue',
-      header: 'Value USD',
+      accessorKey: "inventoryValue",
+      header: "Valor USD",
       cell: ({ getValue }) => formatUSD(Number(getValue())),
     },
-    { accessorKey: 'supplier', header: 'Supplier' },
+    { accessorKey: "supplier", header: "Proveedor" },
   ];
 
   return (
     <PageWrapper
-      title="Raw material rotation"
-      description="Consumption, days on hand, and focus on slow movers or stockout risk."
+      title="Rotación de materia prima"
+      description="Consumo, días en mano, y enfoque en movimientos lentos o riesgo de stockout."
     >
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <KpiCard label="Average rotation (days)" value={`${avgRotation} days`} />
-        <KpiCard label="Slow-moving items" value={slowMoving} />
-        <KpiCard label="Stockout risk" value={stockoutRisk} />
-        <KpiCard label="SKUs tracked" value={rawMaterialsMock.length} />
+        <KpiCard
+          label="Rotación promedio (días)"
+          value={`${avgRotation} days`}
+        />
+        <KpiCard label="Artículos de movimiento lento" value={slowMoving} />
+        <KpiCard label="Riesgo de stockout" value={stockoutRisk} />
+        <KpiCard label="SKUs rastreados" value={rawMaterialsMock.length} />
       </div>
 
-      <BarChartCard title="Highest rotation days — top 10" subtitle="Review purchasing and usage">
+      <BarChartCard
+        title="Días de rotación más altos — top 10"
+        subtitle="Revisar compras y uso"
+      >
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200" />

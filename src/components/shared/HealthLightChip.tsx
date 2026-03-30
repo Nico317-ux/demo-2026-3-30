@@ -1,16 +1,22 @@
 import { cn } from '../../utils/cn';
 import type { HealthLightColor } from '../../types';
 
-const dotClass: Record<HealthLightColor, string> = {
-  green:  'bg-emerald-400',
-  yellow: 'bg-amber-400',
-  red:    'bg-[#DC3920]',
+const textClass: Record<HealthLightColor, string> = {
+  green:  'text-[#22C55E]',
+  yellow: 'text-[#F59E0B]',
+  red:    'text-[#DC3920]',
 };
 
-const textClass: Record<HealthLightColor, string> = {
-  green:  'text-emerald-400',
-  yellow: 'text-amber-400',
-  red:    'text-[#DC3920]',
+const borderClass: Record<HealthLightColor, string> = {
+  green:  'border-[#22C55E]/30',
+  yellow: 'border-[#F59E0B]/30',
+  red:    'border-[#DC3920]/30',
+};
+
+const bgClass: Record<HealthLightColor, string> = {
+  green:  'bg-[#22C55E]/15',
+  yellow: 'bg-[#F59E0B]/15',
+  red:    'bg-[#DC3920]/15',
 };
 
 const labels: Record<HealthLightColor, string> = {
@@ -22,10 +28,12 @@ const labels: Record<HealthLightColor, string> = {
 export function HealthLightChip({ color, label }: { color: HealthLightColor; label?: string }) {
   return (
     <span className={cn(
-      'inline-flex items-center gap-2 rounded-full bg-[#0A204E] px-2 py-1 text-xs font-medium',
+      'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium',
+      bgClass[color],
+      borderClass[color],
       textClass[color],
     )}>
-      <span className={cn('h-2.5 w-2.5 rounded-full', dotClass[color])} aria-hidden />
+      <span className={cn('w-1.5 h-1.5 rounded-full bg-current inline-block')} aria-hidden />
       {label ?? labels[color]}
     </span>
   );

@@ -22,49 +22,50 @@ export type NavItem = {
   label: string;
   icon: LucideIcon;
   badge?: string;
+  description?: string;
 };
 
-export const navHome: NavItem = { to: '/', label: 'Home', icon: Home };
+export const navHome: NavItem = { to: '/', label: 'Inicio', icon: Home };
 
 export const navCoreModules: NavItem[] = [
-  { to: '/backorder', label: '01 · Backorder', icon: ClipboardList },
-  { to: '/inventory', label: '02 · Inventory & stock', icon: Boxes },
-  { to: '/sales', label: '03 · Sales KPIs', icon: LineChart },
-  { to: '/raw-materials', label: '04 · Raw material rotation', icon: Truck },
-  { to: '/product-costs', label: '05 · Product costs', icon: Wallet },
+  { to: '/backorder',     label: 'Backorder',              icon: ClipboardList, description: 'Pedidos pendientes por cliente' },
+  { to: '/inventory',     label: 'Inventario',             icon: Boxes,         description: 'Stock de producto terminado' },
+  { to: '/sales',         label: 'KPIs de Ventas',         icon: LineChart,      description: 'Indicadores clave de ventas' },
+  { to: '/raw-materials', label: 'Materia Prima',          icon: Truck,          description: 'Rotación y stock de MP' },
+  { to: '/product-costs', label: 'Costos de Producto',     icon: Wallet,         description: 'Estructura de costos por SKU' },
 ];
 
 export const navCrossModules: NavItem[] = [
-  { to: '/cross/backorder-inventory', label: '06 · Backorder vs inventory', icon: GitCompare },
-  { to: '/cross/coverage', label: '07 · Sales vs inventory', icon: Package },
-  { to: '/cross/profitability', label: '08 · Sales vs costs', icon: BarChart3 },
-  { to: '/cross/dead-stock', label: '09 · RM rotation vs stock', icon: Layers },
-  { to: '/cross/purchase-planning', label: '10 · Purchase planning', icon: ShoppingCart },
-  { to: '/cross/product-health', label: '11 · Health score', icon: Activity },
-  { to: '/executive', label: '12 · Executive dashboard', icon: Gauge },
+  { to: '/cross/backorder-inventory', label: 'Backorder vs Inventario', icon: GitCompare,   description: 'Cruce de demanda y stock' },
+  { to: '/cross/coverage',            label: 'Cobertura de Ventas',     icon: Package,       description: 'Días de cobertura por SKU' },
+  { to: '/cross/profitability',       label: 'Ventas vs Costos',        icon: BarChart3,     description: 'Rentabilidad por producto' },
+  { to: '/cross/dead-stock',          label: 'Material Lento',          icon: Layers,        description: 'Rotación MP vs stock actual' },
+  { to: '/cross/purchase-planning',   label: 'Plan de Compras',         icon: ShoppingCart,  description: 'Sugeridos de reabastecimiento' },
+  { to: '/cross/product-health',      label: 'Salud Operativa',         icon: Activity,      description: 'Score integral por producto' },
+  { to: '/executive',                 label: 'Dashboard Ejecutivo',     icon: Gauge,          description: 'Vista consolidada gerencial' },
 ];
 
 export const navExtra: NavItem[] = [
-  { to: '/predictive', label: 'Predictive intelligence', icon: Sparkles },
-  { to: '/quotes', label: 'Quotes', icon: FileSpreadsheet },
+  { to: '/predictive', label: 'Inteligencia Predictiva', icon: Sparkles,       description: 'Alertas y anomalías detectadas' },
+  { to: '/quotes',     label: 'Cotizaciones',             icon: FileSpreadsheet, description: 'Gestión de cotizaciones B2B' },
 ];
 
 export const routeTitles: Record<string, string> = {
-  '/': 'Home · Dashboard map',
-  '/backorder': '01 · Backorder — Open orders',
-  '/inventory': '02 · Finished goods (A / B)',
-  '/sales': '03 · Sales indicators',
-  '/raw-materials': '04 · Raw material rotation',
-  '/product-costs': '05 · Product costs',
-  '/cross/backorder-inventory': '06 · Backorder vs inventory',
-  '/cross/coverage': '07 · Coverage & stockout risk',
-  '/cross/profitability': '08 · Profitability by product',
-  '/cross/dead-stock': '09 · Dead / slow raw stock',
-  '/cross/purchase-planning': '10 · Purchase planning',
-  '/cross/product-health': '11 · Product health score',
-  '/executive': '12 · Executive dashboard',
-  '/predictive': 'Predictive intelligence center',
-  '/quotes': 'Quotes',
+  '/':                          'Inicio',
+  '/backorder':                 'Backorder',
+  '/inventory':                 'Inventario',
+  '/sales':                     'KPIs de Ventas',
+  '/raw-materials':             'Materia Prima',
+  '/product-costs':             'Costos de Producto',
+  '/cross/backorder-inventory': 'Backorder vs Inventario',
+  '/cross/coverage':            'Cobertura de Ventas',
+  '/cross/profitability':       'Ventas vs Costos',
+  '/cross/dead-stock':          'Material Lento',
+  '/cross/purchase-planning':   'Plan de Compras',
+  '/cross/product-health':      'Salud Operativa',
+  '/executive':                 'Dashboard Ejecutivo',
+  '/predictive':                'Inteligencia Predictiva',
+  '/quotes':                    'Cotizaciones',
 };
 
 export function getRouteTitle(pathname: string): string {

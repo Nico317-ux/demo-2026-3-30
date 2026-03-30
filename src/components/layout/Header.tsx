@@ -1,16 +1,39 @@
-import { Menu, SlidersHorizontal } from 'lucide-react';
-import { useDashboardStore } from '../../store/dashboardStore';
-import { cn } from '../../utils/cn';
-import { linesList, regionsList } from '../../data/sales.mock';
+import { Menu, SlidersHorizontal } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { useDashboardStore } from "../../store/dashboardStore";
+import { cn } from "../../utils/cn";
+import { linesList, regionsList } from "../../data/sales.mock";
 
-const periods = ['2026-01', '2026-02', '2026-03'];
+const periods = ["2026-01", "2026-02", "2026-03"];
 
-export function Header({ title }: { title: string }) {
-  const { filters, setFilter, toggleSidebar, sidebarOpen } = useDashboardStore();
+const routeLabels: Record<string, string> = {
+  "/": "Inicio",
+  "/backorder": "Backorder",
+  "/inventory": "Inventario",
+  "/sales": "KPIs de Ventas",
+  "/raw-materials": "Materia Prima",
+  "/product-costs": "Costos de Producto",
+  "/cross/backorder-inventory": "Backorder vs Inventario",
+  "/cross/coverage": "Cobertura de Ventas",
+  "/cross/profitability": "Ventas vs Costos",
+  "/cross/dead-stock": "Material Lento",
+  "/cross/purchase-planning": "Plan de Compras",
+  "/cross/product-health": "Salud Operativa",
+  "/executive": "Dashboard Ejecutivo",
+  "/predictive": "Inteligencia Predictiva",
+  "/quotes": "Cotizaciones",
+};
 
-  const regionOptions = ['All', ...regionsList];
-  const lineOptions = ['All', ...linesList];
-  const warehouseOptions = ['All', 'A', 'B'];
+export function Header() {
+  const { pathname } = useLocation();
+  const { filters, setFilter, toggleSidebar, sidebarOpen } =
+    useDashboardStore();
+
+  const regionOptions = ["Todos", ...regionsList];
+  const lineOptions = ["Todos", ...linesList];
+  const warehouseOptions = ["Todos", "A", "B"];
+
+  const pageTitle = routeLabels[pathname] ?? "Dashboard";
 
   return (
     <header className="sticky top-0 z-20 flex flex-col gap-3 border-b border-[#032C61] bg-[#0A204E]/95 px-4 py-3 backdrop-blur md:flex-row md:items-center md:justify-between">
@@ -25,8 +48,12 @@ export function Header({ title }: { title: string }) {
           <Menu className="h-5 w-5" />
         </button>
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-[#F1EEEE]/50">Vista actual</p>
-          <h2 className="text-lg font-semibold text-[#F1EEEE]">{title}</h2>
+          <p className="text-xs font-medium uppercase tracking-wide text-[#F1EEEE]/50">
+            Vista actual
+          </p>
+          <span className="text-[#0A204E] text-base font-semibold tracking-tight">
+            {pageTitle}
+          </span>
         </div>
       </div>
 
@@ -37,11 +64,11 @@ export function Header({ title }: { title: string }) {
         </span>
         <select
           className={cn(
-            'rounded-lg border border-[#032C61] bg-[#032C61] px-2 py-1.5 text-sm text-[#F1EEEE]',
-            'focus:border-[#DC3920] focus:outline-none focus:ring-1 focus:ring-[#DC3920]',
+            "rounded-lg border border-[#032C61] bg-[#032C61] px-2 py-1.5 text-sm text-[#F1EEEE]",
+            "focus:border-[#DC3920] focus:outline-none focus:ring-1 focus:ring-[#DC3920]",
           )}
           value={filters.period}
-          onChange={(e) => setFilter('period', e.target.value)}
+          onChange={(e) => setFilter("period", e.target.value)}
         >
           {periods.map((p) => (
             <option key={p} value={p}>
@@ -52,7 +79,7 @@ export function Header({ title }: { title: string }) {
         <select
           className="rounded-lg border border-[#032C61] bg-[#032C61] px-2 py-1.5 text-sm text-[#F1EEEE] focus:border-[#DC3920] focus:outline-none focus:ring-1 focus:ring-[#DC3920]"
           value={filters.region}
-          onChange={(e) => setFilter('region', e.target.value)}
+          onChange={(e) => setFilter("region", e.target.value)}
         >
           {regionOptions.map((r) => (
             <option key={r} value={r}>
@@ -63,7 +90,7 @@ export function Header({ title }: { title: string }) {
         <select
           className="rounded-lg border border-[#032C61] bg-[#032C61] px-2 py-1.5 text-sm text-[#F1EEEE] focus:border-[#DC3920] focus:outline-none focus:ring-1 focus:ring-[#DC3920]"
           value={filters.line}
-          onChange={(e) => setFilter('line', e.target.value)}
+          onChange={(e) => setFilter("line", e.target.value)}
         >
           {lineOptions.map((l) => (
             <option key={l} value={l}>
@@ -74,7 +101,7 @@ export function Header({ title }: { title: string }) {
         <select
           className="rounded-lg border border-[#032C61] bg-[#032C61] px-2 py-1.5 text-sm text-[#F1EEEE] focus:border-[#DC3920] focus:outline-none focus:ring-1 focus:ring-[#DC3920]"
           value={filters.warehouse}
-          onChange={(e) => setFilter('warehouse', e.target.value)}
+          onChange={(e) => setFilter("warehouse", e.target.value)}
         >
           {warehouseOptions.map((w) => (
             <option key={w} value={w}>

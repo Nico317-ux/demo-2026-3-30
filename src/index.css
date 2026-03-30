@@ -1,8 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
-  --brand-dark:  #0A204E;
-  --brand-navy:  #032C61;
-  --brand-red:   #DC3920;
-  --brand-white: #F1EEEE;
+  --brand-dark: #07112b;
+  --brand-navy: #032c61;
+  --brand-red: #dc3920;
+  --brand-white: #f1eeee;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background-color: #07112b;
+  color: #f1eeee;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scrollbar — main content */
+main::-webkit-scrollbar {
+  width: 4px;
+}
+main::-webkit-scrollbar-track {
+  background: transparent;
+}
+main::-webkit-scrollbar-thumb {
+  background: #1c3260;
+  border-radius: 2px;
+}
+main::-webkit-scrollbar-thumb:hover {
+  background: #dc3920;
+}
+
+/* Sidebar scrollbar — ultra minimalista */
+aside::-webkit-scrollbar,
+nav::-webkit-scrollbar {
+  width: 3px;
+}
+aside::-webkit-scrollbar-track,
+nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+aside::-webkit-scrollbar-thumb,
+nav::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+aside:hover::-webkit-scrollbar-thumb,
+nav:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+aside:hover::-webkit-scrollbar-thumb:hover,
+nav:hover::-webkit-scrollbar-thumb:hover {
+  background: #dc3920;
+}
+
+/* Firefox */
+aside,
+nav {
+  scrollbar-width: none;
+}
+aside:hover,
+nav:hover {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
