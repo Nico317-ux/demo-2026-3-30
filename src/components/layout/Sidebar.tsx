@@ -11,16 +11,14 @@ export function Sidebar() {
 
   return (
     <aside className="h-screen w-72 fixed left-0 top-0 border-r border-slate-800/20 bg-slate-900/40 backdrop-blur-xl shadow-2xl shadow-blue-900/10 z-50 flex flex-col py-8 pl-6">
-      <div className="mb-12 pr-6">
-        <div className="flex h-10 items-stretch mb-2 relative group max-w-fit cursor-pointer">
-          <div className="bg-[#002f5d] text-white font-black text-[22px] flex items-center px-3 pb-0.5 tracking-wide rounded-l-lg z-10">
-            SUPER
+      <div className="mb-12 pr-6 flex flex-col gap-1 items-start">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dim)] flex items-center justify-center text-white shadow-[0_0_15px_rgba(144,171,255,0.4)]">
+            <span className="material-symbols-outlined text-2xl">diamond</span>
           </div>
-          <div className="bg-[#e2312b] text-white font-black text-[28px] pl-6 pr-4 pb-0.5 flex items-center relative z-0" style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)', marginLeft: '-12px' }}>
-            A
-          </div>
+          <h1 className="text-2xl font-extrabold text-white font-headline tracking-tight">SUPER A</h1>
         </div>
-        <p className="text-slate-500 text-[10px] font-bold tracking-[0.2em] uppercase mt-1">Plataforma Inteligente</p>
+        <p className="text-slate-400 text-[10px] font-bold tracking-[0.2em] uppercase mt-1 pl-13">Plataforma Inteligente</p>
       </div>
 
       <nav className="flex-1 space-y-2">

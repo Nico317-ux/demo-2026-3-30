@@ -92,13 +92,11 @@ export function Login() {
           <div className="mb-4 h-16 w-16 flex items-center justify-center bg-[var(--color-primary)]/10 rounded-2xl border border-[var(--color-primary)]/30 shadow-[0_0_20px_rgba(144,171,255,0.2)]">
             <span className="material-symbols-outlined text-[var(--color-primary)] text-4xl drop-shadow-[0_0_15px_rgba(144,171,255,0.8)]">psychology</span>
           </div>
-          <div className="flex h-12 items-stretch justify-center relative group max-w-fit mb-2">
-            <div className="bg-[#002f5d] text-white font-black text-[30px] flex items-center px-4 pb-0.5 tracking-wide rounded-l-lg z-10">
-              SUPER
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dim)] flex items-center justify-center text-white shadow-[0_0_20px_rgba(144,171,255,0.4)]">
+              <span className="material-symbols-outlined text-3xl">diamond</span>
             </div>
-            <div className="bg-[#e2312b] text-white font-black text-[38px] pl-8 pr-5 pb-0.5 flex items-center relative z-0" style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)', marginLeft: '-16px' }}>
-              A
-            </div>
+            <h1 className="text-3xl font-extrabold text-white font-headline tracking-tight">SUPER A</h1>
           </div>
           <p className="font-label text-sm text-on-surface-variant tracking-widest mt-1 uppercase text-center w-full">Plataforma de Inteligencia</p>
         </div>

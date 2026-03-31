@@ -4,11 +4,11 @@
   /* Foundations */
   --color-background: #070d1f;
   --color-on-background: #dfe4fe;
-  
+
   --color-surface: #070d1f;
   --color-surface-dim: #070d1f;
   --color-surface-bright: #222b47;
-  
+
   /* Surface Tiers - "The Layering Principle" */
   --color-surface-container-lowest: #000000;
   --color-surface-container-low: #0c1326;
@@ -16,27 +16,27 @@
   --color-surface-container-high: #171f36;
   --color-surface-container-highest: #1c253e;
   --color-surface-variant: #1c253e;
-  
+
   --color-on-surface: #dfe4fe;
   --color-on-surface-variant: #a5aac2;
   --color-outline: #6f758b;
   --color-outline-variant: #41475b; /* Used for ghost borders */
-  
+
   /* Accents & Logic */
   --color-primary: #90abff;
   --color-primary-dim: #316bf3;
   --color-on-primary: #002873;
   --color-primary-container: #7b9cff;
   --color-on-primary-container: #001e5a;
-  
+
   --color-secondary: #ff7165; /* Crimson Red */
   --color-secondary-dim: #e02928;
   --color-on-secondary: #4a0003;
-  
+
   --color-tertiary: #9bffce; /* Emerald Green */
   --color-tertiary-dim: #58e7ab;
   --color-on-tertiary: #006443;
-  
+
   /* Fonts */
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-display: "Manrope", system-ui, sans-serif;
@@ -45,7 +45,11 @@
   --font-label: "Inter", system-ui, sans-serif;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 body {
   font-family: var(--font-body);
@@ -57,7 +61,11 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, .font-headline {
+h1,
+h2,
+h3,
+h4,
+.font-headline {
   font-family: var(--font-headline);
   letter-spacing: -0.02em;
 }
@@ -66,18 +74,31 @@ h1, h2, h3, h4, .font-headline {
 
 /* The Glass & Gradient Rule */
 .glass-card {
-  background: rgba(20, 29, 54, 0.75); /* Much more distinct from background */
-  backdrop-filter: blur(24px); 
-  -webkit-backdrop-filter: blur(24px);
-  /* Ghost Border logic applied: outline_variant at 15% opacity or tinted primary */
-  border: 1px solid rgba(144, 171, 255, 0.15); /* Stronger visible edge */
-  border-radius: 1.5rem; /* md/lg radius */
-  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.05); /* High contrast Shadows */
+  background: rgba(12, 19, 38, 0.6) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(144, 171, 255, 0.05) !important;
+  border-radius: 1rem !important;
+  color: #dfe4fe !important;
+}
+
+.glass-card *,
+.glass-card .text-on-surface,
+.glass-card .text-on-surface-variant {
+  color: #dfe4fe !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+  background: none !important;
+  filter: none !important;
 }
 
 /* Primary Button with Gradient */
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dim) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-dim) 100%
+  );
   color: var(--color-on-primary-container);
   border-radius: 9999px; /* full */
   font-family: var(--font-headline);
@@ -112,13 +133,28 @@ h1, h2, h3, h4, .font-headline {
 
 /* Background Mesh for specific surfaces */
 .bg-mesh {
-  background: radial-gradient(at 0% 0%, rgba(49, 107, 243, 0.15) 0px, transparent 50%),
-              radial-gradient(at 100% 100%, rgba(155, 255, 206, 0.1) 0px, transparent 50%),
-              radial-gradient(at 50% 50%, var(--color-surface) 0px, var(--color-surface) 100%);
+  background:
+    radial-gradient(at 0% 0%, rgba(49, 107, 243, 0.15) 0px, transparent 50%),
+    radial-gradient(
+      at 100% 100%,
+      rgba(155, 255, 206, 0.1) 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+      at 50% 50%,
+      var(--color-surface) 0px,
+      var(--color-surface) 100%
+    );
 }
 
 /* Smooth Links & Hovers Slowed Down (2.5s) */
-a, button, .bento-item, .group, .group *, tr.table-row, .table-row * {
+a,
+button,
+.bento-item,
+.group,
+.group *,
+tr.table-row,
+.table-row * {
   transition-property: all !important;
   transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1) !important;
   transition-duration: 2500ms !important;
@@ -127,7 +163,10 @@ a, button, .bento-item, .group, .group *, tr.table-row, .table-row * {
 /* Floating Points Global Background System */
 .global-particles {
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
@@ -135,30 +174,46 @@ a, button, .bento-item, .group, .group *, tr.table-row, .table-row * {
 
 .global-particles div {
   position: absolute;
-  width: 2px; height: 2px;
+  width: 2px;
+  height: 2px;
   background-color: var(--color-on-surface);
   border-radius: 50%;
   opacity: 0.15;
-  box-shadow: 0 0 8px rgba(255,255,255,0.4);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
   animation: floatUp 15s linear infinite;
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-  10% { opacity: 0.2; }
-  90% { opacity: 0.2; }
-  100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+  0% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.2;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-10vh) scale(1.2);
+    opacity: 0;
+  }
 }
 
 /* Ensure glass elements stay above particles natively */
-.main-content-area, .main-sidebar {
+.main-content-area,
+.main-sidebar {
   position: relative;
   z-index: 10;
 }
 
 /* Material Symbols Adjustments */
 .material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 300,
+    "GRAD" 0,
+    "opsz" 24;
 }
 
 /* Hide Scrollbar or Make Custom (Dark Theme) */
@@ -177,4 +232,40 @@ a, button, .bento-item, .group, .group *, tr.table-row, .table-row * {
 ::selection {
   background: rgba(144, 171, 255, 0.3);
   color: var(--color-on-surface);
+}
+
+/* ——— Leaflet Dark Theme Overrides ——— */
+.leaflet-container {
+  background: #070d1f !important;
+  font-family: var(--font-body) !important;
+}
+
+.leaflet-tile-pane {
+  opacity: 0.85;
+}
+
+/* Dark Tooltip for Leaflet */
+.dark-tooltip.leaflet-tooltip {
+  background: var(--color-surface-container-highest) !important;
+  color: var(--color-on-surface) !important;
+  border: 1px solid rgba(144, 171, 255, 0.25) !important;
+  border-radius: 0.75rem !important;
+  padding: 6px 12px !important;
+  font-size: 11px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(12px);
+}
+
+.dark-tooltip.leaflet-tooltip::before {
+  border-top-color: rgba(144, 171, 255, 0.25) !important;
+}
+
+/* Animated dashed lines for map connections */
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -30;
+  }
+}
+.leaflet-interactive[stroke-dasharray] {
+  animation: dashFlow 2s linear infinite;
 }

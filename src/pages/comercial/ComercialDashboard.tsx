@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { GeographicMap } from "../../components/map/GeographicMap";
 
 gsap.registerPlugin(useGSAP);
 
@@ -18,7 +19,7 @@ export function ComercialDashboard() {
     <div ref={container} className="w-full flex flex-col gap-12">
       <div className="page-header flex justify-between items-end">
         <div>
-          <h2 className="text-4xl font-extrabold font-headline tracking-tight text-on-surface">Dominio Comercial</h2>
+          <h2 className="text-3xl font-extrabold font-headline tracking-tight text-on-surface">Dominio Comercial</h2>
           <p className="text-on-surface-variant mt-2 text-lg">Inteligencia de clientes y portafolio.</p>
         </div>
         <div className="flex gap-4">
@@ -38,7 +39,7 @@ export function ComercialDashboard() {
         
         {/* AI Suggestion - Featured Header */}
         <div className="col-span-12 bento-item">
-          <div className="relative overflow-hidden glass-card p-10 flex flex-col md:flex-row items-start md:items-center gap-8 border-l-[6px] border-[var(--color-tertiary)] bg-[var(--color-surface-variant)] shadow-xl z-10 w-full group transition-all duration-500 hover:shadow-[0_0_30px_rgba(155,255,206,0.1)]">
+          <div className="relative overflow-hidden glass-card p-10 flex flex-col md:flex-row items-start md:items-center gap-8 border-l-[6px] border-[var(--color-tertiary)] shadow-xl z-10 w-full group transition-all duration-500 hover:shadow-[0_0_30px_rgba(155,255,206,0.1)]">
             <div className="h-20 w-20 bg-[var(--color-tertiary)]/10 rounded-2xl flex items-center justify-center shrink-0 border border-[var(--color-tertiary)]/20 group-hover:bg-[var(--color-tertiary)]/20 transition-all">
               <span className="material-symbols-outlined text-[var(--color-tertiary)] text-4xl">auto_awesome</span>
             </div>
@@ -132,95 +133,7 @@ export function ComercialDashboard() {
 
         {/* Customer Map/Region View */}
         <div className="col-span-12 lg:col-span-7 bento-item">
-          <div className="glass-card h-full overflow-hidden flex flex-col relative group">
-            
-            <div className="p-8 pb-4 flex justify-between items-center absolute top-0 left-0 w-full z-10 bg-gradient-to-b from-[var(--color-surface-container-low)] to-transparent pointer-events-none">
-              <div>
-                <h3 className="text-xl font-bold font-headline text-on-surface">Geografía</h3>
-                <p className="text-[10px] text-on-surface-variant mt-1 uppercase tracking-widest font-bold">Densidad de Concentración</p>
-              </div>
-              <div className="bg-[var(--color-surface-container-highest)] px-4 py-3 rounded-full text-[10px] font-bold tracking-widest flex items-center gap-6 border border-[rgba(144,171,255,0.1)] pointer-events-auto uppercase">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-tertiary)] shadow-[0_0_8px_rgba(155,255,206,0.6)]"></span>
-                  <span>Crecimiento</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-primary)] shadow-[0_0_8px_rgba(144,171,255,0.6)]"></span>
-                  <span>Principal</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex-1 min-h-[450px] relative bg-black/40 overflow-hidden flex items-center justify-center p-4">
-              {/* Geographic Connection Map - Venezuela */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-1000">
-                <svg className="w-[85%] h-[85%] object-contain overflow-visible drop-shadow-[0_0_20px_rgba(144,171,255,0.1)]" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-                   {/* Cybernetic Venezuela Outline */}
-                   <path d="M30,12 L45,15 L55,10 L68,12 L80,8 L95,25 L92,40 L85,55 L80,75 L70,90 L60,95 L45,85 L35,80 L25,85 L30,65 L20,50 L5,40 L18,25 Z" fill="rgba(65,71,91,0.2)" stroke="var(--color-primary)" strokeWidth="0.3" strokeDasharray="1 1.5" className="transition-all duration-1000 hover:fill-[rgba(144,171,255,0.05)]" />
-                   
-                   {/* Interconnected Network Lines */}
-                   <path d="M25,25 L50,23 L58,18 L80,65" fill="none" stroke="var(--color-primary)" strokeWidth="0.4" strokeDasharray="1 1.5" className="opacity-80 animate-pulse" />
-                   <path d="M25,25 L18,45 L50,23" fill="none" stroke="var(--color-tertiary)" strokeWidth="0.4" strokeDasharray="1 1.5" className="opacity-80 animate-pulse" />
-                   
-                   {/* Nodes / Hotspots */}
-                   
-                   {/* Maracaibo (Zulia) */}
-                   <g className="hover:scale-125 transition-transform duration-300 origin-[25px_25px] cursor-pointer group">
-                     <circle cx="25" cy="25" r="4" fill="var(--color-tertiary)" opacity="0.2" className="animate-pulse" />
-                     <circle cx="25" cy="25" r="1.5" fill="var(--color-tertiary)" stroke="white" strokeWidth="0.5" className="shadow-[0_0_10px_rgba(155,255,206,1)]" />
-                     <text x="29" y="26" fill="white" fontSize="3" fontWeight="bold" className="opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md font-headline">ZULIA (Principal)</text>
-                   </g>
-
-                   {/* Caracas (Distrito Capital) */}
-                   <g className="hover:scale-125 transition-transform duration-300 origin-[58px_18px] cursor-pointer group">
-                     <circle cx="58" cy="18" r="4" fill="var(--color-primary)" opacity="0.2" className="animate-pulse" />
-                     <circle cx="58" cy="18" r="1.5" fill="var(--color-primary)" stroke="white" strokeWidth="0.5" />
-                     <text x="62" y="19" fill="white" fontSize="3" fontWeight="bold" className="opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md font-headline">CARACAS (Crecimiento)</text>
-                   </g>
-
-                   {/* Valencia (Carabobo) */}
-                   <g className="hover:scale-125 transition-transform duration-300 origin-[50px_23px] cursor-pointer group">
-                     <circle cx="50" cy="23" r="1" fill="white" opacity="0.8" />
-                     <text x="52" y="24" fill="white" fontSize="2.5" fontWeight="normal" className="opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md font-body">Valencia</text>
-                   </g>
-
-                   {/* Puerto Ordaz (Bolívar) */}
-                   <g className="hover:scale-125 transition-transform duration-300 origin-[80px_65px] cursor-pointer group">
-                     <circle cx="80" cy="65" r="3" fill="var(--color-primary)" opacity="0.2" className="animate-pulse" />
-                     <circle cx="80" cy="65" r="1.2" fill="var(--color-primary)" stroke="white" strokeWidth="0.4" />
-                     <text x="84" y="66" fill="white" fontSize="3" fontWeight="bold" className="opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md font-headline">BOLÍVAR</text>
-                   </g>
-
-                   {/* San Cristóbal (Táchira) */}
-                   <g className="hover:scale-125 transition-transform duration-300 origin-[18px_45px] cursor-pointer group">
-                     <circle cx="18" cy="45" r="3" fill="var(--color-tertiary)" opacity="0.2" className="animate-pulse" />
-                     <circle cx="18" cy="45" r="1" fill="var(--color-tertiary)" stroke="white" strokeWidth="0.4" />
-                     <text x="22" y="46" fill="white" fontSize="3" fontWeight="bold" className="opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md font-headline">TÁCHIRA</text>
-                   </g>
-
-                </svg>
-              </div>
-            </div>
-
-            <div className="p-8 bg-[var(--color-surface-container-low)] flex flex-col md:flex-row items-center justify-between border-t border-[rgba(65,71,91,0.2)] relative z-20">
-              <div className="flex gap-16">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-primary)] font-bold mb-1">Región Principal</p>
-                  <p className="text-2xl font-bold text-on-surface font-headline">Sudamérica</p>
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-tertiary)] font-bold mb-1">Puntos Activos</p>
-                  <p className="text-2xl font-bold text-on-surface font-headline">24 Ubicaciones</p>
-                </div>
-              </div>
-              <div className="flex -space-x-3 mt-4 md:mt-0 hover:space-x-1 transition-all duration-400">
-                 <div className="w-12 h-12 rounded-full border-2 border-[var(--color-surface-container-low)] bg-blue-900/50 flex items-center justify-center text-[var(--color-primary)] relative z-[3] hover:z-10 transition-transform"> <span className="material-symbols-outlined text-xl">person</span> </div>
-                 <div className="w-12 h-12 rounded-full border-2 border-[var(--color-surface-container-low)] bg-emerald-900/50 flex items-center justify-center text-[var(--color-tertiary)] relative z-[2] hover:z-10 transition-transform"> <span className="material-symbols-outlined text-xl">person_4</span> </div>
-                 <div className="w-12 h-12 rounded-full border-2 border-[var(--color-surface-container-low)] bg-[var(--color-surface-container-highest)] flex items-center justify-center text-[10px] font-bold text-on-surface relative z-[1] hover:z-10 transition-transform hover:bg-[var(--color-primary)] hover:text-white">+12</div>
-              </div>
-            </div>
-
-          </div>
+          <GeographicMap />
         </div>
 
         {/* Secondary Intelligence Row */}
@@ -231,7 +144,7 @@ export function ComercialDashboard() {
             </div>
             <div>
               <p className="text-on-surface-variant text-[11px] uppercase tracking-widest font-bold mb-1">ARPU Mensual</p>
-              <h5 className="text-3xl font-extrabold text-on-surface font-headline">$1,240.00</h5>
+              <h5 className="text-2xl font-extrabold text-on-surface font-headline">$1,240.00</h5>
             </div>
           </div>
           <div className="bento-item glass-card p-8 flex flex-col justify-center gap-4 hover:shadow-[0_0_20px_rgba(255,113,101,0.05)] transition-all cursor-default">
@@ -240,7 +153,7 @@ export function ComercialDashboard() {
             </div>
             <div>
               <p className="text-on-surface-variant text-[11px] uppercase tracking-widest font-bold mb-1">Riesgo de Abandono</p>
-              <h5 className="text-3xl font-extrabold text-on-surface font-headline">1.2%</h5>
+              <h5 className="text-2xl font-extrabold text-on-surface font-headline">1.2%</h5>
             </div>
           </div>
           <div className="bento-item glass-card p-8 flex flex-col justify-center gap-4 hover:shadow-[0_0_20px_rgba(155,255,206,0.05)] transition-all cursor-default">
@@ -249,7 +162,7 @@ export function ComercialDashboard() {
             </div>
             <div>
               <p className="text-on-surface-variant text-[11px] uppercase tracking-widest font-bold mb-1">Costo de Adquisición</p>
-              <h5 className="text-3xl font-extrabold text-on-surface font-headline">$42.50</h5>
+              <h5 className="text-2xl font-extrabold text-on-surface font-headline">$42.50</h5>
             </div>
           </div>
         </div>
