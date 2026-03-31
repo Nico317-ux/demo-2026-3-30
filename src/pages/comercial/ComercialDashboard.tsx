@@ -151,32 +151,54 @@ export function ComercialDashboard() {
               </div>
             </div>
 
-            <div className="flex-1 min-h-[450px] relative bg-black/40 overflow-hidden flex items-center justify-center">
-              {/* Dotted World Map SVG Graphic */}
-              <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-1000 flex items-center justify-center">
-                <svg className="w-[120%] h-[120%] object-cover text-blue-500/30" viewBox="0 0 1000 500" fill="currentColor">
-                  {/* Generate a simple grid of dots for the map look */}
-                  <pattern id="dots" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
-                    <circle cx="2" cy="2" r="1.5" className="fill-current"></circle>
-                  </pattern>
-                  <rect x="0" y="0" width="100%" height="100%" fill="url(#dots)"></rect>
-                  <path d="M200,100 Q400,50 600,150 T900,200" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" className="opacity-50" />
-                  <path d="M100,300 Q300,450 500,350 T800,400" fill="none" stroke="var(--color-tertiary)" strokeWidth="1" strokeDasharray="3,3" className="opacity-50" />
-                </svg>
-              </div>
-              
-              <div className="absolute inset-0 p-12 pointer-events-none">
-                {/* Hotspot 1 */}
-                <div className="absolute top-[35%] left-[25%] pointer-events-auto cursor-pointer hover:scale-125 transition-transform duration-300 group/spot">
-                   <div className="absolute -inset-10 bg-[var(--color-primary)]/20 rounded-full blur-[30px] opacity-0 group-hover/spot:opacity-100 transition-opacity"></div>
-                   <div className="w-4 h-4 bg-[var(--color-primary)] rounded-full shadow-[0_0_20px_rgba(144,171,255,1)] border-2 border-white relative z-10 animate-pulse"></div>
-                </div>
+            <div className="flex-1 min-h-[450px] relative bg-black/40 overflow-hidden flex items-center justify-center p-4">
+              {/* Geographic Connection Map - Venezuela */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-1000">
+                <svg className="w-[85%] h-[85%] object-contain overflow-visible drop-shadow-[0_0_20px_rgba(144,171,255,0.1)]" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                   {/* Cybernetic Venezuela Outline */}
+                   <path d="M30,12 L45,15 L55,10 L68,12 L80,8 L95,25 L92,40 L85,55 L80,75 L70,90 L60,95 L45,85 L35,80 L25,85 L30,65 L20,50 L5,40 L18,25 Z" fill="rgba(65,71,91,0.2)" stroke="var(--color-primary)" strokeWidth="0.3" strokeDasharray="1 1.5" className="transition-all duration-1000 hover:fill-[rgba(144,171,255,0.05)]" />
+                   
+                   {/* Interconnected Network Lines */}
+                   <path d="M25,25 L50,23 L58,18 L80,65" fill="none" stroke="var(--color-primary)" strokeWidth="0.4" strokeDasharray="1 1.5" className="opacity-80 animate-pulse" />
+                   <path d="M25,25 L18,45 L50,23" fill="none" stroke="var(--color-tertiary)" strokeWidth="0.4" strokeDasharray="1 1.5" className="opacity-80 animate-pulse" />
+                   
+                   {/* Nodes / Hotspots */}
+                   
+                   {/* Maracaibo (Zulia) */}
+                   <g className="hover:scale-125 transition-transform duration-300 origin-[25px_25px] cursor-pointer group">
+                     <circle cx="25" cy="25" r="4" fill="var(--color-tertiary)" opacity="0.2" className="animate-pulse" />
+                     <circle cx="25" cy="25" r="1.5" fill="var(--color-tertiary)" stroke="white" strokeWidth="0.5" className="shadow-[0_0_10px_rgba(155,255,206,1)]" />
+                     <text x="29" y="26" fill="white" fontSize="3" fontWeight="bold" className="opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md font-headline">ZULIA (Principal)</text>
+                   </g>
 
-                {/* Hotspot 2 */}
-                <div className="absolute top-[65%] left-[70%] pointer-events-auto cursor-pointer hover:scale-125 transition-transform duration-300 group/spot">
-                   <div className="absolute -inset-12 bg-[var(--color-tertiary)]/20 rounded-full blur-[40px] opacity-0 group-hover/spot:opacity-100 transition-opacity"></div>
-                   <div className="w-5 h-5 bg-[var(--color-tertiary)] rounded-full shadow-[0_0_25px_rgba(155,255,206,1)] border-[2.5px] border-white relative z-10 animate-pulse-soft"></div>
-                </div>
+                   {/* Caracas (Distrito Capital) */}
+                   <g className="hover:scale-125 transition-transform duration-300 origin-[58px_18px] cursor-pointer group">
+                     <circle cx="58" cy="18" r="4" fill="var(--color-primary)" opacity="0.2" className="animate-pulse" />
+                     <circle cx="58" cy="18" r="1.5" fill="var(--color-primary)" stroke="white" strokeWidth="0.5" />
+                     <text x="62" y="19" fill="white" fontSize="3" fontWeight="bold" className="opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md font-headline">CARACAS (Crecimiento)</text>
+                   </g>
+
+                   {/* Valencia (Carabobo) */}
+                   <g className="hover:scale-125 transition-transform duration-300 origin-[50px_23px] cursor-pointer group">
+                     <circle cx="50" cy="23" r="1" fill="white" opacity="0.8" />
+                     <text x="52" y="24" fill="white" fontSize="2.5" fontWeight="normal" className="opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md font-body">Valencia</text>
+                   </g>
+
+                   {/* Puerto Ordaz (Bolívar) */}
+                   <g className="hover:scale-125 transition-transform duration-300 origin-[80px_65px] cursor-pointer group">
+                     <circle cx="80" cy="65" r="3" fill="var(--color-primary)" opacity="0.2" className="animate-pulse" />
+                     <circle cx="80" cy="65" r="1.2" fill="var(--color-primary)" stroke="white" strokeWidth="0.4" />
+                     <text x="84" y="66" fill="white" fontSize="3" fontWeight="bold" className="opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md font-headline">BOLÍVAR</text>
+                   </g>
+
+                   {/* San Cristóbal (Táchira) */}
+                   <g className="hover:scale-125 transition-transform duration-300 origin-[18px_45px] cursor-pointer group">
+                     <circle cx="18" cy="45" r="3" fill="var(--color-tertiary)" opacity="0.2" className="animate-pulse" />
+                     <circle cx="18" cy="45" r="1" fill="var(--color-tertiary)" stroke="white" strokeWidth="0.4" />
+                     <text x="22" y="46" fill="white" fontSize="3" fontWeight="bold" className="opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md font-headline">TÁCHIRA</text>
+                   </g>
+
+                </svg>
               </div>
             </div>
 

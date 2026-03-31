@@ -66,13 +66,13 @@ h1, h2, h3, h4, .font-headline {
 
 /* The Glass & Gradient Rule */
 .glass-card {
-  background: rgba(255, 255, 255, 0.04); /* Clearer as requested */
-  backdrop-filter: blur(32px); /* Higher blur */
-  -webkit-backdrop-filter: blur(32px);
+  background: rgba(20, 29, 54, 0.75); /* Much more distinct from background */
+  backdrop-filter: blur(24px); 
+  -webkit-backdrop-filter: blur(24px);
   /* Ghost Border logic applied: outline_variant at 15% opacity or tinted primary */
-  border: 1px solid rgba(144, 171, 255, 0.1); /* Slightly more visible edge */
+  border: 1px solid rgba(144, 171, 255, 0.15); /* Stronger visible edge */
   border-radius: 1.5rem; /* md/lg radius */
-  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.02); /* Ambient Shadows */
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.05); /* High contrast Shadows */
 }
 
 /* Primary Button with Gradient */
