@@ -50,8 +50,19 @@ export function MainLayout() {
     <div ref={container} className="bg-mesh text-on-surface font-body min-h-screen selection:bg-[var(--color-primary)]/30 overflow-hidden relative">
       
       {/* Custom Cursor Trail Elements */}
-      <div ref={cursorRef} className="fixed top-0 left-0 w-2 h-2 bg-white rounded-full mix-blend-difference pointer-events-none z-[9999]"></div>
       <div ref={cursorFollowerRef} className="fixed top-0 left-0 w-64 h-64 bg-[var(--color-primary)]/20 rounded-full blur-[80px] pointer-events-none z-[9998] transition-opacity duration-300"></div>
+
+      {/* Global Floating Particles */}
+      <div className="global-particles">
+        {Array.from({ length: 40 }).map((_, i) => (
+          <div key={i} style={{ 
+            left: `${Math.random() * 100}%`, 
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 15}s`,
+            animationDuration: `${10 + Math.random() * 20}s`
+          }}></div>
+        ))}
+      </div>
 
       <div className="main-sidebar relative z-[100]">
         <Sidebar />

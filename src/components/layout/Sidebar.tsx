@@ -12,7 +12,14 @@ export function Sidebar() {
   return (
     <aside className="h-screen w-72 fixed left-0 top-0 border-r border-slate-800/20 bg-slate-900/40 backdrop-blur-xl shadow-2xl shadow-blue-900/10 z-50 flex flex-col py-8 pl-6">
       <div className="mb-12 pr-6">
-        <h1 className="text-2xl font-bold tracking-tighter text-blue-400 dark:text-blue-300 font-headline">SUPER A</h1>
+        <div className="flex h-10 items-stretch mb-2 relative group max-w-fit cursor-pointer">
+          <div className="bg-[#002f5d] text-white font-black text-[22px] flex items-center px-3 pb-0.5 tracking-wide rounded-l-lg z-10">
+            SUPER
+          </div>
+          <div className="bg-[#e2312b] text-white font-black text-[28px] pl-6 pr-4 pb-0.5 flex items-center relative z-0" style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)', marginLeft: '-12px' }}>
+            A
+          </div>
+        </div>
         <p className="text-slate-500 text-[10px] font-bold tracking-[0.2em] uppercase mt-1">Plataforma Inteligente</p>
       </div>
 

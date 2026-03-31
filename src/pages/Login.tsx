@@ -73,23 +73,33 @@ export function Login() {
         <div className="w-80 h-80 bg-tertiary rounded-full"></div>
       </div>
 
-      {/* Decorative Particles */}
-      <div className="particles fixed top-0 left-0 w-full h-full pointer-events-none z-0">
-        <div className="absolute w-[2px] h-[2px] bg-primary rounded-full top-[10%] left-[20%] shadow-[0_0_8px_rgba(144,171,255,0.8)]"></div>
-        <div className="absolute w-[3px] h-[3px] bg-tertiary rounded-full top-[30%] left-[80%] shadow-[0_0_8px_rgba(155,255,206,0.8)]"></div>
-        <div className="absolute w-[2px] h-[2px] bg-primary rounded-full top-[70%] left-[15%] shadow-[0_0_8px_rgba(144,171,255,0.8)]"></div>
-        <div className="absolute w-[2px] h-[2px] bg-primary rounded-full top-[85%] left-[60%] shadow-[0_0_8px_rgba(144,171,255,0.8)]"></div>
-        <div className="absolute w-[3px] h-[3px] bg-tertiary rounded-full top-[50%] left-[45%] shadow-[0_0_8px_rgba(155,255,206,0.8)]"></div>
+      {/* Decorative Particles (Global CSS utilized) */}
+      <div className="global-particles">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <div key={i} style={{ 
+            left: `${Math.random() * 100}%`, 
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 15}s`,
+            animationDuration: `${10 + Math.random() * 20}s`
+          }}></div>
+        ))}
       </div>
 
       {/* Main Box */}
       <main className="relative z-10 w-full max-w-md flex flex-col items-center">
         
         <div className="login-header flex flex-col items-center mb-10 w-full">
-          <div className="mb-6 h-16 w-16 flex items-center justify-center bg-[var(--color-primary)]/10 rounded-2xl border border-[var(--color-primary)]/30 shadow-[0_0_20px_rgba(144,171,255,0.2)]">
+          <div className="mb-4 h-16 w-16 flex items-center justify-center bg-[var(--color-primary)]/10 rounded-2xl border border-[var(--color-primary)]/30 shadow-[0_0_20px_rgba(144,171,255,0.2)]">
             <span className="material-symbols-outlined text-[var(--color-primary)] text-4xl drop-shadow-[0_0_15px_rgba(144,171,255,0.8)]">psychology</span>
           </div>
-          <h1 className="font-headline text-3xl font-extrabold tracking-tighter text-on-surface text-center uppercase">Super A</h1>
+          <div className="flex h-12 items-stretch justify-center relative group max-w-fit mb-2">
+            <div className="bg-[#002f5d] text-white font-black text-[30px] flex items-center px-4 pb-0.5 tracking-wide rounded-l-lg z-10">
+              SUPER
+            </div>
+            <div className="bg-[#e2312b] text-white font-black text-[38px] pl-8 pr-5 pb-0.5 flex items-center relative z-0" style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)', marginLeft: '-16px' }}>
+              A
+            </div>
+          </div>
           <p className="font-label text-sm text-on-surface-variant tracking-widest mt-1 uppercase text-center w-full">Plataforma de Inteligencia</p>
         </div>
 
