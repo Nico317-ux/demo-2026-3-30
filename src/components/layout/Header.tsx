@@ -1,114 +1,54 @@
-import { Menu, SlidersHorizontal } from "lucide-react";
+import { Menu, Bell, Search, Calendar } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useDashboardStore } from "../../store/dashboardStore";
-import { cn } from "../../utils/cn";
-import { linesList, regionsList } from "../../data/sales.mock";
-
-const periods = ["2026-01", "2026-02", "2026-03"];
-
-const routeLabels: Record<string, string> = {
-  "/": "Inicio",
-  "/backorder": "Backorder",
-  "/inventory": "Inventario",
-  "/sales": "KPIs de Ventas",
-  "/raw-materials": "Materia Prima",
-  "/product-costs": "Costos de Producto",
-  "/cross/backorder-inventory": "Backorder vs Inventario",
-  "/cross/coverage": "Cobertura de Ventas",
-  "/cross/profitability": "Ventas vs Costos",
-  "/cross/dead-stock": "Material Lento",
-  "/cross/purchase-planning": "Plan de Compras",
-  "/cross/product-health": "Salud Operativa",
-  "/executive": "Dashboard Ejecutivo",
-  "/predictive": "Inteligencia Predictiva",
-  "/quotes": "Cotizaciones",
-};
+import { getRouteTitle } from "../../utils/navConfig";
 
 export function Header() {
   const { pathname } = useLocation();
-  const { filters, setFilter, toggleSidebar, sidebarOpen } =
-    useDashboardStore();
-
-  const regionOptions = ["Todos", ...regionsList];
-  const lineOptions = ["Todos", ...linesList];
-  const warehouseOptions = ["Todos", "A", "B"];
-
-  const pageTitle = routeLabels[pathname] ?? "Dashboard";
+  const { toggleSidebar, sidebarOpen } = useDashboardStore();
+  const pageTitle = getRouteTitle(pathname);
 
   return (
-    <header className="sticky top-0 z-20 flex flex-col gap-3 border-b border-[#032C61] bg-[#0A204E]/95 px-4 py-3 backdrop-blur md:flex-row md:items-center md:justify-between">
-      <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-20 flex items-center justify-between h-[72px] border-b border-surface-2 bg-white/80 backdrop-blur-xl px-5 md:px-8">
+      <div className="flex items-center gap-4">
         <button
           type="button"
-          className="rounded-lg border border-[#032C61] p-2 text-[#F1EEEE]/70 hover:text-[#F1EEEE] lg:hidden"
+          className="p-2 rounded-xl text-text-secondary hover:text-text-primary hover:bg-surface-1 transition-all lg:hidden"
           onClick={toggleSidebar}
           aria-expanded={sidebarOpen}
-          aria-label="Abrir menú"
+          aria-label="Menu"
         >
           <Menu className="h-5 w-5" />
         </button>
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-[#F1EEEE]/50">
-            Vista actual
-          </p>
-          <span className="text-[#0A204E] text-base font-semibold tracking-tight">
+          <h1 className="text-xl md:text-2xl font-display font-bold text-text-primary tracking-tight">
             {pageTitle}
-          </span>
+          </h1>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="hidden items-center gap-1 text-[#F1EEEE]/50 sm:inline-flex">
-          <SlidersHorizontal className="h-4 w-4" aria-hidden />
-          <span className="text-xs font-medium">Filtros</span>
-        </span>
-        <select
-          className={cn(
-            "rounded-lg border border-[#032C61] bg-[#032C61] px-2 py-1.5 text-sm text-[#F1EEEE]",
-            "focus:border-[#DC3920] focus:outline-none focus:ring-1 focus:ring-[#DC3920]",
-          )}
-          value={filters.period}
-          onChange={(e) => setFilter("period", e.target.value)}
-        >
-          {periods.map((p) => (
-            <option key={p} value={p}>
-              Período {p}
-            </option>
-          ))}
-        </select>
-        <select
-          className="rounded-lg border border-[#032C61] bg-[#032C61] px-2 py-1.5 text-sm text-[#F1EEEE] focus:border-[#DC3920] focus:outline-none focus:ring-1 focus:ring-[#DC3920]"
-          value={filters.region}
-          onChange={(e) => setFilter("region", e.target.value)}
-        >
-          {regionOptions.map((r) => (
-            <option key={r} value={r}>
-              Región: {r}
-            </option>
-          ))}
-        </select>
-        <select
-          className="rounded-lg border border-[#032C61] bg-[#032C61] px-2 py-1.5 text-sm text-[#F1EEEE] focus:border-[#DC3920] focus:outline-none focus:ring-1 focus:ring-[#DC3920]"
-          value={filters.line}
-          onChange={(e) => setFilter("line", e.target.value)}
-        >
-          {lineOptions.map((l) => (
-            <option key={l} value={l}>
-              Línea: {l}
-            </option>
-          ))}
-        </select>
-        <select
-          className="rounded-lg border border-[#032C61] bg-[#032C61] px-2 py-1.5 text-sm text-[#F1EEEE] focus:border-[#DC3920] focus:outline-none focus:ring-1 focus:ring-[#DC3920]"
-          value={filters.warehouse}
-          onChange={(e) => setFilter("warehouse", e.target.value)}
-        >
-          {warehouseOptions.map((w) => (
-            <option key={w} value={w}>
-              Almacén: {w}
-            </option>
-          ))}
-        </select>
+      <div className="flex items-center gap-2">
+        {/* Search */}
+        <div className="hidden md:flex relative group">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted group-focus-within:text-brand-gold transition-colors" />
+          <input
+            type="text"
+            placeholder="Buscar productos, clientes..."
+            className="w-56 pl-10 pr-4 py-2.5 bg-surface-1 border border-surface-2 rounded-xl text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold/30 transition-all"
+          />
+        </div>
+
+        {/* Period indicator */}
+        <div className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-surface-1 border border-surface-2 text-sm text-text-secondary font-medium">
+          <Calendar className="w-4 h-4 text-brand-gold" />
+          Marzo 2026
+        </div>
+        
+        {/* Notification */}
+        <button className="relative p-2.5 rounded-xl text-text-secondary hover:text-text-primary hover:bg-surface-1 transition-all">
+          <Bell className="h-5 w-5" />
+          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-brand-red ring-2 ring-white" />
+        </button>
       </div>
     </header>
   );

@@ -4,12 +4,14 @@ import { Sidebar } from "./Sidebar";
 
 export function MainLayout() {
   return (
-    <div className="flex h-screen overflow-hidden bg-[#07112B]">
+    <div className="flex h-screen w-full overflow-hidden bg-surface-0">
       <Sidebar />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header />
-        <main className="flex-1 overflow-y-auto bg-[#F1EEEE] p-4 md:p-6">
-          <Outlet />
+        <main className="flex-1 overflow-y-auto bg-surface-0 p-5 md:p-8">
+          <div className="max-w-[1400px] mx-auto animate-fade-in-up">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>
