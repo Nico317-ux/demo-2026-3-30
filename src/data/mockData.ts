@@ -20,8 +20,9 @@ export const mockTopClientes = [
   { cliente: "Ferremundial Proto 2020 C.A.", region: "Capital", compras_usd: 3923.64, participacion_pct: 34.89, lastPurchase: "2026-03-28", status: "Activo" },
   { cliente: "Pinta Ofertas C.A.", region: "Oriente", compras_usd: 583.54, participacion_pct: 5.18, lastPurchase: "2026-03-25", status: "Re-compra" },
   { cliente: "Ferreteria Alfa 2021 C.A.", region: "Capital", compras_usd: 107.85, participacion_pct: 0.95, lastPurchase: "2026-03-20", status: "Activo" },
-  { cliente: "Constructora y Multiservicios Maca 78, C.A.", region: "Táchira", compras_usd: 82.07, participacion_pct: 0.62, lastPurchase: "2026-02-15", status: "Inactivo" },
-  { cliente: "Servicios y Distribuciones Liscano, C.A.", region: "Sin Asignar", compras_usd: 131.63, participacion_pct: 0.99, lastPurchase: "2026-01-30", status: "En Riesgo" },
+  { cliente: "Constructora y Multiservicios Maca 78, C.A.", region: "Táchira", compras_usd: -82.07, participacion_pct: -0.62, lastPurchase: "2026-02-15", status: "En Riesgo" },
+  { cliente: "Servicios y Distribuciones Liscano, C.A.", region: "Sin Asignar", compras_usd: -131.63, participacion_pct: -0.99, lastPurchase: "2026-01-30", status: "En Riesgo" },
+  { cliente: "Pinlacas Guatire, C.A.", region: "Capital", compras_usd: 0, participacion_pct: -1.24, lastPurchase: "2025-12-10", status: "Inactivo" },
 ];
 
 export const mockVentasPorMarca = [
@@ -33,7 +34,7 @@ export const mockVentasPorMarca = [
 export const mockVentasPorRegion = [
   { region: "Capital", ventas_usd: 12617.34, galones: 791.75 },
   { region: "Oriente", ventas_usd: 583.54, galones: 20.0 },
-  { region: "Táchira", ventas_usd: 440.77, galones: 24.5 },
+  { region: "Táchira", ventas_usd: -440.77, galones: -24.5 },
 ];
 
 export const mockEstadisticasProductos = [

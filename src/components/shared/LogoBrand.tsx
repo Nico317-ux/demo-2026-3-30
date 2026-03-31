@@ -7,15 +7,15 @@ interface LogoBrandProps {
 }
 
 /**
- * Pure CSS recreation of the Super A brand logo.
- * "SUPER" in italic + red "A" badge.
+ * Pure CSS "SUPER A" logo.
+ * "SUPER" in bold italic text + navy circle with geometric red A.
  */
 export function LogoBrand({ size = 'md', className, showText = true }: LogoBrandProps) {
   const sizes = {
-    sm: { superText: 'text-sm', aBox: 'w-7 h-7', aText: 'text-sm', gap: 'gap-1' },
-    md: { superText: 'text-lg', aBox: 'w-9 h-9', aText: 'text-base', gap: 'gap-1.5' },
-    lg: { superText: 'text-2xl', aBox: 'w-11 h-11', aText: 'text-xl', gap: 'gap-2' },
-    xl: { superText: 'text-4xl', aBox: 'w-16 h-16', aText: 'text-3xl', gap: 'gap-3' },
+    sm: { text: 'text-[11px]', circle: 'w-7 h-7', gap: 'gap-1.5' },
+    md: { text: 'text-sm', circle: 'w-9 h-9', gap: 'gap-2' },
+    lg: { text: 'text-xl', circle: 'w-12 h-12', gap: 'gap-2.5' },
+    xl: { text: 'text-3xl', circle: 'w-16 h-16', gap: 'gap-3' },
   };
   const s = sizes[size];
 
@@ -23,34 +23,36 @@ export function LogoBrand({ size = 'md', className, showText = true }: LogoBrand
     <div className={cn("flex items-center", s.gap, className)}>
       {showText && (
         <span className={cn(
-          "font-display font-extrabold text-white uppercase italic tracking-wide select-none",
-          s.superText,
+          "font-display font-extrabold text-white uppercase italic tracking-wider select-none",
+          s.text,
         )}>
           SUPER
         </span>
       )}
-      <div className={cn(
-        "flex items-center justify-center bg-gradient-to-br from-brand-red to-[#c42820] rounded-lg shadow-lg",
-        s.aBox,
-      )}>
-        <span className={cn(
-          "font-display font-extrabold text-white leading-none select-none",
-          s.aText,
-        )}>
-          A
-        </span>
+      <div className={cn("rounded-full bg-brand-navy flex items-center justify-center shadow-md", s.circle)}>
+        <GeometricA className="w-[60%] h-[60%] text-brand-red" />
       </div>
     </div>
   );
 }
 
+function GeometricA({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" className={className} xmlns="http://www.w3.org/2000/svg">
+      <path
+        fill="currentColor"
+        d="M 37 18 L 63 18 L 88 85 L 63 85 L 56 66 L 44 66 L 37 85 L 12 85 Z M 50 46 L 45.5 58 L 54.5 58 Z"
+      />
+    </svg>
+  );
+}
+
 /**
- * Hero "SUPER" + Spinning "A" lockup for the login page.
- * "SUPER" is styled text, "A" is a 3D spinning cube.
+ * Hero lockup for login: SUPER text + large spinning A circle.
  */
 export function HeroBrandLockup() {
   return (
-    <div className="flex items-center justify-center gap-5 animate-fade-in-up">
+    <div className="flex items-center justify-center gap-6 animate-fade-in-up">
       {/* SUPER text */}
       <span
         className="text-6xl font-display font-extrabold text-white uppercase italic tracking-wider select-none"
@@ -61,28 +63,23 @@ export function HeroBrandLockup() {
         SUPER
       </span>
 
-      {/* Spinning A */}
+      {/* Spinning A in navy circle */}
       <div className="relative" style={{ perspective: '800px' }}>
         <div className="animate-spin-y-slow" style={{ transformStyle: 'preserve-3d' }}>
           <div
-            className="w-24 h-24 bg-gradient-to-br from-brand-red via-[#e63e35] to-[#b52a22] rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden"
+            className="w-28 h-28 rounded-full bg-brand-navy flex items-center justify-center shadow-2xl relative overflow-hidden ring-1 ring-white/10"
             style={{
-              boxShadow: '0 0 40px rgba(232,55,45,0.35), 0 0 80px rgba(232,55,45,0.15), 0 12px 32px rgba(0,0,0,0.3)',
+              boxShadow: '0 0 50px rgba(15,52,96,0.5), 0 0 100px rgba(232,55,45,0.2), 0 16px 40px rgba(0,0,0,0.4)',
             }}
           >
             {/* Inner shine */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/15 to-transparent pointer-events-none" />
-            {/* The letter */}
-            <span
-              className="text-6xl font-display font-black text-white leading-none select-none relative z-10"
-              style={{ textShadow: '0 3px 6px rgba(0,0,0,0.25)' }}
-            >
-              A
-            </span>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+            {/* Geometric A */}
+            <GeometricA className="w-[60%] h-[60%] text-brand-red relative z-10" />
           </div>
         </div>
-        {/* Ambient glow underneath */}
-        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-brand-red/25 rounded-full blur-xl" />
+        {/* Ambient glow */}
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-brand-red/20 rounded-full blur-2xl" />
       </div>
     </div>
   );

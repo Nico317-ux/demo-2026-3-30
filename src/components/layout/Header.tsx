@@ -9,7 +9,7 @@ export function Header() {
   const pageTitle = getRouteTitle(pathname);
 
   return (
-    <header className="sticky top-0 z-20 flex items-center justify-between h-[72px] border-b border-surface-2 bg-white/80 backdrop-blur-xl px-5 md:px-8">
+    <header className="sticky top-0 z-20 flex items-center justify-between h-[72px] header-light px-5 md:px-8">
       <div className="flex items-center gap-4">
         <button
           type="button"

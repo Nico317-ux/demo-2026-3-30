@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -6,15 +6,16 @@
   --color-brand-gold: #D4A843;
   --color-brand-cream: #FFF8F0;
   --color-brand-charcoal: #1A1A2E;
+  --color-brand-navy: #0F1B2D;
   
   --color-surface-0: #FAFAF9;
   --color-surface-1: #F5F3F0;
-  --color-surface-2: #EDEBE8;
+  --color-surface-2: #E5E2DC;
   --color-surface-card: #FFFFFF;
   
-  --color-text-primary: #1A1A2E;
-  --color-text-secondary: #6B7280;
-  --color-text-muted: #9CA3AF;
+  --color-text-primary: #18181b;
+  --color-text-secondary: #52525b;
+  --color-text-muted: #a1a1aa;
   
   --color-accent-emerald: #10B981;
   --color-accent-red: #EF4444;
@@ -22,8 +23,8 @@
   --color-accent-blue: #3B82F6;
   --color-accent-violet: #8B5CF6;
   
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "Outfit", system-ui, -apple-system, sans-serif;
+  --font-display: "Outfit", system-ui, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -46,15 +47,15 @@ h1, h2, h3, h4, .font-display {
 
 /* ——— Glass Cards (Light Mode) ——— */
 .card {
-  background: white;
+  background: var(--color-surface-card);
   border-radius: 16px;
   border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.02);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.05);
 }
 
 .card-lift:hover {
@@ -67,34 +68,27 @@ h1, h2, h3, h4, .font-display {
   background: linear-gradient(180deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
 }
 
-/* ——— Subtle Dot Grid Background ——— */
-.bg-dot-grid {
-  background-image:
-    radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-/* ——— Gradient Blush Accents ——— */
-.blush-red {
+/* ——— Dashboard Background (Light, blurry blueish-gray) ——— */
+.dashboard-bg {
+  background-color: #f1f5f9; /* Slate 100 */
   position: relative;
 }
-.blush-red::before {
+.dashboard-bg::before {
   content: '';
   position: absolute;
-  top: -100px; right: -100px;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(232,55,45,0.04) 0%, transparent 70%);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(59,130,246,0.08), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(139,92,246,0.08), transparent 40%);
   pointer-events: none;
-  z-index: 0;
 }
-.blush-gold::after {
-  content: '';
-  position: absolute;
-  bottom: -80px; left: -80px;
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(212,168,67,0.04) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
+
+/* ——— Header on Light ——— */
+.header-light {
+  background: rgba(250, 250, 249, 0.75);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
 /* ——— Animations ——— */
@@ -178,11 +172,11 @@ h1, h2, h3, h4, .font-display {
 .kpi-stripe-blue::before { background: linear-gradient(180deg, #3B82F6, #60A5FA); }
 .kpi-stripe-violet::before { background: linear-gradient(180deg, #8B5CF6, #A78BFA); }
 
-/* ——— Scrollbar ——— */
+/* ——— Scrollbar (Dark) ——— */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.2); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
 
 /* ——— IA Badge Glow ——— */
 .ia-glow {
@@ -191,8 +185,8 @@ h1, h2, h3, h4, .font-display {
 
 /* ——— Selection ——— */
 ::selection {
-  background: rgba(212,168,67,0.2);
-  color: #1A1A2E;
+  background: rgba(212,168,67,0.3);
+  color: #FFFFFF;
 }
 
 /* ——— Focus Ring ——— */
@@ -215,4 +209,22 @@ tbody tr {
 /* ——— Recharts Animation Override ——— */
 .recharts-active-dot circle {
   transition: r 0.2s ease;
+}
+
+/* ——— Logo A Shape ——— */
+.logo-a-shape {
+  clip-path: polygon(
+    50% 0%,
+    100% 100%,
+    82% 100%,
+    72% 70%,
+    28% 70%,
+    18% 100%,
+    0% 100%,
+    50% 0%,
+    50% 0%
+  );
+}
+.logo-a-cutout {
+  clip-path: polygon(50% 35%, 64% 60%, 36% 60%);
 }

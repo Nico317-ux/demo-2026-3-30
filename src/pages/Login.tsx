@@ -91,7 +91,7 @@ export function Login() {
             <div className="grid grid-cols-2 gap-3">
               {[
                 { name: 'Keller Ortega', role: 'Coordinador', initials: 'KO', color: 'bg-brand-red' },
-                { name: 'Ana Martínez', role: 'Ejecutiva', initials: 'AM', color: 'bg-brand-gold' },
+                { name: 'Carlos Martinez', role: 'Vendedor Oriente', initials: 'CM', color: 'bg-brand-gold' },
               ].map((user, i) => (
                 <button
                   key={user.name}
