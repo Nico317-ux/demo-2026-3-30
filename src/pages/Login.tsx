@@ -58,7 +58,7 @@ export function Login() {
       opacity: 0,
       duration: 0.6,
       ease: "power2.inOut",
-      onComplete: () => navigate("/comercial")
+      onComplete: () => { navigate("/comercial"); }
     });
   };
 

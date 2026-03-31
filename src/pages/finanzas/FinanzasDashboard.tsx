@@ -18,7 +18,7 @@ export function FinanzasDashboard() {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
     tl.fromTo(".page-header", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 })
       .fromTo(".bento-item", { y: 30, opacity: 0, scale: 0.95 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, stagger: 0.1 }, "-=0.4")
-      .fromTo(".progress-bar", { width: 0 }, { width: (i, target) => target.dataset.width, duration: 1.5, ease: "power4.out" }, "-=0.4");
+      .fromTo(".progress-bar", { width: 0 }, { width: (_, target) => target.dataset.width, duration: 1.5, ease: "power4.out" }, "-=0.4");
   }, { scope: container });
 
   return (

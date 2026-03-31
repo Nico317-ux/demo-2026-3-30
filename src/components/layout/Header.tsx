@@ -1,6 +1,4 @@
 import { Link, useLocation } from "react-router-dom";
-import { cn } from "../../utils/cn";
-
 export function Header() {
   const location = useLocation();
 
