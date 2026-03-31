@@ -1,173 +1,171 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Eye, EyeOff, BarChart3, Bot, Users } from 'lucide-react';
-import { HeroBrandLockup, LogoBrand } from '../components/shared/LogoBrand';
+import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 export function Login() {
   const navigate = useNavigate();
-  const [showPw, setShowPw] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('demo@supera.com');
-  const [password, setPassword] = useState('demo123');
+  const container = useRef<HTMLDivElement>(null);
 
-  const submit = (e: React.FormEvent) => {
+  useGSAP(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    
+    // Animate background elements smoothly
+    tl.fromTo(".bg-element", 
+      { opacity: 0, scale: 0.8 }, 
+      { opacity: 0.1, scale: 1, duration: 2, stagger: 0.2 }
+    )
+    .fromTo(".particles div", 
+      { y: 50, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 1.5, stagger: 0.1 }, 
+      "-=1.5"
+    )
+    .fromTo(".login-header", 
+      { y: -30, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 1 }, 
+      "-=1"
+    )
+    .fromTo(".glass-card", 
+      { scale: 0.95, opacity: 0, y: 30 }, 
+      { scale: 1, opacity: 1, y: 0, duration: 1.2 }, 
+      "-=0.8"
+    )
+    .fromTo(".stagger-item", 
+      { y: 20, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }, 
+      "-=0.6"
+    );
+    
+    // Continuous floating for particles
+    gsap.to(".particles div", {
+      y: "random(-20, 20)",
+      x: "random(-20, 20)",
+      duration: "random(3, 6)",
+      yoyo: true,
+      repeat: -1,
+      ease: "sine.inOut",
+      stagger: 0.5
+    });
+  }, { scope: container });
+
+  const handleInitialize = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setTimeout(() => navigate('/comercial'), 900);
+    // Simulate complex neural bootup
+    gsap.to(".glass-card", {
+      scale: 1.05,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power2.inOut",
+      onComplete: () => navigate("/comercial")
+    });
   };
 
   return (
-    <div className="min-h-screen flex bg-surface-0">
-      {/* Left: Visual Brand Panel */}
-      <div className="hidden lg:flex flex-1 relative overflow-hidden sidebar-gradient items-center justify-center">
-        {/* Decorative animated orbs */}
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-brand-red/20 rounded-full blur-[120px] animate-pulse-soft" />
-        <div className="absolute bottom-[-15%] right-[-10%] w-[600px] h-[600px] bg-brand-gold/15 rounded-full blur-[150px] animate-pulse-soft delay-300" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-accent-violet/10 rounded-full blur-[100px] animate-float" />
-
-        {/* Floating particle dots */}
-        <div className="absolute top-[20%] right-[25%] w-2 h-2 bg-brand-gold/40 rounded-full animate-float" />
-        <div className="absolute top-[60%] left-[20%] w-1.5 h-1.5 bg-white/20 rounded-full animate-float delay-150" />
-        <div className="absolute bottom-[30%] right-[15%] w-1 h-1 bg-brand-red/30 rounded-full animate-float delay-300" />
-
-        <div className="relative z-10 text-center space-y-8 px-12">
-          {/* SUPER + spinning A — one lockup */}
-          <HeroBrandLockup />
-
-          <div className="space-y-3 animate-fade-in-up delay-150" style={{ animationFillMode: 'backwards' }}>
-            <div className="w-16 h-1 bg-gradient-to-r from-brand-gold to-brand-red rounded-full mx-auto" />
-            <p className="text-lg text-white/60 font-light max-w-sm mx-auto">
-              Plataforma inteligente de gestión empresarial
-            </p>
-          </div>
-
-          {/* Feature pills with icons */}
-          <div className="flex flex-wrap justify-center gap-3 mt-8">
-            {[
-              { text: 'Dashboard en Tiempo Real', icon: BarChart3 },
-              { text: 'Inteligencia Artificial', icon: Bot },
-              { text: 'Gestión de Clientes', icon: Users },
-            ].map((item, i) => (
-              <span key={item.text} className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/8 text-white/70 text-sm font-medium border border-white/10 backdrop-blur-sm animate-fade-in-up hover:bg-white/12 hover:text-white/90 hover:border-white/20 transition-all cursor-default" style={{ animationDelay: `${300 + i * 100}ms`, animationFillMode: 'backwards' }}>
-                <item.icon className="w-4 h-4 text-brand-gold" />
-                {item.text}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom branding */}
-        <div className="absolute bottom-8 left-0 right-0 text-center">
-          <p className="text-white/30 text-xs font-medium tracking-widest uppercase">
-            © 2026 Super A · Demo BOTINFY
-          </p>
-        </div>
+    <div ref={container} className="font-body text-on-surface bg-mesh min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden selection:bg-primary/30">
+      
+      {/* Background Decor */}
+      <div className="fixed top-0 right-0 p-16 opacity-10 blur-3xl pointer-events-none bg-element">
+        <div className="w-96 h-96 bg-primary rounded-full"></div>
+      </div>
+      <div className="fixed bottom-0 left-0 p-16 opacity-10 blur-3xl pointer-events-none bg-element">
+        <div className="w-80 h-80 bg-tertiary rounded-full"></div>
       </div>
 
-      {/* Mobile brand header — only visible on small screens */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-10 sidebar-gradient overflow-hidden">
-        <div className="absolute inset-0 bg-brand-red/10 blur-3xl" />
-        <div className="relative flex items-center justify-center py-6">
-          <LogoBrand size="md" />
-        </div>
+      {/* Decorative Particles */}
+      <div className="particles fixed top-0 left-0 w-full h-full pointer-events-none z-0">
+        <div className="absolute w-[2px] h-[2px] bg-primary rounded-full top-[10%] left-[20%] shadow-[0_0_8px_rgba(144,171,255,0.8)]"></div>
+        <div className="absolute w-[3px] h-[3px] bg-tertiary rounded-full top-[30%] left-[80%] shadow-[0_0_8px_rgba(155,255,206,0.8)]"></div>
+        <div className="absolute w-[2px] h-[2px] bg-primary rounded-full top-[70%] left-[15%] shadow-[0_0_8px_rgba(144,171,255,0.8)]"></div>
+        <div className="absolute w-[2px] h-[2px] bg-primary rounded-full top-[85%] left-[60%] shadow-[0_0_8px_rgba(144,171,255,0.8)]"></div>
+        <div className="absolute w-[3px] h-[3px] bg-tertiary rounded-full top-[50%] left-[45%] shadow-[0_0_8px_rgba(155,255,206,0.8)]"></div>
       </div>
 
-      {/* Right: Login Form */}
-      <div className="flex-1 flex items-center justify-center p-6 md:p-12 pt-24 lg:pt-12">
-        <div className="w-full max-w-md animate-fade-in-up delay-150" style={{ animationFillMode: 'backwards' }}>
-
-          <div className="space-y-2 mb-8">
-            <h2 className="text-3xl font-display font-bold text-text-primary">
-              Bienvenido
-            </h2>
-            <p className="text-text-secondary">
-              Inicia sesión para acceder al dashboard.
-            </p>
+      {/* Main Box */}
+      <main className="relative z-10 w-full max-w-md flex flex-col items-center">
+        
+        <div className="login-header flex flex-col items-center mb-10 w-full">
+          <div className="mb-6 h-16 w-16 flex items-center justify-center bg-[var(--color-primary)]/10 rounded-2xl border border-[var(--color-primary)]/30 shadow-[0_0_20px_rgba(144,171,255,0.2)]">
+            <span className="material-symbols-outlined text-[var(--color-primary)] text-4xl drop-shadow-[0_0_15px_rgba(144,171,255,0.8)]">psychology</span>
           </div>
+          <h1 className="font-headline text-3xl font-extrabold tracking-tighter text-on-surface text-center uppercase">Super A</h1>
+          <p className="font-label text-sm text-on-surface-variant tracking-widest mt-1 uppercase text-center w-full">Plataforma de Inteligencia</p>
+        </div>
 
-          {/* Quick Access */}
-          <div className="mb-8">
-            <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-3">Acceso Rápido Demo</p>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { name: 'Keller Ortega', role: 'Coordinador', initials: 'KO', color: 'bg-brand-red' },
-                { name: 'Carlos Martinez', role: 'Vendedor Oriente', initials: 'CM', color: 'bg-brand-gold' },
-              ].map((user, i) => (
-                <button
-                  key={user.name}
-                  onClick={() => { setEmail('demo@supera.com'); submit({ preventDefault: () => {} } as React.FormEvent); }}
-                  className="flex items-center gap-3 p-3 rounded-xl border border-surface-2 hover:border-brand-gold/40 hover:bg-surface-1 transition-all group card-lift cursor-pointer animate-fade-in-up"
-                  style={{ animationDelay: `${250 + i * 100}ms`, animationFillMode: 'backwards' }}
-                >
-                  <div className={`w-10 h-10 rounded-xl ${user.color} flex items-center justify-center text-white font-bold text-sm shadow-md group-hover:scale-110 transition-transform duration-300`}>
-                    {user.initials}
-                  </div>
-                  <div className="text-left">
-                    <p className="text-sm font-semibold text-text-primary">{user.name}</p>
-                    <p className="text-[11px] text-text-muted">{user.role}</p>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
+        <div className="glass-card w-full p-10 flex flex-col gap-8">
+          <header className="stagger-item">
+            <h2 className="font-headline text-xl font-bold text-on-surface">Iniciar Sesión</h2>
+            <p className="text-on-surface-variant text-sm mt-1">Acceso autorizado al núcleo neuronal</p>
+          </header>
 
-          <div className="flex items-center gap-4 mb-8">
-            <div className="flex-1 h-px bg-surface-2" />
-            <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest">O ingresa manualmente</span>
-            <div className="flex-1 h-px bg-surface-2" />
-          </div>
-
-          <form onSubmit={submit} className="space-y-5">
-            <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-text-primary">Correo Electrónico</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-surface-1 border border-surface-2 text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold/40 transition-all text-sm"
-                placeholder="usuario@empresa.com"
-                required
-              />
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-text-primary">Contraseña</label>
-              <div className="relative">
-                <input
-                  type={showPw ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 pr-12 rounded-xl bg-surface-1 border border-surface-2 text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand-gold/40 focus:border-brand-gold/40 transition-all text-sm"
-                  placeholder="••••••••"
-                  required
+          <form onSubmit={handleInitialize} className="flex flex-col gap-6">
+            <div className="flex flex-col gap-2 stagger-item">
+              <label className="font-label text-[10px] font-bold uppercase tracking-widest text-[var(--color-primary)] px-1 opacity-80">ID de Ejecutivo</label>
+              <div className="group relative flex items-center transition-all duration-400">
+                <span className="material-symbols-outlined absolute left-4 text-outline group-focus-within:text-primary transition-colors">fingerprint</span>
+                <input 
+                  type="text" 
+                  placeholder="EX-CORE-772" 
+                  className="input-ghost w-full py-4 pl-12 pr-6 placeholder:text-outline font-medium text-sm" 
+                  required 
+                  defaultValue="K.ORTEGA"
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPw(!showPw)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary transition-colors p-1"
-                >
-                  {showPw ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2 stagger-item">
+              <label className="font-label text-[10px] font-bold uppercase tracking-widest text-[var(--color-primary)] px-1 opacity-80">Clave de Seguridad</label>
+              <div className="group relative flex items-center transition-all duration-400">
+                <span className="material-symbols-outlined absolute left-4 text-outline group-focus-within:text-primary transition-colors">key_visualizer</span>
+                <input 
+                  type="password" 
+                  placeholder="••••••••••••" 
+                  className="input-ghost w-full py-4 pl-12 pr-6 placeholder:text-outline font-medium text-sm tracking-[0.2em]" 
+                  required 
+                  defaultValue="password"
+                />
+                <button type="button" className="absolute right-4 text-outline hover:text-on-surface transition-colors">
+                  <span className="material-symbols-outlined text-sm">visibility</span>
                 </button>
               </div>
-              <p className="text-xs text-text-muted mt-1">Contraseña demo: <span className="font-mono font-semibold text-brand-gold">demo123</span></p>
             </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3.5 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-brand-charcoal to-brand-charcoal/90 hover:from-brand-red hover:to-brand-red/90 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                <>Iniciar Sesión <ArrowRight className="w-4 h-4" /></>
-              )}
+
+            <button type="submit" className="btn-primary w-full py-4 mt-2 stagger-item">
+              INICIAR SESIÓN
             </button>
           </form>
 
-          <p className="text-xs text-text-muted text-center mt-8">
-            © 2026 Super A · Desarrollado por BOTINFY
-          </p>
+          <div className="flex items-center gap-4 py-2 opacity-60 stagger-item">
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-outline-variant to-transparent"></div>
+            <span className="text-outline text-[10px] font-bold tracking-[0.2em] uppercase">Alternativas</span>
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-outline-variant to-transparent"></div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 stagger-item">
+            <button className="flex items-center justify-center gap-3 bg-[var(--color-surface-container)] border border-[rgba(65,71,91,0.2)] rounded-full py-3 px-4 hover:bg-[var(--color-surface-container-high)] hover:border-[rgba(144,171,255,0.2)] transition-all group duration-400">
+              <span className="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">hub</span>
+              <span className="font-label text-xs font-semibold text-on-surface">Portal SSO</span>
+            </button>
+            <button className="flex items-center justify-center gap-3 bg-[var(--color-surface-container)] border border-[rgba(65,71,91,0.2)] rounded-full py-3 px-4 hover:bg-[var(--color-surface-container-high)] hover:border-[rgba(155,255,206,0.2)] transition-all group duration-400">
+              <span className="material-symbols-outlined text-tertiary group-hover:scale-110 transition-transform" style={{fontVariationSettings: "'FILL' 1"}}>face_unlock</span>
+              <span className="font-label text-xs font-semibold text-on-surface">Biometría</span>
+            </button>
+          </div>
         </div>
-      </div>
+        
+        <footer className="mt-12 w-full flex items-center justify-between px-4 opacity-0 login-header">
+          <div className="flex gap-6">
+            <a href="#" className="text-[10px] font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors duration-400">Política Neuronal</a>
+            <a href="#" className="text-[10px] font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors duration-400">Estado del Sistema</a>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_8px_rgba(155,255,206,0.6)] animate-pulse"></span>
+            <span className="text-[10px] font-bold tracking-widest uppercase text-tertiary">Operativo</span>
+          </div>
+        </footer>
+
+      </main>
     </div>
   );
 }

@@ -1,236 +1,237 @@
-import { TrendingUp, DollarSign, Droplets, Target, Medal, ArrowUpRight, Users, Sparkles, Info } from 'lucide-react';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, PieChart, Pie, Cell, CartesianGrid } from 'recharts';
-import { mockKpis, mockVendedores, mockVentasPorMarca, mockVentasPorRegion, mockTopClientes } from '../../data/mockData';
-import { AICard } from '../../components/shared/AICard';
-import { cn } from '../../utils/cn';
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
-const DONUT_COLORS = ['#D4A843', '#E8372D', '#8B5CF6', '#3B82F6', '#10B981'];
+gsap.registerPlugin(useGSAP);
 
 export function ComercialDashboard() {
-  const topVendedores = [...mockVendedores].sort((a, b) => b.ventas_usd - a.ventas_usd).slice(0, 5);
-  const fmt = (v: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(v);
-  const fmtFull = (v: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(v);
+  const container = useRef<HTMLDivElement>(null);
 
-  // Calculations for AI insights
-  const topVendedor = topVendedores[0];
-  const topVendedorPct = ((topVendedor.ventas_usd / mockKpis.ventasTotales_USD) * 100).toFixed(1);
-  const superAShare = ((mockVentasPorMarca[0].ventas_usd / mockKpis.ventasTotales_USD) * 100).toFixed(0);
-  const capitalShare = ((mockVentasPorRegion[0].ventas_usd / mockKpis.ventasTotales_USD) * 100).toFixed(0);
+  useGSAP(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    tl.from(".page-header", { y: -20, opacity: 0, duration: 0.8 })
+      .from(".bento-item", { y: 30, opacity: 0, scale: 0.95, duration: 0.8, stagger: 0.1 }, "-=0.4")
+      .from(".ai-glow", { scale: 0.5, opacity: 0, duration: 1.5, ease: "power2.out" }, "-=0.8");
+  }, { scope: container });
 
   return (
-    <div className="space-y-6">
-      {/* KPI Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        {[
-          { label: 'Ingresos Totales', value: fmtFull(mockKpis.ventasTotales_USD), delta: `+${mockKpis.crecimientoMes_Porcentaje}%`, deltaPositive: true, icon: DollarSign, stripe: 'kpi-stripe-gold', delay: '' },
-          { label: 'Volumen Despachado', value: `${mockKpis.volumenTotal_Galones} Gal`, icon: Droplets, stripe: 'kpi-stripe-blue', delay: 'delay-75' },
-          { label: 'Clientes Activos', value: '5', sub: '2 en recompra', icon: Users, stripe: 'kpi-stripe-emerald', delay: 'delay-150' },
-          { label: 'Meta Trimestral', value: '78%', sub: '$35,000 objetivo', icon: Target, stripe: 'kpi-stripe-violet', delay: 'delay-225', hasProgress: true },
-        ].map((kpi, i) => (
-          <div key={i} className={cn("card kpi-stripe p-5 animate-fade-in-up group hover:scale-[1.02] transition-transform duration-300", kpi.stripe, kpi.delay)} style={{ animationFillMode: 'backwards' }}>
-            <div className="flex items-start justify-between mb-3">
-              <div className="p-2.5 rounded-xl bg-surface-1 group-hover:bg-surface-2 transition-colors">
-                <kpi.icon className="w-5 h-5 text-text-secondary" />
-              </div>
-              {kpi.delta && (
-                <span className={cn("flex items-center text-xs font-bold px-2 py-1 rounded-lg", kpi.deltaPositive ? "bg-accent-emerald/10 text-accent-emerald" : "bg-accent-red/10 text-accent-red")}>
-                  <TrendingUp className="w-3 h-3 mr-1" /> {kpi.delta}
-                </span>
-              )}
-            </div>
-            <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-1">{kpi.label}</p>
-            <p className="text-2xl font-display font-bold text-text-primary tabular">{kpi.value}</p>
-            {kpi.sub && <p className="text-xs text-text-muted mt-1">{kpi.sub}</p>}
-            {kpi.hasProgress && (
-              <div className="mt-3 h-2 w-full bg-surface-1 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-accent-violet to-accent-blue rounded-full w-[78%] transition-all animate-gradient" />
-              </div>
-            )}
-          </div>
-        ))}
+    <div ref={container} className="w-full flex flex-col gap-12">
+      <div className="page-header flex justify-between items-end">
+        <div>
+          <h2 className="text-4xl font-extrabold font-headline tracking-tight text-on-surface">Dominio Comercial</h2>
+          <p className="text-on-surface-variant mt-2 text-lg">Inteligencia de clientes y portafolio.</p>
+        </div>
+        <div className="flex gap-4">
+          <button className="px-6 py-2.5 rounded-full bg-[var(--color-surface-container-high)] text-on-surface font-headline font-semibold text-sm border border-[rgba(65,71,91,0.2)] flex items-center gap-2 hover:bg-[var(--color-surface-container-highest)] hover:border-[rgba(144,171,255,0.2)] transition-all duration-400">
+            <span className="material-symbols-outlined text-lg">filter_list</span>
+            Regiones
+          </button>
+          <button className="px-6 py-2.5 rounded-full bg-[var(--color-surface-container-high)] text-on-surface font-headline font-semibold text-sm border border-[rgba(65,71,91,0.2)] flex items-center gap-2 hover:bg-[var(--color-surface-container-highest)] hover:border-[rgba(144,171,255,0.2)] transition-all duration-400">
+            <span className="material-symbols-outlined text-lg">segment</span>
+            Segmentos
+          </button>
+        </div>
       </div>
 
-      {/* AI insight about KPIs */}
-      <AICard
-        title="Resumen Ejecutivo IA"
-        variant="info"
-        content={
-          <p>
-            Los ingresos de <strong>{fmtFull(mockKpis.ventasTotales_USD)}</strong> representan un crecimiento del <span className="text-accent-emerald font-bold">+{mockKpis.crecimientoMes_Porcentaje}%</span> respecto al mes anterior. Con <strong>802.5 galones</strong> despachados y un cumplimiento del 78% de la meta trimestral, se proyecta alcanzar el 100% si se mantiene el ritmo actual durante las próximas 3 semanas.
-          </p>
-        }
-      />
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Leaderboard */}
-        <div className="lg:col-span-2 space-y-4">
-          <div className="card p-6 animate-fade-in-up delay-150" style={{ animationFillMode: 'backwards' }}>
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-display font-bold text-text-primary flex items-center gap-2">
-                <Medal className="w-5 h-5 text-brand-gold" />
-                Ranking de Vendedores
-              </h3>
-              <span className="text-xs font-medium text-text-muted bg-surface-1 px-3 py-1.5 rounded-lg">Marzo 2026</span>
+      {/* Bento Grid Layout */}
+      <div className="grid grid-cols-12 gap-8">
+        
+        {/* AI Suggestion - Featured Header */}
+        <div className="col-span-12 bento-item">
+          <div className="relative overflow-hidden glass-card p-10 flex flex-col md:flex-row items-start md:items-center gap-8 border-l-[6px] border-[var(--color-tertiary)] bg-[var(--color-surface-variant)] shadow-xl z-10 w-full group transition-all duration-500 hover:shadow-[0_0_30px_rgba(155,255,206,0.1)]">
+            <div className="h-20 w-20 bg-[var(--color-tertiary)]/10 rounded-2xl flex items-center justify-center shrink-0 border border-[var(--color-tertiary)]/20 group-hover:bg-[var(--color-tertiary)]/20 transition-all">
+              <span className="material-symbols-outlined text-[var(--color-tertiary)] text-4xl">auto_awesome</span>
             </div>
-            <div className="h-[280px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={topVendedores} layout="vertical" margin={{ top: 0, right: 20, left: 10, bottom: 0 }}>
-                  <CartesianGrid horizontal={false} strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" />
-                  <XAxis type="number" hide />
-                  <YAxis dataKey="nombre" type="category" axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 12, fontWeight: 500 }} width={110} />
-                  <Tooltip
-                    cursor={{ fill: 'rgba(0,0,0,0.03)' }}
-                    contentStyle={{ backgroundColor: '#fff', borderColor: '#e5e5e5', borderRadius: '12px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)', fontSize: '13px' }}
-                    formatter={(value) => [`${fmtFull(Number(value))}`, 'Ventas']}
-                  />
-                  <Bar dataKey="ventas_usd" radius={[0, 8, 8, 0]} barSize={20} animationDuration={1200} animationEasing="ease-out">
-                    {topVendedores.map((_e, index) => (
-                      <Cell key={`cell-${index}`} fill={index === 0 ? '#D4A843' : index === 1 ? '#E8372D' : '#E5E7EB'} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* AI insight about the chart */}
-          <AICard
-            title="Análisis del Ranking"
-            variant="warning"
-            content={
-              <p>
-                <strong>{topVendedor.nombre}</strong> lidera con <span className="text-brand-gold font-bold">{fmtFull(topVendedor.ventas_usd)}</span> ({topVendedorPct}% del total). Esta concentración genera riesgo — si este vendedor se ausenta, el 40% de los ingresos se detiene. Recomendación: <strong>redistribuir cuentas clave</strong> entre los vendedores con 0 ventas (Jean Brazon, Mariannis Gandara, Jhonatan Lopez) para diversificar.
+            <div className="flex-1">
+              <h4 className="text-[var(--color-tertiary)] font-bold text-xs uppercase tracking-[0.2em] mb-2 font-label">Insight Inteligencia AI</h4>
+              <p className="text-2xl text-on-surface font-medium leading-relaxed font-headline">
+                <span className="font-bold">IA Tip:</span> Ferremundial representa el <span className="text-[var(--color-tertiary)] border-b-2 border-[var(--color-tertiary)]/30 pb-0.5">34.89% de ventas</span>, considera un programa de lealtad o crédito premium para asegurar esta cuenta ancla.
               </p>
-            }
-          />
+            </div>
+            <button className="px-8 py-4 rounded-full bg-[var(--color-tertiary)] text-[var(--color-on-tertiary)] font-bold font-headline hover:scale-[1.05] active:scale-[0.98] transition-transform duration-400 shadow-[0_0_20px_rgba(155,255,206,0.3)] mt-4 md:mt-0 whitespace-nowrap">
+                Aplicar Estrategia
+            </button>
+            <div className="ai-glow absolute -right-32 -top-32 w-96 h-96 bg-[var(--color-tertiary)]/10 blur-[120px] rounded-full pointer-events-none z-[-1]"></div>
+          </div>
         </div>
 
-        {/* Ventas por Marca - Donut */}
-        <div className="space-y-4">
-          <div className="card p-6 animate-fade-in-up delay-225" style={{ animationFillMode: 'backwards' }}>
-            <h3 className="text-lg font-display font-bold text-text-primary mb-4">Ventas por Marca</h3>
-            <div className="flex justify-center h-[180px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Tooltip
-                    contentStyle={{ backgroundColor: '#fff', borderColor: '#e5e5e5', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
-                    formatter={(value) => fmtFull(Number(value))}
-                  />
-                  <Pie data={mockVentasPorMarca} cx="50%" cy="50%" innerRadius={55} outerRadius={75} paddingAngle={4} dataKey="ventas_usd" stroke="none" animationDuration={1400} animationEasing="ease-out">
-                    {mockVentasPorMarca.map((_e, i) => <Cell key={i} fill={DONUT_COLORS[i % DONUT_COLORS.length]} />)}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
+        {/* Key Accounts Widget */}
+        <div className="col-span-12 lg:col-span-5 flex flex-col gap-8 bento-item">
+          <div className="glass-card p-8 h-full flex flex-col gap-8">
+            <div className="flex justify-between items-center bg-[var(--color-surface-container-high)] p-4 rounded-2xl">
+              <h3 className="text-xl font-bold font-headline text-on-surface tracking-tight">Cuentas Clave</h3>
+              <span className="text-xs font-bold text-[var(--color-primary)] px-3 py-1 bg-[var(--color-primary)]/10 rounded-full tracking-widest border border-[var(--color-primary)]/20">TOP 10</span>
             </div>
-            <div className="space-y-2.5 mt-4">
-              {mockVentasPorMarca.map((m, i) => (
-                <div key={m.marca} className="flex items-center justify-between group hover:bg-surface-1 rounded-lg px-2 py-1 -mx-2 transition-colors cursor-default">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full group-hover:scale-125 transition-transform" style={{ backgroundColor: DONUT_COLORS[i] }} />
-                    <span className="text-sm text-text-secondary font-medium truncate max-w-[140px]">{m.marca}</span>
+            
+            <div className="space-y-4 custom-scrollbar overflow-y-auto pr-2 max-h-[500px]">
+              {/* Client 1 */}
+              <div className="group flex items-center justify-between p-4 rounded-2xl hover:bg-[var(--color-surface-container-highest)]/80 transition-all duration-400 border border-transparent hover:border-[rgba(144,171,255,0.1)] cursor-pointer">
+                <div className="flex items-center gap-5">
+                  <div className="w-14 h-14 bg-[var(--color-primary)]/10 rounded-xl flex items-center justify-center group-hover:bg-[var(--color-primary)] group-hover:text-[var(--color-on-primary)] transition-colors duration-400">
+                    <span className="material-symbols-outlined text-[var(--color-primary)] group-hover:text-[var(--color-on-primary)]">corporate_fare</span>
                   </div>
-                  <span className="text-sm font-bold text-text-primary tabular">{fmt(m.ventas_usd)}</span>
+                  <div>
+                    <p className="font-bold text-on-surface text-lg leading-tight font-headline">Ferremundial Proto 2020 C.A.</p>
+                    <p className="text-xs text-on-surface-variant font-medium mt-1 uppercase tracking-wider">Distribuidor Principal • LATAM</p>
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
+                <div className="text-right">
+                  <p className="text-xl font-bold text-on-surface font-headline">$3,923.64</p>
+                  <p className="text-[11px] font-bold text-[var(--color-tertiary)] flex items-center justify-end gap-1 uppercase tracking-widest mt-1">
+                    <span className="material-symbols-outlined text-sm">trending_up</span> 12%
+                  </p>
+                </div>
+              </div>
 
-          {/* AI insight about brands chart */}
-          <div className="card p-4 border-accent-violet/20 bg-accent-violet/3 animate-fade-in-up delay-300" style={{ animationFillMode: 'backwards' }}>
-            <div className="flex items-start gap-2.5">
-              <Sparkles className="w-4 h-4 text-accent-violet mt-0.5 shrink-0" />
-              <div>
-                <p className="text-xs font-bold text-text-primary mb-1">Interpretación IA <span className="text-[9px] px-1 py-0.5 bg-accent-violet/10 text-accent-violet rounded ml-1">IA</span></p>
-                <p className="text-xs text-text-secondary leading-relaxed">
-                  <strong>SUPER A</strong> domina con el {superAShare}% de las ventas. PINTAMAS solo aporta 4.4%. Oportunidad: lanzar combo cross‑brand para elevar participación de marcas secundarias.
-                </p>
+              {/* Client 2 */}
+              <div className="group flex items-center justify-between p-4 rounded-2xl hover:bg-[var(--color-surface-container-highest)]/80 transition-all duration-400 border border-transparent hover:border-[rgba(144,171,255,0.1)] cursor-pointer">
+                <div className="flex items-center gap-5">
+                  <div className="w-14 h-14 bg-slate-500/10 rounded-xl flex items-center justify-center group-hover:bg-slate-500 transition-colors duration-400 text-slate-400 group-hover:text-white">
+                    <span className="material-symbols-outlined">store</span>
+                  </div>
+                  <div>
+                    <p className="font-bold text-on-surface text-lg leading-tight font-headline">Pinta Ofertas C.A.</p>
+                    <p className="text-xs text-on-surface-variant font-medium mt-1 uppercase tracking-wider">Retail Outlet • Caribbean</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-xl font-bold text-on-surface font-headline">$583.54</p>
+                  <p className="text-[11px] font-bold text-on-surface-variant flex items-center justify-end gap-1 uppercase tracking-widest mt-1">
+                    <span className="material-symbols-outlined text-sm">horizontal_rule</span> Estable
+                  </p>
+                </div>
+              </div>
+
+              {/* Client 3 */}
+              <div className="group flex items-center justify-between p-4 rounded-2xl hover:bg-[var(--color-surface-container-highest)]/80 transition-all duration-400 border border-transparent hover:border-[var(--color-secondary)]/20 cursor-pointer">
+                <div className="flex items-center gap-5">
+                  <div className="w-14 h-14 bg-[var(--color-secondary)]/10 rounded-xl flex items-center justify-center group-hover:bg-[var(--color-secondary)] group-hover:text-[var(--color-on-secondary)] transition-colors duration-400 text-[var(--color-secondary)]">
+                    <span className="material-symbols-outlined">construction</span>
+                  </div>
+                  <div>
+                    <p className="font-bold text-on-surface text-lg leading-tight font-headline">Global Build Ltd.</p>
+                    <p className="text-xs text-on-surface-variant font-medium mt-1 uppercase tracking-wider">Contratista • Norteamérica</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-xl font-bold text-on-surface font-headline">$2,410.12</p>
+                  <p className="text-[11px] font-bold text-[var(--color-secondary)] flex items-center justify-end gap-1 uppercase tracking-widest mt-1">
+                    <span className="material-symbols-outlined text-sm">trending_down</span> 4%
+                  </p>
+                </div>
               </div>
             </div>
+
+            <div className="mt-auto pt-8 border-t border-[rgba(65,71,91,0.2)]">
+              <button className="w-full text-center text-xs font-bold font-headline tracking-[0.2em] text-[var(--color-primary)] hover:text-[var(--color-primary-dim)] transition-colors uppercase">
+                VER TODOS LOS 142 CLIENTES
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Region + Clients */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Distribución Regional */}
-        <div className="card p-5 animate-fade-in-up delay-300" style={{ animationFillMode: 'backwards' }}>
-          <h4 className="text-sm font-bold text-text-primary uppercase tracking-wider mb-4">Distribución Regional</h4>
-          <div className="space-y-3">
-            {mockVentasPorRegion.map((r) => {
-              const pct = Math.max(3, Math.round((Math.abs(r.ventas_usd) / mockKpis.ventasTotales_USD) * 100));
-              return (
-                <div key={r.region} className="space-y-1.5 group">
-                  <div className="flex justify-between text-sm">
-                    <span className="font-medium text-text-primary group-hover:text-brand-red transition-colors">{r.region}</span>
-                    <span className="font-bold text-text-primary tabular">{fmt(Math.abs(r.ventas_usd))}</span>
-                  </div>
-                  <div className="h-2 bg-surface-1 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-brand-gold to-brand-red rounded-full transition-all duration-700 ease-out" style={{ width: `${pct}%` }} />
-                  </div>
+        {/* Customer Map/Region View */}
+        <div className="col-span-12 lg:col-span-7 bento-item">
+          <div className="glass-card h-full overflow-hidden flex flex-col relative group">
+            
+            <div className="p-8 pb-4 flex justify-between items-center absolute top-0 left-0 w-full z-10 bg-gradient-to-b from-[var(--color-surface-container-low)] to-transparent pointer-events-none">
+              <div>
+                <h3 className="text-xl font-bold font-headline text-on-surface">Geografía</h3>
+                <p className="text-[10px] text-on-surface-variant mt-1 uppercase tracking-widest font-bold">Densidad de Concentración</p>
+              </div>
+              <div className="bg-[var(--color-surface-container-highest)] px-4 py-3 rounded-full text-[10px] font-bold tracking-widest flex items-center gap-6 border border-[rgba(144,171,255,0.1)] pointer-events-auto uppercase">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-tertiary)] shadow-[0_0_8px_rgba(155,255,206,0.6)]"></span>
+                  <span>Crecimiento</span>
                 </div>
-              );
-            })}
-          </div>
-          {/* Mini AI note */}
-          <div className="mt-4 pt-3 border-t border-surface-2/50 flex items-start gap-2">
-            <Info className="w-3.5 h-3.5 text-accent-violet mt-0.5 shrink-0" />
-            <p className="text-[11px] text-text-muted leading-relaxed">
-              La región <strong>Capital</strong> concentra el {capitalShare}% de las ventas. Oriente y Táchira representan oportunidades de expansión geográfica.
-            </p>
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-primary)] shadow-[0_0_8px_rgba(144,171,255,0.6)]"></span>
+                  <span>Principal</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-1 min-h-[450px] relative bg-black/40 overflow-hidden flex items-center justify-center">
+              {/* Dotted World Map SVG Graphic */}
+              <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-1000 flex items-center justify-center">
+                <svg className="w-[120%] h-[120%] object-cover text-blue-500/30" viewBox="0 0 1000 500" fill="currentColor">
+                  {/* Generate a simple grid of dots for the map look */}
+                  <pattern id="dots" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1.5" className="fill-current"></circle>
+                  </pattern>
+                  <rect x="0" y="0" width="100%" height="100%" fill="url(#dots)"></rect>
+                  <path d="M200,100 Q400,50 600,150 T900,200" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" className="opacity-50" />
+                  <path d="M100,300 Q300,450 500,350 T800,400" fill="none" stroke="var(--color-tertiary)" strokeWidth="1" strokeDasharray="3,3" className="opacity-50" />
+                </svg>
+              </div>
+              
+              <div className="absolute inset-0 p-12 pointer-events-none">
+                {/* Hotspot 1 */}
+                <div className="absolute top-[35%] left-[25%] pointer-events-auto cursor-pointer hover:scale-125 transition-transform duration-300 group/spot">
+                   <div className="absolute -inset-10 bg-[var(--color-primary)]/20 rounded-full blur-[30px] opacity-0 group-hover/spot:opacity-100 transition-opacity"></div>
+                   <div className="w-4 h-4 bg-[var(--color-primary)] rounded-full shadow-[0_0_20px_rgba(144,171,255,1)] border-2 border-white relative z-10 animate-pulse"></div>
+                </div>
+
+                {/* Hotspot 2 */}
+                <div className="absolute top-[65%] left-[70%] pointer-events-auto cursor-pointer hover:scale-125 transition-transform duration-300 group/spot">
+                   <div className="absolute -inset-12 bg-[var(--color-tertiary)]/20 rounded-full blur-[40px] opacity-0 group-hover/spot:opacity-100 transition-opacity"></div>
+                   <div className="w-5 h-5 bg-[var(--color-tertiary)] rounded-full shadow-[0_0_25px_rgba(155,255,206,1)] border-[2.5px] border-white relative z-10 animate-pulse-soft"></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-8 bg-[var(--color-surface-container-low)] flex flex-col md:flex-row items-center justify-between border-t border-[rgba(65,71,91,0.2)] relative z-20">
+              <div className="flex gap-16">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-primary)] font-bold mb-1">Región Principal</p>
+                  <p className="text-2xl font-bold text-on-surface font-headline">Sudamérica</p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-tertiary)] font-bold mb-1">Puntos Activos</p>
+                  <p className="text-2xl font-bold text-on-surface font-headline">24 Ubicaciones</p>
+                </div>
+              </div>
+              <div className="flex -space-x-3 mt-4 md:mt-0 hover:space-x-1 transition-all duration-400">
+                 <div className="w-12 h-12 rounded-full border-2 border-[var(--color-surface-container-low)] bg-blue-900/50 flex items-center justify-center text-[var(--color-primary)] relative z-[3] hover:z-10 transition-transform"> <span className="material-symbols-outlined text-xl">person</span> </div>
+                 <div className="w-12 h-12 rounded-full border-2 border-[var(--color-surface-container-low)] bg-emerald-900/50 flex items-center justify-center text-[var(--color-tertiary)] relative z-[2] hover:z-10 transition-transform"> <span className="material-symbols-outlined text-xl">person_4</span> </div>
+                 <div className="w-12 h-12 rounded-full border-2 border-[var(--color-surface-container-low)] bg-[var(--color-surface-container-highest)] flex items-center justify-center text-[10px] font-bold text-on-surface relative z-[1] hover:z-10 transition-transform hover:bg-[var(--color-primary)] hover:text-white">+12</div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        {/* Quick Clients Preview */}
-        <div className="lg:col-span-2 card p-6 animate-fade-in-up delay-300" style={{ animationFillMode: 'backwards' }}>
-          <div className="flex items-center justify-between mb-5">
-            <h3 className="text-lg font-display font-bold text-text-primary flex items-center gap-2">
-              <Users className="w-5 h-5 text-accent-blue" />
-              Clientes Principales
-            </h3>
-            <a href="/comercial/clientes" className="text-xs font-bold text-brand-gold hover:text-brand-red transition-colors uppercase tracking-wider flex items-center gap-1 group">
-              Ver todos <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
+        {/* Secondary Intelligence Row */}
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bento-item glass-card p-8 flex flex-col justify-center gap-4 hover:shadow-[0_0_20px_rgba(144,171,255,0.05)] transition-all cursor-default">
+            <div className="w-16 h-16 rounded-2xl bg-[var(--color-primary)]/10 flex items-center justify-center border border-[var(--color-primary)]/20 shadow-inner">
+              <span className="material-symbols-outlined text-[var(--color-primary)] text-3xl">leaderboard</span>
+            </div>
+            <div>
+              <p className="text-on-surface-variant text-[11px] uppercase tracking-widest font-bold mb-1">ARPU Mensual</p>
+              <h5 className="text-3xl font-extrabold text-on-surface font-headline">$1,240.00</h5>
+            </div>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="text-[10px] font-bold text-text-muted uppercase tracking-widest border-b border-surface-2">
-                  <th className="pb-3 pr-4">Cliente</th>
-                  <th className="pb-3 pr-4">Región</th>
-                  <th className="pb-3 pr-4 text-right">Facturación</th>
-                  <th className="pb-3 text-right">Participación</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-surface-2/50">
-                {mockTopClientes.slice(0, 4).map((c, i) => (
-                  <tr key={i} className="group hover:bg-surface-1/50 transition-colors">
-                    <td className="py-3.5 pr-4">
-                      <p className="text-sm font-semibold text-text-primary group-hover:text-brand-red transition-colors">{c.cliente}</p>
-                    </td>
-                    <td className="py-3.5 pr-4">
-                      <span className="text-xs font-medium text-text-muted bg-surface-1 px-2.5 py-1 rounded-lg">{c.region}</span>
-                    </td>
-                    <td className="py-3.5 pr-4 text-right">
-                      <span className="text-sm font-bold text-text-primary tabular">{fmtFull(c.compras_usd)}</span>
-                    </td>
-                    <td className="py-3.5 text-right">
-                      <span className={cn("text-sm font-bold tabular", c.participacion_pct > 0 ? "text-accent-emerald" : "text-accent-red")}>
-                        {c.participacion_pct > 0 ? '+' : ''}{c.participacion_pct}%
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="bento-item glass-card p-8 flex flex-col justify-center gap-4 hover:shadow-[0_0_20px_rgba(255,113,101,0.05)] transition-all cursor-default">
+            <div className="w-16 h-16 rounded-2xl bg-[var(--color-secondary)]/10 flex items-center justify-center border border-[var(--color-secondary)]/20 shadow-inner">
+              <span className="material-symbols-outlined text-[var(--color-secondary)] text-3xl">group_remove</span>
+            </div>
+            <div>
+              <p className="text-on-surface-variant text-[11px] uppercase tracking-widest font-bold mb-1">Riesgo de Abandono</p>
+              <h5 className="text-3xl font-extrabold text-on-surface font-headline">1.2%</h5>
+            </div>
           </div>
-          {/* AI insight right in the table */}
-          <div className="mt-4 pt-3 border-t border-surface-2/50 flex items-start gap-2">
-            <Sparkles className="w-3.5 h-3.5 text-accent-violet mt-0.5 shrink-0" />
-            <p className="text-[11px] text-text-muted leading-relaxed">
-              <strong>Ferremundial Proto</strong> aporta el 34.89% de la facturación. 2 clientes registran devoluciones (valores negativos). Se recomienda contacto inmediato para entender causas y evitar pérdida.
-            </p>
+          <div className="bento-item glass-card p-8 flex flex-col justify-center gap-4 hover:shadow-[0_0_20px_rgba(155,255,206,0.05)] transition-all cursor-default">
+            <div className="w-16 h-16 rounded-2xl bg-[var(--color-tertiary)]/10 flex items-center justify-center border border-[var(--color-tertiary)]/20 shadow-inner">
+              <span className="material-symbols-outlined text-[var(--color-tertiary)] text-3xl">insights</span>
+            </div>
+            <div>
+              <p className="text-on-surface-variant text-[11px] uppercase tracking-widest font-bold mb-1">Costo de Adquisición</p>
+              <h5 className="text-3xl font-extrabold text-on-surface font-headline">$42.50</h5>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   );

@@ -65,35 +65,38 @@ export function AIAssistant() {
   return (
     <div className="h-[calc(100vh-10rem)] flex flex-col gap-5">
       {/* Chat container */}
-      <div className="flex-1 card flex flex-col overflow-hidden animate-fade-in-up">
+      <div className="flex-1 glass-card border border-[rgba(65,71,91,0.2)] flex flex-col overflow-hidden animate-fade-in-up relative">
+         <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--color-primary)]/5 blur-[120px] rounded-full pointer-events-none"></div>
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-5 md:p-6 space-y-5">
           {messages.map((msg) => (
             <div key={msg.id} className={cn("flex w-full animate-fade-in-up", msg.type === 'user' ? 'justify-end' : 'justify-start')}>
               <div className={cn("flex gap-3 max-w-[85%] md:max-w-[70%]", msg.type === 'user' ? 'flex-row-reverse' : 'flex-row')}>
                 <div className={cn(
-                  "w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-sm",
+                  "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border",
                   msg.type === 'user'
-                    ? "bg-brand-charcoal text-white"
-                    : "bg-gradient-to-br from-accent-violet to-accent-blue text-white"
+                    ? "bg-[var(--color-surface-container-high)] text-white border-[rgba(65,71,91,0.2)]"
+                    : "bg-[var(--color-primary)]/10 border-[var(--color-primary)]/30 text-[var(--color-primary)]"
                 )}>
-                  {msg.type === 'user' ? <User className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
+                  {msg.type === 'user' ? <User className="w-5 h-5 opacity-70" /> : <Sparkles className="w-5 h-5 drop-shadow-[0_0_8px_rgba(144,171,255,0.6)]" />}
                 </div>
                 <div className={cn(
-                  "px-4 py-3 rounded-2xl text-sm leading-relaxed",
+                  "px-5 py-4 rounded-2xl text-sm leading-relaxed border backdrop-blur-sm",
                   msg.type === 'user'
-                    ? "bg-brand-charcoal text-white rounded-tr-md"
-                    : "bg-surface-1 border border-surface-2 text-text-primary rounded-tl-md"
+                    ? "bg-[var(--color-primary)]/10 text-[var(--color-on-primary-container)] border-[var(--color-primary)]/20 rounded-tr-sm"
+                    : "bg-[var(--color-surface-container-high)]/50 border-[rgba(65,71,91,0.2)] text-on-surface rounded-tl-sm"
                 )}>
                   <div dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }} />
                   {msg.isWidget && (
-                    <div className="mt-3 p-3 bg-accent-violet/5 border border-accent-violet/15 rounded-xl flex items-center gap-3 hover:bg-accent-violet/10 transition-colors cursor-pointer group">
-                      <BarChart2 className="w-5 h-5 text-accent-violet" />
-                      <div className="flex-1">
-                        <p className="text-xs font-bold text-text-primary">Reporte de Clientes Generado</p>
-                        <p className="text-[11px] text-text-muted">Análisis de retención y valor de cartera</p>
+                    <div className="mt-4 p-4 bg-[var(--color-surface-container-highest)]/80 border border-[rgba(65,71,91,0.3)] rounded-xl flex items-center gap-4 hover:border-[var(--color-primary)]/30 transition-colors cursor-pointer group">
+                      <div className="w-10 h-10 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                        <BarChart2 className="w-5 h-5 text-[var(--color-primary)]" />
                       </div>
-                      <ArrowRight className="w-4 h-4 text-text-muted group-hover:text-accent-violet transition-colors" />
+                      <div className="flex-1">
+                        <p className="text-xs font-bold font-headline text-on-surface mb-1">Reporte de Clientes Generado</p>
+                        <p className="text-[11px] text-on-surface-variant font-medium uppercase tracking-widest">Análisis de retención</p>
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-on-surface-variant group-hover:text-[var(--color-primary)] group-hover:translate-x-1 transition-all" />
                     </div>
                   )}
                 </div>
@@ -104,12 +107,12 @@ export function AIAssistant() {
           {isTyping && (
             <div className="flex justify-start animate-fade-in">
               <div className="flex gap-3 max-w-[70%]">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-violet to-accent-blue flex items-center justify-center text-white animate-pulse-soft shadow-sm">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dim)] flex items-center justify-center text-white animate-[pulse_2s_ease-in-out_infinite] shadow-[0_0_15px_rgba(144,171,255,0.4)]">
                   <Sparkles className="w-4 h-4" />
                 </div>
-                <div className="px-4 py-3 rounded-2xl bg-surface-1 border border-surface-2 rounded-tl-md flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 text-accent-violet animate-spin" />
-                  <span className="text-sm text-text-muted font-medium">Analizando datos...</span>
+                <div className="px-4 py-3 rounded-2xl bg-[var(--color-surface-container-high)]/80 border border-[rgba(65,71,91,0.2)] rounded-tl-sm flex items-center gap-2 backdrop-blur-md">
+                  <Loader2 className="w-4 h-4 text-[var(--color-primary)] animate-spin" />
+                  <span className="text-sm text-on-surface-variant font-medium">Procesando núcleo neuronal...</span>
                 </div>
               </div>
             </div>
@@ -117,31 +120,31 @@ export function AIAssistant() {
         </div>
 
         {/* Input */}
-        <div className="p-4 border-t border-surface-2/50 bg-white/50 backdrop-blur-sm">
-          <form onSubmit={handleSubmit} className="relative">
+        <div className="p-4 border-t border-[rgba(65,71,91,0.2)] bg-[var(--color-surface-container-low)]/60 backdrop-blur-xl relative z-10">
+          <form onSubmit={handleSubmit} className="relative group transition-all duration-400">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Pregunta sobre ventas, clientes o inventarios..."
               disabled={isTyping}
-              className="w-full bg-surface-1 border border-surface-2 rounded-xl pl-4 pr-14 py-3.5 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent-violet/30 focus:border-accent-violet/30 transition-all disabled:opacity-50"
+              className="input-ghost w-full py-4 pl-6 pr-16 bg-black/20 text-sm font-medium tracking-wide placeholder-[rgba(165,170,194,0.4)] transition-colors group-focus-within:border-[var(--color-primary)]/50 focus:outline-none focus:ring-0 disabled:opacity-50"
             />
             <button
               type="submit"
               disabled={!input.trim() || isTyping}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-accent-violet hover:bg-accent-violet/80 text-white rounded-lg transition-all disabled:opacity-40 shadow-sm"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-[var(--color-on-primary-container)] transition-all disabled:opacity-30 disabled:scale-95 disabled:hover:scale-95 hover:scale-105 shadow-[0_0_15px_rgba(144,171,255,0.4)]"
             >
               <Send className="w-4 h-4" />
             </button>
           </form>
-          <div className="flex flex-wrap justify-center gap-2 mt-3">
+          <div className="flex flex-wrap justify-center gap-3 mt-4">
             {SUGGESTIONS.map((s) => (
               <button
                 key={s}
                 onClick={() => sendMessage(s)}
                 disabled={isTyping}
-                className="text-[11px] font-medium text-text-muted hover:text-accent-violet px-3 py-1.5 rounded-lg bg-surface-1 hover:bg-accent-violet/5 border border-surface-2 transition-all disabled:opacity-50"
+                className="text-[11px] font-bold tracking-widest uppercase text-on-surface-variant hover:text-[var(--color-primary)] px-4 py-2 rounded-full bg-[var(--color-surface-container-highest)]/50 hover:bg-[var(--color-primary)]/10 border border-[rgba(65,71,91,0.2)] hover:border-[var(--color-primary)]/30 transition-all disabled:opacity-50 disabled:hover:border-transparent"
               >
                 {s}
               </button>

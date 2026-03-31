@@ -1,129 +1,248 @@
-import { Boxes, AlertCircle, RefreshCw, BarChart2, ShieldAlert, Package, Sparkles } from 'lucide-react';
-import { mockEstadisticasProductos } from '../../data/mockData';
-import { cn } from '../../utils/cn';
-import { AICard } from '../../components/shared/AICard';
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 export function ProduccionDashboard() {
-  const stockSano = mockEstadisticasProductos.filter(p => p.status === 'Sano').length;
-  const stockCritico = mockEstadisticasProductos.filter(p => p.status === 'Critico').length;
-  const stockAtencion = mockEstadisticasProductos.filter(p => p.status === 'Atencion').length;
-  const total = mockEstadisticasProductos.length;
-  const agotados = mockEstadisticasProductos.filter(p => p.stock_actual === 0);
+  const container = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    tl.from(".page-header", { y: -20, opacity: 0, duration: 0.8 })
+      .from(".bento-item", { y: 30, opacity: 0, scale: 0.95, duration: 0.8, stagger: 0.1 }, "-=0.4")
+      .from(".table-row", { x: -20, opacity: 0, duration: 0.6, stagger: 0.1 }, "-=0.6");
+  }, { scope: container });
 
   return (
-    <div className="space-y-6">
-      {/* Status row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <div className="card kpi-stripe kpi-stripe-emerald p-5 animate-fade-in-up group hover:scale-[1.02] transition-transform duration-300" style={{ animationFillMode: 'backwards' }}>
-          <div className="flex items-start justify-between mb-3">
-            <div className="p-2.5 rounded-xl bg-accent-emerald/10 group-hover:bg-accent-emerald/20 transition-colors"><Boxes className="w-5 h-5 text-accent-emerald" /></div>
-            <span className="text-xs font-bold text-text-muted bg-surface-1 px-2 py-1 rounded-lg">{Math.round((stockSano / total) * 100)}%</span>
-          </div>
-          <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Stock Saludable</p>
-          <p className="text-2xl font-display font-bold text-text-primary">{stockSano} <span className="text-sm text-text-muted font-normal">SKUs</span></p>
+    <div ref={container} className="w-full flex flex-col gap-12">
+      
+      {/* Header Section */}
+      <div className="page-header flex justify-between items-end">
+        <div>
+          <h2 className="text-4xl font-extrabold font-headline tracking-tight text-on-surface">Control de Producción</h2>
+          <p className="text-on-surface-variant mt-2 font-body text-lg">Mapeo de inventario y análisis financiero en tiempo real.</p>
         </div>
-
-        <div className="card kpi-stripe kpi-stripe-gold p-5 animate-fade-in-up delay-75 group hover:scale-[1.02] transition-transform duration-300" style={{ animationFillMode: 'backwards' }}>
-          <div className="flex items-start justify-between mb-3">
-            <div className="p-2.5 rounded-xl bg-accent-amber/10 group-hover:bg-accent-amber/20 transition-colors"><Package className="w-5 h-5 text-accent-amber" /></div>
-            <span className="text-xs font-bold text-text-muted bg-surface-1 px-2 py-1 rounded-lg">{Math.round((stockAtencion / total) * 100)}%</span>
-          </div>
-          <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Requiere Atención</p>
-          <p className="text-2xl font-display font-bold text-text-primary">{stockAtencion} <span className="text-sm text-text-muted font-normal">SKUs</span></p>
-        </div>
-
-        <div className="card kpi-stripe kpi-stripe-red p-5 animate-fade-in-up delay-150 group hover:scale-[1.02] transition-transform duration-300" style={{ animationFillMode: 'backwards' }}>
-          <div className="flex items-start justify-between mb-3">
-            <div className="p-2.5 rounded-xl bg-accent-red/10 relative group-hover:bg-accent-red/20 transition-colors">
-              <AlertCircle className="w-5 h-5 text-accent-red" />
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent-red rounded-full animate-pulse-soft" />
-            </div>
-            <span className="text-xs font-bold text-text-muted bg-surface-1 px-2 py-1 rounded-lg">{Math.round((stockCritico / total) * 100)}%</span>
-          </div>
-          <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Quiebre / Crítico</p>
-          <p className="text-2xl font-display font-bold text-text-primary">{stockCritico} <span className="text-sm text-text-muted font-normal">SKUs</span></p>
-        </div>
-
-        <div className="card kpi-stripe kpi-stripe-violet p-5 animate-fade-in-up delay-225 group hover:scale-[1.02] transition-transform duration-300" style={{ animationFillMode: 'backwards' }}>
-          <div className="flex items-start justify-between mb-3">
-            <div className="p-2.5 rounded-xl bg-accent-violet/10 group-hover:bg-accent-violet/20 transition-colors"><BarChart2 className="w-5 h-5 text-accent-violet" /></div>
-          </div>
-          <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Cobertura Prom.</p>
-          <p className="text-2xl font-display font-bold text-text-primary">14.5 <span className="text-sm text-text-muted font-normal">días</span></p>
-          <div className="mt-3 h-2 bg-surface-1 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-accent-red via-accent-amber to-accent-emerald rounded-full w-[45%] transition-all duration-700" />
+        <div className="flex gap-3">
+          <div className="bg-[var(--color-surface-container-low)] px-5 py-3 rounded-xl border border-[rgba(65,71,91,0.2)] shadow-inner">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-1 font-bold">Estado del Sistema</span>
+            <span className="flex items-center gap-2 text-[var(--color-tertiary)] font-bold text-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-tertiary)] shadow-[0_0_8px_rgba(155,255,206,0.6)] animate-pulse"></span>
+              Operativo
+            </span>
           </div>
         </div>
       </div>
 
-      {/* AI insight about stock status */}
-      <AICard
-        title="Diagnóstico de Inventario"
-        variant="warning"
-        content={
-          <p>
-            De los <strong>{total} SKUs</strong> monitoreados: <span className="text-accent-emerald font-bold">{stockSano} sanos</span>, <span className="text-accent-amber font-bold">{stockAtencion} en atención</span> y <span className="text-accent-red font-bold">{stockCritico} críticos</span>. {agotados.length > 0 && (<>Hay <strong>{agotados.length} producto(s) con stock en 0</strong>: {agotados.map(a => a.sku).join(', ')}. Se está perdiendo venta activa por falta de reposición.</>)} La cobertura promedio de 14.5 días está por debajo del ideal de 21 días.
-          </p>
-        }
-      />
-
-      {/* SKU Table */}
-      <div className="card overflow-hidden animate-fade-in-up delay-225" style={{ animationFillMode: 'backwards' }}>
-        <div className="p-5 border-b border-surface-2/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-          <h3 className="font-display font-bold text-text-primary flex items-center gap-2">
-            <BarChart2 className="w-5 h-5 text-accent-violet" />
-            Monitor de Inventario SKU
-          </h3>
-          <div className="flex items-center gap-2 text-xs font-medium text-text-muted">
-            <RefreshCw className="w-3 h-3 animate-spin" style={{ animationDuration: '3s' }} /> Actualizado: Hace 2 min
+      {/* Top Metrics Bento Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        {/* Inventory Value Card */}
+        <div className="bento-item glass-card p-8 rounded-2xl col-span-1 md:col-span-2 flex flex-col justify-between min-h-[160px] bg-gradient-to-br from-[var(--color-surface-container)] to-[var(--color-surface-container-low)]">
+          <div>
+            <p className="text-on-surface-variant text-xs uppercase tracking-widest font-bold flex items-center gap-2 mb-2">
+              <span className="material-symbols-outlined text-[var(--color-primary)] text-lg">account_balance_wallet</span>
+              Valor de Inventario
+            </p>
+            <h3 className="text-5xl font-extrabold font-headline mt-4 text-white drop-shadow-md">$9,605.78</h3>
+          </div>
+          <div className="flex items-center gap-2 text-[var(--color-tertiary)] text-xs mt-6 font-bold uppercase tracking-widest bg-[var(--color-tertiary)]/10 w-fit px-3 py-1.5 rounded-full border border-[var(--color-tertiary)]/20">
+            <span className="material-symbols-outlined text-sm">trending_up</span>
+            <span>+2.4% desde último periodo</span>
           </div>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="text-[10px] font-bold text-text-muted uppercase tracking-widest bg-surface-1/50 border-b border-surface-2/50">
-                <th className="px-5 py-3.5">SKU / Descripción</th>
-                <th className="px-5 py-3.5">Familia</th>
-                <th className="px-5 py-3.5 text-right">Stock</th>
-                <th className="px-5 py-3.5 text-center">Estado</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-surface-2/30">
-              {mockEstadisticasProductos.map((prod, idx) => (
-                <tr key={idx} className="hover:bg-surface-1/30 transition-colors group animate-fade-in-up" style={{ animationDelay: `${idx * 50}ms`, animationFillMode: 'backwards' }}>
-                  <td className="px-5 py-4">
-                    <p className="text-sm font-semibold text-text-primary group-hover:text-brand-red transition-colors font-mono">{prod.sku}</p>
-                    <p className="text-xs text-text-muted truncate max-w-[300px]" title={prod.descripcion}>{prod.descripcion}</p>
+
+        {/* Stock Levels */}
+        <div className="bento-item glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center">
+          <p className="text-on-surface-variant text-xs uppercase tracking-widest font-bold mb-4">SKUs Sanos</p>
+          <div className="text-6xl font-extrabold text-[var(--color-tertiary)] font-headline drop-shadow-lg">02</div>
+          <div className="w-16 h-1.5 bg-[var(--color-tertiary)]/20 rounded-full mt-6 overflow-hidden">
+            <div className="w-full h-full bg-[var(--color-tertiary)] rounded-full shadow-[0_0_10px_rgba(155,255,206,0.8)]"></div>
+          </div>
+        </div>
+
+        <div className="bento-item glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center border border-[var(--color-secondary)]/20 shadow-[inset_0_0_20px_rgba(255,113,101,0.05)]">
+          <p className="text-on-surface-variant text-xs uppercase tracking-widest font-bold mb-4">SKUs Críticos</p>
+          <div className="text-6xl font-extrabold text-[var(--color-secondary)] font-headline drop-shadow-lg">02</div>
+          <div className="w-16 h-1.5 bg-[var(--color-secondary)]/20 rounded-full mt-6 overflow-hidden">
+            <div className="w-1/2 h-full bg-[var(--color-secondary)] rounded-full shadow-[0_0_10px_rgba(255,113,101,0.8)]"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Inventory & AI Panel Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        
+        {/* Inventory Monitor Table */}
+        <div className="bento-item lg:col-span-2 space-y-6">
+          <div className="flex items-center justify-between">
+            <h4 className="text-2xl font-bold font-headline flex items-center gap-3">
+              <span className="material-symbols-outlined text-[var(--color-primary)] text-3xl">inventory_2</span>
+              Monitor de Inventario
+            </h4>
+            <button className="text-[var(--color-primary)] text-xs font-bold uppercase tracking-widest hover:text-[var(--color-primary-dim)] transition-colors">Ver Todos los Activos</button>
+          </div>
+
+          <div className="glass-card overflow-hidden">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-[var(--color-surface-container-high)]/60">
+                  <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant">SKU de Producto</th>
+                  <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant">Descripción</th>
+                  <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant text-center">Estado</th>
+                  <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant text-right">Acción</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[rgba(65,71,91,0.2)]">
+                <tr className="table-row hover:bg-[var(--color-surface-container-highest)]/40 transition-colors cursor-pointer group">
+                  <td className="px-8 py-6 font-mono text-sm text-[var(--color-primary)] font-medium group-hover:text-white transition-colors">404400702006</td>
+                  <td className="px-8 py-6 text-sm font-bold text-on-surface">Precision Industrial Rotor A1</td>
+                  <td className="px-8 py-6 text-center">
+                    <span className="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-[var(--color-secondary)]/10 text-[var(--color-secondary)] border border-[var(--color-secondary)]/20">Crítico</span>
                   </td>
-                  <td className="px-5 py-4">
-                    <span className="text-xs font-medium text-text-secondary bg-surface-1 px-2.5 py-1 rounded-lg border border-surface-2">{prod.familia}</span>
-                  </td>
-                  <td className="px-5 py-4 text-right">
-                    <span className={cn("text-sm font-bold tabular", prod.stock_actual === 0 ? "text-accent-red" : "text-text-primary")}>{prod.stock_actual}</span>
-                  </td>
-                  <td className="px-5 py-4 text-center">
-                    <span className={cn(
-                      "inline-flex items-center px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border transition-colors",
-                      prod.status === 'Sano' && "text-accent-emerald bg-accent-emerald/10 border-accent-emerald/20",
-                      prod.status === 'Atencion' && "text-accent-amber bg-accent-amber/10 border-accent-amber/20",
-                      prod.status === 'Critico' && "text-accent-red bg-accent-red/10 border-accent-red/20",
-                    )}>
-                      {prod.status === 'Critico' && <ShieldAlert className="w-3 h-3 mr-1" />}
-                      {prod.status}
-                    </span>
+                  <td className="px-8 py-6 text-right">
+                    <button className="material-symbols-outlined text-on-surface-variant hover:text-[var(--color-primary)] transition-colors">more_vert</button>
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+                <tr className="table-row hover:bg-[var(--color-surface-container-highest)]/40 transition-colors cursor-pointer group">
+                  <td className="px-8 py-6 font-mono text-sm text-[var(--color-primary)] font-medium group-hover:text-white transition-colors">1804400101015</td>
+                  <td className="px-8 py-6 text-sm font-bold text-on-surface">Fiberglass Compound 20kg</td>
+                  <td className="px-8 py-6 text-center">
+                    <span className="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-[var(--color-tertiary)]/10 text-[var(--color-tertiary)] border border-[var(--color-tertiary)]/20">Sano</span>
+                  </td>
+                  <td className="px-8 py-6 text-right">
+                    <button className="material-symbols-outlined text-on-surface-variant hover:text-[var(--color-primary)] transition-colors">more_vert</button>
+                  </td>
+                </tr>
+                <tr className="table-row hover:bg-[var(--color-surface-container-highest)]/40 transition-colors cursor-pointer group">
+                  <td className="px-8 py-6 font-mono text-sm text-[var(--color-primary)] font-medium group-hover:text-white transition-colors">220993004001</td>
+                  <td className="px-8 py-6 text-sm font-bold text-on-surface">Thermal Sealant 500ml</td>
+                  <td className="px-8 py-6 text-center">
+                    <span className="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-yellow-400/10 text-yellow-400 border border-yellow-400/20">Atención</span>
+                  </td>
+                  <td className="px-8 py-6 text-right">
+                    <button className="material-symbols-outlined text-on-surface-variant hover:text-[var(--color-primary)] transition-colors">more_vert</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        {/* AI note at bottom of table */}
-        <div className="p-4 border-t border-surface-2/50 bg-surface-1/30 flex items-start gap-2.5">
-          <Sparkles className="w-4 h-4 text-accent-violet mt-0.5 shrink-0" />
-          <p className="text-xs text-text-secondary leading-relaxed">
-            <strong>Lectura IA de la tabla:</strong> Los Impermeabilizantes (138 uds) y Rollos (94 uds) tienen stock alto pero <em>0 ventas</em> en el período — posible sobreinventario. La Pintura Esmalte tiene ventas pero 0 stock — priorizar reabastecimiento. La Pintura Caucho Pro-vinílica (1 ud) se agotará pronto sin reposición.
-          </p>
+
+        {/* AI Assistant Panel */}
+        <div className="bento-item space-y-6">
+          <h4 className="text-2xl font-bold font-headline flex items-center gap-3">
+            <span className="material-symbols-outlined text-[var(--color-primary-container)] text-3xl">auto_awesome</span>
+            Núcleo Neuronal
+          </h4>
+
+          <div className="glass-card h-[460px] flex flex-col shadow-[0_0_30px_rgba(144,171,255,0.05)] border border-[var(--color-primary-container)]/20 relative overflow-hidden">
+             
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-primary)]/10 blur-[80px] rounded-full pointer-events-none"></div>
+
+            <div className="flex-1 p-6 space-y-6 overflow-y-auto custom-scrollbar relative z-10">
+              
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-2xl bg-[var(--color-primary)]/20 flex items-center justify-center flex-shrink-0 border border-[var(--color-primary)]/30">
+                  <span className="material-symbols-outlined text-[var(--color-primary)] text-sm">smart_toy</span>
+                </div>
+                <div className="bg-[var(--color-surface-container-highest)]/80 p-5 rounded-2xl rounded-tl-none text-sm leading-relaxed border border-[rgba(65,71,91,0.2)] font-medium">
+                  <p className="text-[var(--color-primary-container)] font-bold mb-2 uppercase tracking-widest text-[10px]">Neural IA</p>
+                  Hola, ¿en qué puedo ayudarte hoy? He analizado el stock y el SKU 404400702006 está en rotura de stock crítica.
+                </div>
+              </div>
+
+              <div className="flex flex-col items-end gap-4">
+                <div className="bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-primary-dim)]/10 p-5 rounded-2xl rounded-tr-none text-sm leading-relaxed border border-[var(--color-primary)]/30 max-w-[85%] font-medium">
+                  ¿Cuál es el impacto financiero de esta rotura proyectada?
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-2xl bg-[var(--color-primary)]/20 flex items-center justify-center flex-shrink-0 border border-[var(--color-primary)]/30">
+                  <span className="material-symbols-outlined text-[var(--color-primary)] text-sm">smart_toy</span>
+                </div>
+                <div className="bg-[var(--color-surface-container-highest)]/80 p-5 rounded-2xl rounded-tl-none text-sm leading-relaxed border border-[rgba(65,71,91,0.2)] font-medium">
+                  <p className="text-[var(--color-primary-container)] font-bold mb-2 uppercase tracking-widest text-[10px]">Neural IA</p>
+                  El impacto mensual estimado es de <strong className="text-white">$12,400.00</strong> en ingresos perdidos. Recomiendo iniciar orden de backorder inmediatamente.
+                </div>
+              </div>
+
+            </div>
+
+            <div className="p-6 border-t border-[rgba(65,71,91,0.2)] bg-[var(--color-surface-container-low)]/80 relative z-10">
+              <div className="relative group transition-all duration-400">
+                <input 
+                  type="text" 
+                  className="input-ghost w-full py-4 pl-6 pr-14 text-sm font-medium tracking-wide placeholder-[rgba(165,170,194,0.4)] group-focus-within:border-[var(--color-primary)]/50 transition-colors bg-black/20" 
+                  placeholder="Iniciar secuencia de comandos..." 
+                />
+                <button className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-[var(--color-primary)] rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-[0_0_15px_rgba(144,171,255,0.4)]">
+                  <span className="material-symbols-outlined text-[var(--color-on-primary-container)] text-[18px]">send</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      {/* Financial Insights & Operational KPIs */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12">
+        <div className="bento-item md:col-span-2 glass-card p-10 rounded-2xl bg-gradient-to-b from-[var(--color-surface-container-low)] to-[var(--color-surface)]">
+          <h4 className="text-2xl font-bold font-headline mb-10 flex items-center gap-3">
+            <span className="material-symbols-outlined text-[var(--color-primary)] text-3xl">monitoring</span>
+            KPIs de Análisis Financiero
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
+            
+            <div className="space-y-3">
+              <p className="text-on-surface-variant text-[10px] uppercase tracking-[0.2em] font-bold">Eficiencia OpEx</p>
+              <div className="text-4xl font-extrabold text-on-surface font-headline">94.2%</div>
+              <div className="flex items-center gap-1.5 text-[var(--color-tertiary)] text-[11px] uppercase tracking-widest font-bold bg-[var(--color-tertiary)]/10 w-fit px-2 py-1 rounded-md">
+                <span className="material-symbols-outlined text-sm">keyboard_arrow_up</span> 0.8%
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-on-surface-variant text-[10px] uppercase tracking-[0.2em] font-bold">Tasa de Quema (Inv)</p>
+              <div className="text-4xl font-extrabold text-on-surface font-headline flex items-end">
+                $1,240<span className="text-xl opacity-40 mb-1 ml-1">/d</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[var(--color-secondary)] text-[11px] uppercase tracking-widest font-bold bg-[var(--color-secondary)]/10 w-fit px-2 py-1 rounded-md">
+                <span className="material-symbols-outlined text-sm">keyboard_arrow_up</span> 12%
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-on-surface-variant text-[10px] uppercase tracking-[0.2em] font-bold">Margen Proyectado</p>
+              <div className="text-4xl font-extrabold text-on-surface font-headline">18.5%</div>
+              <div className="flex items-center gap-1.5 text-[var(--color-tertiary)] text-[11px] uppercase tracking-widest font-bold bg-[var(--color-tertiary)]/10 w-fit px-2 py-1 rounded-md">
+                <span className="material-symbols-outlined text-sm">keyboard_arrow_up</span> 2.1%
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div className="bento-item glass-card overflow-hidden rounded-2xl relative group cursor-pointer border-none h-[280px] bg-gradient-to-br from-slate-800 to-black flex items-center justify-center">
+           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none">
+             <defs>
+               <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-[var(--color-primary)]"/>
+               </pattern>
+             </defs>
+             <rect width="100%" height="100%" fill="url(#grid)" />
+           </svg>
+           <span className="material-symbols-outlined text-8xl text-[var(--color-primary)] opacity-20 relative z-0 group-hover:scale-110 transition-transform duration-1000">precision_manufacturing</span>
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-background)] via-black/50 to-transparent p-8 flex flex-col justify-end pointer-events-none z-10">
+            <h5 className="font-extrabold text-2xl font-headline text-white drop-shadow-lg">Estado Línea 04</h5>
+            <p className="text-[11px] text-on-surface font-bold uppercase tracking-widest mt-2 drop-shadow-md">Monitoreo Activo</p>
+            <div className="mt-5 flex gap-3 items-center bg-[var(--color-surface-container)]/80 w-fit px-4 py-2 rounded-full backdrop-blur-md border border-[rgba(65,71,91,0.4)]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-tertiary)] animate-pulse shadow-[0_0_10px_rgba(155,255,206,1)]"></span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-tertiary)]">Transmisión en Vivo</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

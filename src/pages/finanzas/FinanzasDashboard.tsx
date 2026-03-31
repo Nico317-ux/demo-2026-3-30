@@ -1,155 +1,212 @@
-import { DollarSign, Wallet, TrendingUp, AlertTriangle, ArrowUpRight, ArrowDownRight, PieChart as PieChartIcon, Sparkles, Info } from 'lucide-react';
-import { mockKpis, mockEstadisticasProductos } from '../../data/mockData';
-import { AICard } from '../../components/shared/AICard';
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { mockKpis, mockEstadisticasProductos } from "../../data/mockData";
+
+gsap.registerPlugin(useGSAP);
 
 export function FinanzasDashboard() {
+  const container = useRef<HTMLDivElement>(null);
+  
   const fmt = (v: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(v);
   const topSku = mockEstadisticasProductos.reduce((p, c) => (p.ventas_usd > c.ventas_usd) ? p : c);
   const totalInventory = mockKpis.valorInventarioPareto_USD + mockKpis.valorInventarioFueraPareto_USD;
   const paretoPercent = Math.round((mockKpis.valorInventarioPareto_USD / totalInventory) * 100);
   const fueraParetoPct = 100 - paretoPercent;
 
+  useGSAP(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    tl.fromTo(".page-header", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 })
+      .fromTo(".bento-item", { y: 30, opacity: 0, scale: 0.95 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, stagger: 0.1 }, "-=0.4")
+      .fromTo(".progress-bar", { width: 0 }, { width: (i, target) => target.dataset.width, duration: 1.5, ease: "power4.out" }, "-=0.4");
+  }, { scope: container });
+
   return (
-    <div className="space-y-6">
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="card kpi-stripe kpi-stripe-gold p-5 animate-fade-in-up group hover:scale-[1.02] transition-transform duration-300" style={{ animationFillMode: 'backwards' }}>
-          <div className="flex items-start justify-between mb-3">
-            <div className="p-2.5 rounded-xl bg-surface-1 group-hover:bg-surface-2 transition-colors"><DollarSign className="w-5 h-5 text-brand-gold" /></div>
-          </div>
-          <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Inventario Pareto (A)</p>
-          <p className="text-2xl font-display font-bold text-text-primary tabular">{fmt(mockKpis.valorInventarioPareto_USD)}</p>
-          <div className="mt-3 h-2 bg-surface-1 rounded-full overflow-hidden">
-            <div className="h-full bg-brand-gold rounded-full transition-all duration-700" style={{ width: `${paretoPercent}%` }} />
-          </div>
-          <p className="text-xs text-text-muted mt-1.5">{paretoPercent}% del valor total</p>
+    <div ref={container} className="w-full flex flex-col gap-12">
+      {/* Page Header */}
+      <div className="page-header flex justify-between items-end">
+        <div>
+          <h2 className="text-4xl font-extrabold font-headline tracking-tight text-on-surface">Inteligencia Financiera</h2>
+          <p className="text-on-surface-variant mt-2 text-lg">Asignación de capital y análisis de riesgo.</p>
         </div>
-
-        <div className="card kpi-stripe kpi-stripe-blue p-5 animate-fade-in-up delay-75 group hover:scale-[1.02] transition-transform duration-300" style={{ animationFillMode: 'backwards' }}>
-          <div className="flex items-start justify-between mb-3">
-            <div className="p-2.5 rounded-xl bg-surface-1 group-hover:bg-surface-2 transition-colors"><Wallet className="w-5 h-5 text-accent-blue" /></div>
-          </div>
-          <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Inventario Lento (B/C)</p>
-          <p className="text-2xl font-display font-bold text-text-primary tabular">{fmt(mockKpis.valorInventarioFueraPareto_USD)}</p>
-          <div className="mt-3 h-2 bg-surface-1 rounded-full overflow-hidden">
-            <div className="h-full bg-accent-blue rounded-full transition-all duration-700" style={{ width: `${fueraParetoPct}%` }} />
-          </div>
-          <p className="text-xs text-text-muted mt-1.5">Capital retenido en rotación lenta</p>
-        </div>
-
-        <div className="card kpi-stripe kpi-stripe-emerald p-5 animate-fade-in-up delay-150 group hover:scale-[1.02] transition-transform duration-300" style={{ animationFillMode: 'backwards' }}>
-          <div className="flex items-start justify-between mb-3">
-            <div className="p-2.5 rounded-xl bg-surface-1 group-hover:bg-surface-2 transition-colors"><PieChartIcon className="w-5 h-5 text-accent-emerald" /></div>
-            <span className="text-xs font-bold text-accent-emerald bg-accent-emerald/10 px-2 py-1 rounded-lg flex items-center gap-1">
-              <ArrowUpRight className="w-3 h-3" /> 24.5%
-            </span>
-          </div>
-          <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Margen Promedio</p>
-          <p className="text-2xl font-display font-bold text-text-primary">24.5%</p>
-          <p className="text-xs text-text-muted mt-1.5">Sobre línea SUPER A (principal)</p>
+        <div className="flex gap-4">
+          <button className="px-6 py-2.5 rounded-full bg-[var(--color-surface-container-high)] text-[var(--color-primary)] font-headline font-semibold text-sm border border-[var(--color-primary)]/20 shadow-[0_0_15px_rgba(144,171,255,0.1)] hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] transition-all duration-400">
+            Exportar Auditoría
+          </button>
         </div>
       </div>
 
-      {/* AI Insight about inventory numbers */}
-      <AICard
-        title="Análisis de Inventario IA"
-        variant="info"
-        content={
-          <p>
-            El inventario total valorizado es <strong>{fmt(totalInventory)}</strong>. El {paretoPercent}% está en productos Pareto (alta rotación) y el {fueraParetoPct}% en inventario lento. La ratio saludable es 85/15 — actualmente estás en {paretoPercent}/{fueraParetoPct}, lo que significa que hay <span className="text-accent-amber font-bold">{fmt(mockKpis.valorInventarioFueraPareto_USD)}</span> de capital que podrían liberarse con promociones focalizadas.
-          </p>
-        }
-      />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        {/* KPI Cards */}
+        <div className="bento-item glass-card p-8 group relative overflow-hidden border-t-2 border-[var(--color-tertiary)] hover:border-[var(--color-tertiary)] hover:shadow-[0_0_30px_rgba(155,255,206,0.1)] transition-all">
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-[var(--color-tertiary)]/10 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div className="flex items-start justify-between mb-4">
+            <div className="w-12 h-12 rounded-xl bg-[var(--color-tertiary)]/10 flex items-center justify-center text-[var(--color-tertiary)] border border-[var(--color-tertiary)]/20">
+              <span className="material-symbols-outlined text-[28px]">payments</span>
+            </div>
+            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[var(--color-tertiary)] bg-[var(--color-tertiary)]/10 px-3 py-1.5 rounded-full border border-[var(--color-tertiary)]/20 flex items-center gap-1">
+              Top 80%
+            </span>
+          </div>
+          <p className="text-[11px] font-bold text-on-surface-variant uppercase tracking-[0.2em] mb-2">Inventario Pareto (A)</p>
+          <p className="text-4xl font-display font-extrabold text-white font-headline tracking-tighter">{fmt(mockKpis.valorInventarioPareto_USD)}</p>
+          
+          <div className="mt-6 h-1.5 bg-[var(--color-surface-container)] rounded-full overflow-hidden">
+            <div className="progress-bar h-full bg-[var(--color-tertiary)] rounded-full shadow-[0_0_10px_rgba(155,255,206,0.8)]" data-width={`${paretoPercent}%`} />
+          </div>
+          <p className="text-[11px] text-on-surface-variant mt-2 font-medium uppercase tracking-widest">{paretoPercent}% del valor total rotativo</p>
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Product Star */}
-        <div className="lg:col-span-2 card p-6 animate-fade-in-up delay-150" style={{ animationFillMode: 'backwards' }}>
-          <div className="flex items-center justify-between mb-6 pb-4 border-b border-surface-2/50">
-            <h3 className="font-display font-bold text-text-primary flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-brand-gold" />
+        <div className="bento-item glass-card p-8 group relative overflow-hidden border-t-2 border-[var(--color-primary)] hover:border-[var(--color-primary)] hover:shadow-[0_0_30px_rgba(144,171,255,0.1)] transition-all">
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-[var(--color-primary)]/10 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div className="flex items-start justify-between mb-4">
+            <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center text-[var(--color-primary)] border border-[var(--color-primary)]/20">
+              <span className="material-symbols-outlined text-[28px]">account_balance_wallet</span>
+            </div>
+          </div>
+          <p className="text-[11px] font-bold text-on-surface-variant uppercase tracking-[0.2em] mb-2">Inventario Lento (B/C)</p>
+          <p className="text-4xl font-display font-extrabold text-white font-headline tracking-tighter">{fmt(mockKpis.valorInventarioFueraPareto_USD)}</p>
+          
+          <div className="mt-6 h-1.5 bg-[var(--color-surface-container)] rounded-full overflow-hidden">
+            <div className="progress-bar h-full bg-[var(--color-primary)] rounded-full shadow-[0_0_10px_rgba(144,171,255,0.8)]" data-width={`${fueraParetoPct}%`} />
+          </div>
+          <p className="text-[11px] text-[var(--color-primary)] mt-2 font-bold uppercase tracking-widest">Capital inmovilizado</p>
+        </div>
+
+        <div className="bento-item glass-card p-8 group relative overflow-hidden border-t-2 border-[var(--color-secondary)] hover:border-[var(--color-secondary)] hover:shadow-[0_0_30px_rgba(255,113,101,0.1)] transition-all">
+           <div className="absolute -right-8 -top-8 w-32 h-32 bg-[var(--color-secondary)]/10 rounded-full blur-2xl pointer-events-none"></div>
+           
+           <div className="flex items-start justify-between mb-4">
+            <div className="w-12 h-12 rounded-xl bg-[var(--color-secondary)]/10 flex items-center justify-center text-[var(--color-secondary)] border border-[var(--color-secondary)]/20">
+              <span className="material-symbols-outlined text-[28px]">timeline</span>
+            </div>
+            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[var(--color-tertiary)] bg-[var(--color-tertiary)]/10 px-3 py-1.5 rounded-full border border-[var(--color-tertiary)]/20 flex items-center gap-1">
+              +24.5% Anual
+            </span>
+          </div>
+           <p className="text-[11px] font-bold text-on-surface-variant uppercase tracking-[0.2em] mb-2">Margen Promedio</p>
+           <p className="text-4xl font-display font-extrabold text-white font-headline tracking-tighter">24.5%</p>
+           <p className="text-[11px] text-on-surface-variant mt-6 uppercase tracking-widest font-bold">Sobre línea SUPER A Central</p>
+        </div>
+
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Main Star Product Card */}
+        <div className="bento-item lg:col-span-2 glass-card p-10 flex flex-col justify-between border-l-[6px] border-l-[var(--color-primary)]">
+          
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-[rgba(65,71,91,0.2)]">
+            <h3 className="font-headline font-bold text-2xl text-white flex items-center gap-3">
+              <span className="material-symbols-outlined text-[var(--color-primary)]">star</span>
               Producto Estrella del Período
             </h3>
           </div>
-          <div className="flex flex-col md:flex-row gap-8">
-            <div className="flex-1">
-              <span className="text-[10px] font-bold tracking-widest text-accent-emerald uppercase bg-accent-emerald/10 px-2.5 py-1 rounded-md inline-flex items-center gap-1">
-                <ArrowUpRight className="w-3 h-3" /> TOP SELLER
-              </span>
-              <h4 className="text-lg font-bold text-text-primary mt-3 leading-snug">{topSku.descripcion}</h4>
-              <p className="text-sm text-text-muted mt-1 font-mono">SKU: {topSku.sku}</p>
-              <div className="grid grid-cols-2 gap-3 mt-6">
-                <div className="card p-4 group hover:scale-[1.03] transition-transform duration-200">
-                  <p className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">Ingresos</p>
-                  <p className="text-xl font-display font-bold text-accent-emerald tabular">{fmt(topSku.ventas_usd)}</p>
+
+          <div className="flex flex-col md:flex-row gap-12 flex-1 items-stretch">
+            <div className="flex-1 flex flex-col justify-center">
+              <div className="w-fit">
+                <span className="text-[10px] font-bold tracking-[0.2em] text-[var(--color-tertiary)] uppercase bg-[var(--color-tertiary)]/10 border border-[var(--color-tertiary)]/30 px-3 py-1.5 rounded-full inline-flex items-center gap-1.5 shadow-[0_0_10px_rgba(155,255,206,0.1)]">
+                  <span className="material-symbols-outlined text-[14px]">trending_up</span> MÁS VENDIDO
+                </span>
+              </div>
+              <h4 className="text-3xl font-extrabold text-white mt-5 leading-snug font-headline">{topSku.descripcion}</h4>
+              <p className="text-sm text-[var(--color-primary-container)] mt-2 font-mono tracking-widest uppercase">SKU: {topSku.sku}</p>
+              
+              <div className="grid grid-cols-2 gap-4 mt-8">
+                <div className="bg-[var(--color-surface-container)]/80 p-5 rounded-2xl border border-[rgba(65,71,91,0.2)]">
+                  <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em] mb-1.5">Ingresos Totales</p>
+                  <p className="text-2xl font-headline font-extrabold text-[var(--color-tertiary)]">{fmt(topSku.ventas_usd)}</p>
                 </div>
-                <div className="card p-4 group hover:scale-[1.03] transition-transform duration-200">
-                  <p className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">Margen</p>
-                  <p className="text-xl font-display font-bold text-brand-gold tabular flex items-center"><ArrowUpRight className="w-4 h-4 mr-1" /> 24.5%</p>
+                <div className="bg-[var(--color-surface-container)]/80 p-5 rounded-2xl border border-[rgba(65,71,91,0.2)]">
+                  <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em] mb-1.5">Margen Generado</p>
+                  <p className="text-2xl font-headline font-extrabold text-[var(--color-primary)]">24.5%</p>
                 </div>
               </div>
-              {/* Mini AI note on the product */}
-              <div className="mt-4 flex items-start gap-2 p-3 rounded-xl bg-accent-violet/5 border border-accent-violet/10">
-                <Sparkles className="w-3.5 h-3.5 text-accent-violet mt-0.5 shrink-0" />
-                <p className="text-[11px] text-text-secondary leading-relaxed">
-                  Este SKU genera el <strong>4.4%</strong> de los ingresos con un margen superior al promedio. <strong>Alerta:</strong> su stock actual es <span className="text-accent-red font-bold">0 unidades</span> — hay riesgo de pérdida de ventas recurrentes.
+              
+              <div className="mt-8 flex items-start gap-4 p-5 rounded-2xl bg-[var(--color-secondary)]/5 border border-[var(--color-secondary)]/20">
+                <span className="material-symbols-outlined text-[var(--color-secondary)] text-xl shrink-0 mt-0.5 animate-pulse">warning</span>
+                <p className="text-[12px] text-on-surface leading-relaxed font-medium">
+                  Este SKU genera el <strong>4.4%</strong> de los ingresos con margen superior al promedio. <strong>Alerta:</strong> su stock actual es <span className="text-[var(--color-secondary)] font-bold">0 unidades</span> — alto riesgo de pérdida recurrente.
                 </p>
               </div>
             </div>
-            <div className="w-full md:w-48 h-48 bg-surface-1 rounded-2xl border border-surface-2 flex items-center justify-center relative overflow-hidden group hover:border-brand-gold/30 transition-colors">
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-brand-red/5 group-hover:from-brand-gold/10 group-hover:to-brand-red/10 transition-all" />
-              <div className="text-center z-10">
-                <p className="text-[10px] text-text-muted uppercase tracking-widest font-bold">Rentabilidad</p>
-                <p className="text-3xl font-display font-bold text-text-primary mt-1">Alta</p>
-                <p className="text-xs text-accent-emerald font-semibold mt-1">▲ Top 10%</p>
+
+            <div className="w-full md:w-64 bg-[var(--color-surface-container)] rounded-3xl border border-[var(--color-primary)]/10 flex items-center justify-center relative overflow-hidden group hover:border-[var(--color-primary)]/40 hover:shadow-[0_0_30px_rgba(144,171,255,0.1)] transition-all">
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/10 to-transparent group-hover:opacity-100 opacity-50 transition-opacity" />
+              <div className="text-center z-10 relative flex flex-col items-center">
+                <span className="material-symbols-outlined text-6xl text-[var(--color-primary)] drop-shadow-[0_0_15px_rgba(144,171,255,0.6)] mb-4">diamond</span>
+                <p className="text-[10px] text-on-surface-variant uppercase tracking-[0.2em] font-bold">Rentabilidad</p>
+                <p className="text-3xl font-headline font-bold text-white mt-1">Alta</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--color-tertiary)] mt-3 bg-[var(--color-tertiary)]/10 px-3 py-1 rounded-full border border-[var(--color-tertiary)]/20">▲ Top 10%</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Alerts Column */}
-        <div className="space-y-4">
-          <div className="card kpi-stripe kpi-stripe-red p-5 animate-fade-in-up delay-225" style={{ animationFillMode: 'backwards' }}>
-            <div className="flex items-start gap-3">
-              <div className="p-2 rounded-xl bg-accent-red/10 shrink-0"><AlertTriangle className="w-5 h-5 text-accent-red" /></div>
-              <div>
-                <h4 className="text-sm font-bold text-text-primary mb-1">Capital Estancado</h4>
-                <p className="text-sm text-text-secondary leading-relaxed">
-                  <strong>{fmt(mockKpis.valorInventarioFueraPareto_USD)}</strong> en inventario lento. Sugiero promoción de los Rollos de Tela para liberar capital.
+        {/* Alerts & Flow Column */}
+        <div className="bento-item space-y-6">
+          <div className="glass-card p-6 border-l-[4px] border-[var(--color-secondary)] bg-[var(--color-surface-container)]/80 group overflow-hidden relative transition-all hover:shadow-[0_0_20px_rgba(255,113,101,0.15)]">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-secondary)]/5 blur-xl pointer-events-none"></div>
+            <div className="flex items-start gap-4">
+              <div className="p-2.5 rounded-xl bg-[var(--color-secondary)]/10 shrink-0 border border-[var(--color-secondary)]/20 shadow-inner">
+                <span className="material-symbols-outlined text-[var(--color-secondary)]">error</span>
+              </div>
+              <div className="relative z-10">
+                <h4 className="text-sm font-bold font-headline text-white mb-1.5 tracking-wide">Capital Estancado</h4>
+                <p className="text-xs text-on-surface-variant leading-relaxed">
+                  <strong>{fmt(mockKpis.valorInventarioFueraPareto_USD)}</strong> en inventario lento. IA sugiere promoción en "Rollos de Tela" para inyectar liquidez.
                 </p>
               </div>
             </div>
           </div>
 
-          <AICard
-            title="Flujo de Caja"
-            variant="success"
-            content={
-              <div className="space-y-2">
-                <p>La línea <strong>Pinturas Esmalte</strong> soporta un ajuste de +2.5% en precio según tendencia de mercado Capital.</p>
-                <p className="text-xs font-bold text-accent-emerald flex items-center gap-1">
-                  <TrendingUp className="w-3 h-3" /> Incremento proyectado: +$1,200/mes
+          <div className="glass-card p-6 border-l-[4px] border-[var(--color-tertiary)] bg-[var(--color-surface-container)]/80 group overflow-hidden relative transition-all hover:shadow-[0_0_20px_rgba(155,255,206,0.15)]">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-tertiary)]/5 blur-xl pointer-events-none"></div>
+            <div className="flex items-start gap-4">
+              <div className="p-2.5 rounded-xl bg-[var(--color-tertiary)]/10 shrink-0 border border-[var(--color-tertiary)]/20 shadow-inner">
+                <span className="material-symbols-outlined text-[var(--color-tertiary)]">auto_awesome</span>
+              </div>
+              <div className="relative z-10">
+                <h4 className="text-sm font-bold font-headline text-[var(--color-tertiary)] mb-1.5 tracking-wide flex items-center gap-2">
+                  Flujo de Caja Predictivo
+                </h4>
+                <p className="text-xs text-on-surface-variant leading-relaxed mb-3">La línea <strong>Pinturas Esmalte</strong> soporta ajuste +2.5% según IA.</p>
+                <p className="text-[10px] uppercase font-bold text-[var(--color-tertiary)] bg-[var(--color-tertiary)]/10 w-fit px-2.5 py-1 rounded-md border border-[var(--color-tertiary)]/20 tracking-wider">
+                  + $1,200/mes Proyectado
                 </p>
               </div>
-            }
-          />
+            </div>
+          </div>
 
-          <div className="card p-5 animate-fade-in-up delay-300" style={{ animationFillMode: 'backwards' }}>
-            <div className="flex justify-between items-center text-xs font-bold text-text-muted uppercase tracking-wider mb-3">
-              <span>Deuda</span><span>Recuperación</span>
+          <div className="glass-card p-8 bg-gradient-to-br from-[var(--color-surface-container-high)] to-[var(--color-surface-container)] border border-[rgba(65,71,91,0.2)]">
+            <div className="flex justify-between items-center text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em] mb-4">
+              <span>Deuda Pendiente</span>
+              <span className="text-right">Recuperación Ext.</span>
             </div>
-            <div className="flex justify-between text-xl font-display font-bold">
-              <span className="text-accent-red flex items-center"><ArrowDownRight className="w-5 h-5 mr-1 text-accent-red/50" /> $4,520</span>
-              <span className="text-accent-emerald flex items-center"><ArrowUpRight className="w-5 h-5 mr-1 text-accent-emerald/50" /> $1,800</span>
+            <div className="flex justify-between items-end border-b border-[rgba(65,71,91,0.3)] pb-5">
+              <span className="text-[var(--color-secondary)] flex flex-col justify-end text-3xl font-headline font-extrabold tracking-tighter">
+                <span className="text-[10px] opacity-70 mb-1 flex items-center tracking-widest"><span className="material-symbols-outlined text-[14px]">arrow_downward</span> RIESGO</span>
+                $4,520
+              </span>
+              <span className="text-[var(--color-tertiary)] flex flex-col justify-end text-right text-3xl font-headline font-extrabold tracking-tighter">
+                <span className="text-[10px] opacity-70 mb-1 flex items-center justify-end tracking-widest">INGRESOS <span className="material-symbols-outlined text-[14px]">arrow_upward</span></span>
+                $1,800
+              </span>
             </div>
-            {/* AI note on balance */}
-            <div className="mt-3 pt-3 border-t border-surface-2/50 flex items-start gap-2">
-              <Info className="w-3.5 h-3.5 text-accent-violet mt-0.5 shrink-0" />
-              <p className="text-[11px] text-text-muted leading-relaxed">
-                Balance neto negativo: <strong>-$2,720</strong>. La cartera morosa requiere atención prioritaria en los próximos 15 días.
+            
+            <div className="mt-5 flex items-start gap-3">
+              <span className="material-symbols-outlined text-[var(--color-primary)] text-lg shrink-0">info</span>
+              <p className="text-[11px] text-on-surface-variant leading-relaxed">
+                Balance neto: <strong className="text-white">-$2,720</strong>. Cartera morosa requiere atención en los próximos 15 días según scoring crediticio.
               </p>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );
