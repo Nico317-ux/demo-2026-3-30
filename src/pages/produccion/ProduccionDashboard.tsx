@@ -1,4 +1,4 @@
-import { Boxes, AlertCircle, RefreshCw, BarChart2, ShieldAlert, Package, Sparkles, Info } from 'lucide-react';
+import { Boxes, AlertCircle, RefreshCw, BarChart2, ShieldAlert, Package, Sparkles } from 'lucide-react';
 import { mockEstadisticasProductos } from '../../data/mockData';
 import { cn } from '../../utils/cn';
 import { AICard } from '../../components/shared/AICard';

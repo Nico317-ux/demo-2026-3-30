@@ -1,7 +1,6 @@
 import { DollarSign, Wallet, TrendingUp, AlertTriangle, ArrowUpRight, ArrowDownRight, PieChart as PieChartIcon, Sparkles, Info } from 'lucide-react';
 import { mockKpis, mockEstadisticasProductos } from '../../data/mockData';
 import { AICard } from '../../components/shared/AICard';
-import { cn } from '../../utils/cn';
 
 export function FinanzasDashboard() {
   const fmt = (v: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(v);

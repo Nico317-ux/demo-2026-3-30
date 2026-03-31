@@ -81,7 +81,7 @@ export function ComercialDashboard() {
                   <Tooltip
                     cursor={{ fill: 'rgba(0,0,0,0.03)' }}
                     contentStyle={{ backgroundColor: '#fff', borderColor: '#e5e5e5', borderRadius: '12px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)', fontSize: '13px' }}
-                    formatter={(value: number) => [`${fmtFull(value)}`, 'Ventas']}
+                    formatter={(value) => [`${fmtFull(Number(value))}`, 'Ventas']}
                   />
                   <Bar dataKey="ventas_usd" radius={[0, 8, 8, 0]} barSize={20} animationDuration={1200} animationEasing="ease-out">
                     {topVendedores.map((_e, index) => (
@@ -114,7 +114,7 @@ export function ComercialDashboard() {
                 <PieChart>
                   <Tooltip
                     contentStyle={{ backgroundColor: '#fff', borderColor: '#e5e5e5', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
-                    formatter={(value: number) => fmtFull(value)}
+                    formatter={(value) => fmtFull(Number(value))}
                   />
                   <Pie data={mockVentasPorMarca} cx="50%" cy="50%" innerRadius={55} outerRadius={75} paddingAngle={4} dataKey="ventas_usd" stroke="none" animationDuration={1400} animationEasing="ease-out">
                     {mockVentasPorMarca.map((_e, i) => <Cell key={i} fill={DONUT_COLORS[i % DONUT_COLORS.length]} />)}

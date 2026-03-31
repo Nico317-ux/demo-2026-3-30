@@ -8,8 +8,8 @@ export function MainLayout() {
       <Sidebar />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header />
-        <main className="flex-1 overflow-y-auto bg-surface-0 p-5 md:p-8">
-          <div className="max-w-[1400px] mx-auto animate-fade-in-up">
+        <main className="flex-1 overflow-y-auto bg-surface-0 bg-dot-grid p-5 md:p-8">
+          <div className="max-w-[1400px] mx-auto animate-fade-in-up relative blush-red blush-gold">
             <Outlet />
           </div>
         </main>
