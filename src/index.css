@@ -82,14 +82,40 @@ h4,
   color: #dfe4fe !important;
 }
 
-.glass-card *,
-.glass-card .text-on-surface,
-.glass-card .text-on-surface-variant {
-  color: #dfe4fe !important;
-  text-shadow: none !important;
+.glass-card {
+  /* keep base text color on the card but do NOT strip child backgrounds/accents */
+  color: var(--color-on-surface) !important;
+}
+
+/* Avoid forcing backgrounds or removing accent classes inside cards.
+   Let utility classes like bg-primary/10, text-tertiary, etc. work as intended. */
+
+/* Ensure cards and bento items are fully visible (override leftover inline opacity) */
+.bento-item,
+.glass-card {
   opacity: 1 !important;
-  background: none !important;
-  filter: none !important;
+  visibility: visible !important;
+}
+
+/* Slightly stronger card background on small screens for readability */
+@media (max-width: 640px) {
+  .glass-card {
+    background: rgba(12, 19, 38, 0.85) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .glass-card {
+    padding: 1rem !important;
+    border-radius: 0.75rem !important;
+  }
+  .glass-card .text-2xl {
+    font-size: 1.25rem !important;
+    line-height: 1.2 !important;
+  }
+  .glass-card .text-xl {
+    font-size: 1rem !important;
+  }
 }
 
 /* Primary Button with Gradient */
@@ -268,4 +294,56 @@ tr.table-row,
 }
 .leaflet-interactive[stroke-dasharray] {
   animation: dashFlow 2s linear infinite;
+}
+
+/* Improve contrast and visibility inside cards (tables, headings, labels) */
+.glass-card th,
+.glass-card td,
+.glass-card p,
+.glass-card h1,
+.glass-card h2,
+.glass-card h3,
+.glass-card h4,
+.glass-card .material-symbols-outlined,
+.glass-card .table-row,
+.glass-card .table-row * {
+  color: var(--color-on-surface) !important;
+  opacity: 1 !important;
+}
+
+/* Ensure decorative absolute overlays inside cards sit behind content */
+.glass-card > .absolute.inset-0,
+.glass-card .absolute.inset-0,
+.glass-card svg.absolute {
+  z-index: 0 !important;
+  pointer-events: none !important;
+  /* keep them faint so they don't mask text */
+  opacity: 0.06 !important;
+}
+
+/* Make sure card children stack above overlays */
+.glass-card > *:not(.absolute),
+.glass-card .z-10,
+.glass-card .relative {
+  position: relative;
+  z-index: 10;
+}
+
+/* Mobile-friendly adjustments: hide sidebar and make content full-width */
+@media (max-width: 768px) {
+  aside {
+    transform: translateX(-100%);
+    position: fixed;
+    left: -100%;
+  }
+  main {
+    margin-left: 0 !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  .glass-card {
+    background: rgba(12, 19, 38, 0.92) !important;
+    padding: 1rem !important;
+    border-radius: 0.75rem !important;
+  }
 }
