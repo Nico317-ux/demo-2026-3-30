@@ -64,13 +64,17 @@ export function Login() {
         </div>
       </div>
 
+      {/* Mobile brand header — only visible on small screens */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-10 sidebar-gradient overflow-hidden">
+        <div className="absolute inset-0 bg-brand-red/10 blur-3xl" />
+        <div className="relative flex items-center justify-center py-6">
+          <LogoBrand size="md" />
+        </div>
+      </div>
+
       {/* Right: Login Form */}
-      <div className="flex-1 flex items-center justify-center p-6 md:p-12">
+      <div className="flex-1 flex items-center justify-center p-6 md:p-12 pt-24 lg:pt-12">
         <div className="w-full max-w-md animate-fade-in-up delay-150" style={{ animationFillMode: 'backwards' }}>
-          {/* Mobile logo */}
-          <div className="lg:hidden flex justify-center mb-10">
-            <LogoBrand size="lg" />
-          </div>
 
           <div className="space-y-2 mb-8">
             <h2 className="text-3xl font-display font-bold text-text-primary">
