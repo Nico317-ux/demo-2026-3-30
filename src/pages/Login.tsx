@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Eye, EyeOff, BarChart3, Bot, Users } from 'lucide-react';
-import { SpinningHeroA, LogoBrand } from '../components/shared/LogoBrand';
+import { HeroBrandLockup, LogoBrand } from '../components/shared/LogoBrand';
 
 export function Login() {
   const navigate = useNavigate();
@@ -30,16 +30,11 @@ export function Login() {
         <div className="absolute top-[60%] left-[20%] w-1.5 h-1.5 bg-white/20 rounded-full animate-float delay-150" />
         <div className="absolute bottom-[30%] right-[15%] w-1 h-1 bg-brand-red/30 rounded-full animate-float delay-300" />
 
-        <div className="relative z-10 text-center space-y-10 px-12 animate-fade-in-up">
-          {/* Spinning 3D red A */}
-          <div className="mx-auto">
-            <SpinningHeroA />
-          </div>
+        <div className="relative z-10 text-center space-y-8 px-12">
+          {/* SUPER + spinning A — one lockup */}
+          <HeroBrandLockup />
 
-          <div className="space-y-3">
-            <h1 className="text-5xl font-display font-bold text-white tracking-tight leading-tight">
-              Super A
-            </h1>
+          <div className="space-y-3 animate-fade-in-up delay-150" style={{ animationFillMode: 'backwards' }}>
             <div className="w-16 h-1 bg-gradient-to-r from-brand-gold to-brand-red rounded-full mx-auto" />
             <p className="text-lg text-white/60 font-light max-w-sm mx-auto">
               Plataforma inteligente de gestión empresarial

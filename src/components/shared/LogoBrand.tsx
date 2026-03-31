@@ -8,80 +8,81 @@ interface LogoBrandProps {
 
 /**
  * Pure CSS recreation of the Super A brand logo.
- * Navy banner with "SUPER" in white italic + red stylized "A" with white triangle.
+ * "SUPER" in italic + red "A" badge.
  */
 export function LogoBrand({ size = 'md', className, showText = true }: LogoBrandProps) {
   const sizes = {
-    sm: { h: 'h-8', textSize: 'text-[10px]', aSize: 'text-lg', aW: 'w-7 h-7' },
-    md: { h: 'h-10', textSize: 'text-xs', aSize: 'text-xl', aW: 'w-9 h-9' },
-    lg: { h: 'h-14', textSize: 'text-sm', aSize: 'text-3xl', aW: 'w-12 h-12' },
-    xl: { h: 'h-20', textSize: 'text-lg', aSize: 'text-5xl', aW: 'w-18 h-18' },
+    sm: { superText: 'text-sm', aBox: 'w-7 h-7', aText: 'text-sm', gap: 'gap-1' },
+    md: { superText: 'text-lg', aBox: 'w-9 h-9', aText: 'text-base', gap: 'gap-1.5' },
+    lg: { superText: 'text-2xl', aBox: 'w-11 h-11', aText: 'text-xl', gap: 'gap-2' },
+    xl: { superText: 'text-4xl', aBox: 'w-16 h-16', aText: 'text-3xl', gap: 'gap-3' },
   };
   const s = sizes[size];
 
   return (
-    <div className={cn("flex items-center gap-0", className)}>
-      {/* Navy banner with SUPER text */}
+    <div className={cn("flex items-center", s.gap, className)}>
       {showText && (
-        <div className={cn(
-          "flex items-center bg-brand-charcoal px-3 rounded-l-lg relative overflow-hidden",
-          s.h,
-        )} style={{ clipPath: 'polygon(0 0, 100% 0, 92% 100%, 0% 100%)' }}>
-          <span className={cn(
-            "font-display font-bold text-white tracking-[0.15em] uppercase italic pr-2",
-            s.textSize,
-          )}>
-            SUPER
-          </span>
-        </div>
+        <span className={cn(
+          "font-display font-extrabold text-white uppercase italic tracking-wide select-none",
+          s.superText,
+        )}>
+          SUPER
+        </span>
       )}
-      {/* Red A */}
-      <SuperA className={s.aW} textClass={s.aSize} />
+      <div className={cn(
+        "flex items-center justify-center bg-gradient-to-br from-brand-red to-[#c42820] rounded-lg shadow-lg",
+        s.aBox,
+      )}>
+        <span className={cn(
+          "font-display font-extrabold text-white leading-none select-none",
+          s.aText,
+        )}>
+          A
+        </span>
+      </div>
     </div>
   );
 }
 
 /**
- * The iconic red "A" with white triangle cutout.
+ * Hero "SUPER" + Spinning "A" lockup for the login page.
+ * "SUPER" is styled text, "A" is a 3D spinning cube.
  */
-export function SuperA({ className, textClass, spin = false }: { className?: string; textClass?: string; spin?: boolean }) {
+export function HeroBrandLockup() {
   return (
-    <div className={cn(
-      "relative flex items-center justify-center bg-brand-red rounded-lg shadow-lg",
-      spin && "animate-spin-y",
-      className,
-    )}>
-      {/* The A letter */}
-      <span className={cn(
-        "font-display font-extrabold text-white leading-none select-none",
-        textClass || "text-xl",
-      )} style={{ textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
-        A
+    <div className="flex items-center justify-center gap-5 animate-fade-in-up">
+      {/* SUPER text */}
+      <span
+        className="text-6xl font-display font-extrabold text-white uppercase italic tracking-wider select-none"
+        style={{
+          textShadow: '0 2px 20px rgba(255,255,255,0.15), 0 4px 8px rgba(0,0,0,0.3)',
+        }}
+      >
+        SUPER
       </span>
-      {/* White triangle cutout overlay (the hole in the A) */}
-      <div className="absolute bottom-[22%] left-1/2 -translate-x-1/2 border-l-[5px] border-r-[5px] border-b-[7px] border-l-transparent border-r-transparent border-b-white/90" />
-    </div>
-  );
-}
 
-/**
- * Hero spinning A for login page — a large red A that rotates on its Y axis.
- */
-export function SpinningHeroA() {
-  return (
-    <div className="perspective-[800px] inline-flex">
-      <div className="w-28 h-28 relative animate-spin-y-slow">
-        <div className="w-full h-full bg-gradient-to-br from-brand-red to-[#c42820] rounded-2xl flex items-center justify-center shadow-2xl"
-          style={{ 
-            boxShadow: '0 0 60px rgba(232,55,45,0.3), 0 0 120px rgba(232,55,45,0.15), 0 20px 40px rgba(0,0,0,0.3)',
-          }}
-        >
-          <span className="text-7xl font-display font-extrabold text-white select-none drop-shadow-lg" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.3)' }}>
-            A
-          </span>
+      {/* Spinning A */}
+      <div className="relative" style={{ perspective: '800px' }}>
+        <div className="animate-spin-y-slow" style={{ transformStyle: 'preserve-3d' }}>
+          <div
+            className="w-24 h-24 bg-gradient-to-br from-brand-red via-[#e63e35] to-[#b52a22] rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden"
+            style={{
+              boxShadow: '0 0 40px rgba(232,55,45,0.35), 0 0 80px rgba(232,55,45,0.15), 0 12px 32px rgba(0,0,0,0.3)',
+            }}
+          >
+            {/* Inner shine */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/15 to-transparent pointer-events-none" />
+            {/* The letter */}
+            <span
+              className="text-6xl font-display font-black text-white leading-none select-none relative z-10"
+              style={{ textShadow: '0 3px 6px rgba(0,0,0,0.25)' }}
+            >
+              A
+            </span>
+          </div>
         </div>
-        {/* Reflection glow */}
-        <div className="absolute -inset-4 bg-brand-red/10 rounded-3xl blur-2xl -z-10" />
+        {/* Ambient glow underneath */}
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-brand-red/25 rounded-full blur-xl" />
       </div>
     </div>
   );
