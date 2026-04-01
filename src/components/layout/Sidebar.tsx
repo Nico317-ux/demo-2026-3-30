@@ -22,14 +22,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Mobile overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] md:hidden"
           onClick={onClose}
         />
       )}
 
       <aside
         className={cn(
-          "h-screen w-72 fixed left-0 top-0 border-r border-slate-800/20 bg-slate-900/40 backdrop-blur-xl shadow-2xl shadow-blue-900/10 z-50 flex flex-col py-8 pl-6 transition-transform duration-300",
+          "mobile-sidebar h-screen w-72 fixed left-0 top-0 border-r border-slate-800/20 shadow-2xl shadow-blue-900/10 z-[100] flex flex-col py-8 pl-6 transition-transform duration-300",
           "md:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}

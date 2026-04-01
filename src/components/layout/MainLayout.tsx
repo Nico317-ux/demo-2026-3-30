@@ -15,7 +15,7 @@ export function MainLayout() {
 
   useGSAP(() => {
     // Initial entrance animation for layout components
-    gsap.from(".main-sidebar", { x: -50, opacity: 0, duration: 1, ease: "power3.out", clearProps: "transform" });
+    gsap.from(".main-sidebar", { x: -50, opacity: 0, duration: 1, ease: "power3.out", clearProps: "all" });
     gsap.from(".main-header", { y: -30, opacity: 0, duration: 1, delay: 0.2, ease: "power3.out", clearProps: "transform" });
     gsap.from(".main-content-area", { opacity: 0, duration: 1.5, delay: 0.4, ease: "power2.out" });
 
@@ -66,7 +66,7 @@ export function MainLayout() {
         ))}
       </div>
 
-      <div className="main-sidebar relative z-[100]">
+      <div className="main-sidebar">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       </div>
 
