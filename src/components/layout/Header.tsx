@@ -1,18 +1,31 @@
 import { Link, useLocation } from "react-router-dom";
-export function Header() {
+
+interface HeaderProps {
+  onMenuToggle?: () => void;
+}
+
+export function Header({ onMenuToggle }: HeaderProps) {
   const location = useLocation();
 
   return (
-    <header className="fixed top-0 right-0 w-full md:w-[calc(100%-18rem)] h-20 z-40 bg-gradient-to-b from-slate-900 via-slate-900/80 to-transparent flex justify-between items-center px-6 md:px-10 pb-4">
-      <div className="flex items-center gap-8">
-        <div className="relative group">
+    <header className="fixed top-0 right-0 w-full md:w-[calc(100%-18rem)] h-20 z-40 bg-gradient-to-b from-slate-900 via-slate-900/80 to-transparent flex justify-between items-center px-4 md:px-10 pb-4">
+      <div className="flex items-center gap-4 md:gap-8">
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden text-slate-400 hover:text-primary"
+          onClick={onMenuToggle}
+        >
+          <span className="material-symbols-outlined text-2xl">menu</span>
+        </button>
+
+        <div className="relative group hidden sm:block">
           <span className="absolute inset-y-0 left-4 flex items-center text-on-surface-variant group-focus-within:text-primary transition-colors">
             <span className="material-symbols-outlined">search</span>
           </span>
-          <input 
-            className="input-ghost py-2 pl-12 pr-6 text-sm w-80 font-body" 
-            placeholder="Buscar en la plataforma..." 
-            type="text" 
+          <input
+            className="input-ghost py-2 pl-12 pr-6 text-sm w-48 md:w-80 font-body"
+            placeholder="Buscar en la plataforma..."
+            type="text"
           />
         </div>
 
@@ -25,7 +38,7 @@ export function Header() {
         </nav>
       </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4 md:gap-6">
         <button className="text-slate-400 hover:text-primary transition-colors duration-400 relative">
           <span className="material-symbols-outlined">notifications</span>
           <span className="absolute top-0 right-0 w-2 h-2 rounded-full bg-secondary"></span>

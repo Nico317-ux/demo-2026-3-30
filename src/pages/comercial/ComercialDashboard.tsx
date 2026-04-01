@@ -17,17 +17,17 @@ export function ComercialDashboard() {
 
   return (
     <div ref={container} className="w-full flex flex-col gap-8">
-      <div className="page-header flex justify-between items-end">
+      <div className="page-header flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold font-headline tracking-tight text-on-surface">Dominio Comercial</h2>
-          <p className="text-on-surface-variant mt-2 text-base">Inteligencia de clientes y portafolio.</p>
+          <h2 className="text-xl sm:text-2xl font-extrabold font-headline tracking-tight text-on-surface">Dominio Comercial</h2>
+          <p className="text-on-surface-variant mt-1 sm:mt-2 text-sm sm:text-base">Inteligencia de clientes y portafolio.</p>
         </div>
-        <div className="flex gap-4">
-          <button className="px-6 py-2.5 rounded-full bg-[var(--color-surface-container-high)] text-on-surface font-headline font-semibold text-sm border border-[rgba(65,71,91,0.2)] flex items-center gap-2 hover:bg-[var(--color-surface-container-highest)] hover:border-[rgba(144,171,255,0.2)] transition-all duration-400">
+        <div className="flex gap-3 sm:gap-4 w-full sm:w-auto">
+          <button className="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-full bg-[var(--color-surface-container-high)] text-on-surface font-headline font-semibold text-xs sm:text-sm border border-[rgba(65,71,91,0.2)] flex items-center justify-center gap-2 hover:bg-[var(--color-surface-container-highest)] hover:border-[rgba(144,171,255,0.2)] transition-all duration-400">
             <span className="material-symbols-outlined text-lg">filter_list</span>
             Regiones
           </button>
-          <button className="px-6 py-2.5 rounded-full bg-[var(--color-surface-container-high)] text-on-surface font-headline font-semibold text-sm border border-[rgba(65,71,91,0.2)] flex items-center gap-2 hover:bg-[var(--color-surface-container-highest)] hover:border-[rgba(144,171,255,0.2)] transition-all duration-400">
+          <button className="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-full bg-[var(--color-surface-container-high)] text-on-surface font-headline font-semibold text-xs sm:text-sm border border-[rgba(65,71,91,0.2)] flex items-center justify-center gap-2 hover:bg-[var(--color-surface-container-highest)] hover:border-[rgba(144,171,255,0.2)] transition-all duration-400">
             <span className="material-symbols-outlined text-lg">segment</span>
             Segmentos
           </button>

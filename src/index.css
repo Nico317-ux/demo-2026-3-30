@@ -330,13 +330,8 @@ tr.table-row,
   z-index: 10;
 }
 
-/* Mobile-friendly adjustments: hide sidebar and make content full-width */
-@media (max-width: 768px) {
-  aside {
-    transform: translateX(-100%);
-    position: fixed;
-    left: -100%;
-  }
+/* Mobile-friendly adjustments */
+@media (max-width: 767px) {
   main {
     margin-left: 0 !important;
     padding-left: 1rem !important;
