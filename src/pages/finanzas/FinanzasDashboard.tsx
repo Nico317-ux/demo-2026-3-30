@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { mockKpis, mockEstadisticasProductos } from "../../data/mockData";
+import { mockKpis } from "../../data/mockData";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 gsap.registerPlugin(useGSAP);
@@ -15,10 +15,8 @@ export function FinanzasDashboard() {
   const container = useRef<HTMLDivElement>(null);
   
   const fmt = (v: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(v);
-  const topSku = mockEstadisticasProductos.reduce((p, c) => (p.ventas_usd > c.ventas_usd) ? p : c);
   const totalInventory = mockKpis.valorInventarioPareto_USD + mockKpis.valorInventarioFueraPareto_USD;
   const paretoPercent = Math.round((mockKpis.valorInventarioPareto_USD / totalInventory) * 100);
-  const fueraParetoPct = 100 - paretoPercent;
 
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -129,7 +127,7 @@ export function FinanzasDashboard() {
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#0c1326', border: '1px solid #41475b', borderRadius: '12px' }}
                   cursor={{ fill: 'rgba(255,255,255,0.02)' }}
-                  formatter={(value: number) => [fmt(value), 'Valor']}
+                  formatter={(value: any) => [fmt(Number(value)), 'Valor']}
                 />
                 <Bar dataKey="value" radius={[8, 8, 0, 0]} barSize={80}>
                   {paretoData.map((entry, index) => (
