@@ -14,8 +14,8 @@ export function MainLayout() {
 
   useGSAP(() => {
     // Initial entrance animation for layout components
-    gsap.from(".main-sidebar", { x: -50, opacity: 0, duration: 1, ease: "power3.out" });
-    gsap.from(".main-header", { y: -30, opacity: 0, duration: 1, delay: 0.2, ease: "power3.out" });
+    gsap.from(".main-sidebar", { x: -50, opacity: 0, duration: 1, ease: "power3.out", clearProps: "transform" });
+    gsap.from(".main-header", { y: -30, opacity: 0, duration: 1, delay: 0.2, ease: "power3.out", clearProps: "transform" });
     gsap.from(".main-content-area", { opacity: 0, duration: 1.5, delay: 0.4, ease: "power2.out" });
 
     // Cursor Trail Effect (Estela premium)
@@ -50,7 +50,8 @@ export function MainLayout() {
     <div ref={container} className="bg-mesh text-on-surface font-body min-h-screen selection:bg-[var(--color-primary)]/30 overflow-hidden relative">
       
       {/* Custom Cursor Trail Elements */}
-      <div ref={cursorFollowerRef} className="fixed top-0 left-0 w-64 h-64 bg-[var(--color-primary)]/20 rounded-full blur-[80px] pointer-events-none z-[9998] transition-opacity duration-300"></div>
+      <div ref={cursorRef} className="fixed top-0 left-0 w-3 h-3 rounded-full bg-[var(--color-primary)] mix-blend-screen pointer-events-none z-[9999] opacity-80 backdrop-blur-sm shadow-[0_0_15px_rgba(144,171,255,1)]"></div>
+      <div ref={cursorFollowerRef} className="fixed top-0 left-0 w-48 h-48 bg-[var(--color-primary)]/20 rounded-full blur-[60px] pointer-events-none z-[9998] transition-opacity duration-300"></div>
 
       {/* Global Floating Particles */}
       <div className="global-particles">
@@ -68,7 +69,7 @@ export function MainLayout() {
         <Sidebar />
       </div>
       
-      <main className="ml-72 min-h-screen flex flex-col relative z-50">
+      <main className="md:ml-72 ml-0 min-h-screen flex flex-col relative z-50">
         <div className="main-header">
           <Header />
         </div>

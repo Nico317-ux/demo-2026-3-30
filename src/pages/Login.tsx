@@ -88,7 +88,7 @@ export function Login() {
       {/* Main Box */}
       <main className="relative z-10 w-full max-w-md flex flex-col items-center">
         
-        <div className="login-header flex flex-col items-center mb-10 w-full">
+        <div className="login-header flex flex-col items-center mb-10 w-full opacity-0">
           <div className="mb-4 h-16 w-16 flex items-center justify-center bg-[var(--color-primary)]/10 rounded-2xl border border-[var(--color-primary)]/30 shadow-[0_0_20px_rgba(144,171,255,0.2)]">
             <span className="material-symbols-outlined text-[var(--color-primary)] text-4xl drop-shadow-[0_0_15px_rgba(144,171,255,0.8)]">psychology</span>
           </div>
@@ -101,14 +101,14 @@ export function Login() {
           <p className="font-label text-sm text-on-surface-variant tracking-widest mt-1 uppercase text-center w-full">Plataforma de Inteligencia</p>
         </div>
 
-        <div className="glass-card w-full p-10 flex flex-col gap-8">
-          <header className="stagger-item">
+        <div className="glass-card w-full p-10 flex flex-col gap-8 opacity-0">
+          <header className="stagger-item opacity-0">
             <h2 className="font-headline text-xl font-bold text-on-surface">Iniciar Sesión</h2>
             <p className="text-on-surface-variant text-sm mt-1">Acceso autorizado al núcleo neuronal</p>
           </header>
 
           <form onSubmit={handleInitialize} className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2 stagger-item">
+            <div className="flex flex-col gap-2 stagger-item opacity-0">
               <label className="font-label text-[10px] font-bold uppercase tracking-widest text-[var(--color-primary)] px-1 opacity-80">ID de Ejecutivo</label>
               <div className="group relative flex items-center transition-all duration-400">
                 <span className="material-symbols-outlined absolute left-4 text-outline group-focus-within:text-primary transition-colors">fingerprint</span>
@@ -122,7 +122,7 @@ export function Login() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 stagger-item">
+            <div className="flex flex-col gap-2 stagger-item opacity-0">
               <label className="font-label text-[10px] font-bold uppercase tracking-widest text-[var(--color-primary)] px-1 opacity-80">Clave de Seguridad</label>
               <div className="group relative flex items-center transition-all duration-400">
                 <span className="material-symbols-outlined absolute left-4 text-outline group-focus-within:text-primary transition-colors">key_visualizer</span>
@@ -139,18 +139,18 @@ export function Login() {
               </div>
             </div>
 
-            <button type="submit" className="btn-primary w-full py-4 mt-2 stagger-item">
+            <button type="submit" className="btn-primary w-full py-4 mt-2 stagger-item opacity-0">
               INICIAR SESIÓN
             </button>
           </form>
 
-          <div className="flex items-center gap-4 py-2 opacity-60 stagger-item">
+          <div className="flex items-center gap-4 py-2 opacity-0 stagger-item">
             <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-outline-variant to-transparent"></div>
             <span className="text-outline text-[10px] font-bold tracking-[0.2em] uppercase">Alternativas</span>
             <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-outline-variant to-transparent"></div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 stagger-item">
+          <div className="grid grid-cols-2 gap-4 stagger-item opacity-0">
             <button className="flex items-center justify-center gap-3 bg-[var(--color-surface-container)] border border-[rgba(65,71,91,0.2)] rounded-full py-3 px-4 hover:bg-[var(--color-surface-container-high)] hover:border-[rgba(144,171,255,0.2)] transition-all group duration-400">
               <span className="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">hub</span>
               <span className="font-label text-xs font-semibold text-on-surface">Portal SSO</span>

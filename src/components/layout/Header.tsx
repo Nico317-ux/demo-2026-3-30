@@ -3,7 +3,7 @@ export function Header() {
   const location = useLocation();
 
   return (
-    <header className="fixed top-0 right-0 w-[calc(100%-18rem)] h-20 z-40 bg-slate-900/30 backdrop-blur-2xl flex justify-between items-center px-10 shadow-sm shadow-blue-500/5">
+    <header className="fixed top-0 right-0 w-full md:w-[calc(100%-18rem)] h-20 z-40 bg-gradient-to-b from-slate-900 via-slate-900/80 to-transparent flex justify-between items-center px-6 md:px-10 pb-4">
       <div className="flex items-center gap-8">
         <div className="relative group">
           <span className="absolute inset-y-0 left-4 flex items-center text-on-surface-variant group-focus-within:text-primary transition-colors">
@@ -16,7 +16,7 @@ export function Header() {
           />
         </div>
 
-        <nav className="hidden md:flex gap-8">
+        <nav className="hidden lg:flex gap-8">
           <Link to={location.pathname} className="text-blue-400 border-b-2 border-blue-400 pb-1 font-headline text-sm font-medium">
             Panel Principal
           </Link>

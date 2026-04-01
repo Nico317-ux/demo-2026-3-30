@@ -20,8 +20,8 @@ export function ProduccionDashboard() {
       {/* Header Section */}
       <div className="page-header flex justify-between items-end">
         <div>
-          <h2 className="text-3xl font-extrabold font-headline tracking-tight text-on-surface">Control de Producción</h2>
-          <p className="text-on-surface-variant mt-2 font-body text-lg">Mapeo de inventario y análisis financiero en tiempo real.</p>
+          <h2 className="text-2xl font-extrabold font-headline tracking-tight text-on-surface">Control de Producción</h2>
+          <p className="text-on-surface-variant mt-2 font-body text-base">Mapeo de inventario y análisis financiero en tiempo real.</p>
         </div>
         <div className="flex gap-3">
           <div className="bg-[var(--color-surface-container-low)] px-5 py-3 rounded-xl border border-[rgba(65,71,91,0.2)] shadow-inner">
@@ -37,13 +37,13 @@ export function ProduccionDashboard() {
       {/* Top Metrics Bento Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Inventory Value Card */}
-        <div className="bento-item glass-card p-8 rounded-2xl col-span-1 md:col-span-2 flex flex-col justify-between min-h-[160px]">
+        <div className="bento-item glass-card p-6 rounded-2xl col-span-1 md:col-span-2 flex flex-col justify-between min-h-[160px]">
           <div>
             <p className="text-on-surface-variant text-xs uppercase tracking-widest font-bold flex items-center gap-2 mb-2">
               <span className="material-symbols-outlined text-[var(--color-primary)] text-lg">account_balance_wallet</span>
               Valor de Inventario
             </p>
-            <h3 className="text-3xl font-extrabold font-headline mt-4 text-white drop-shadow-md">$9,605.78</h3>
+            <h3 className="text-2xl font-extrabold font-headline mt-4 text-white drop-shadow-md">$9,605.78</h3>
           </div>
           <div className="flex items-center gap-2 text-[var(--color-tertiary)] text-xs mt-6 font-bold uppercase tracking-widest bg-[var(--color-tertiary)]/10 w-fit px-3 py-1.5 rounded-full border border-[var(--color-tertiary)]/20">
             <span className="material-symbols-outlined text-sm">trending_up</span>
@@ -52,17 +52,17 @@ export function ProduccionDashboard() {
         </div>
 
         {/* Stock Levels */}
-        <div className="bento-item glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center">
+        <div className="bento-item glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center">
           <p className="text-on-surface-variant text-xs uppercase tracking-widest font-bold mb-4">SKUs Sanos</p>
-          <div className="text-3xl font-extrabold text-[var(--color-tertiary)] font-headline drop-shadow-lg">02</div>
+          <div className="text-2xl font-extrabold text-[var(--color-tertiary)] font-headline drop-shadow-lg">02</div>
           <div className="w-16 h-1.5 bg-[var(--color-tertiary)]/20 rounded-full mt-6 overflow-hidden">
             <div className="w-full h-full bg-[var(--color-tertiary)] rounded-full shadow-[0_0_10px_rgba(155,255,206,0.8)]"></div>
           </div>
         </div>
 
-        <div className="bento-item glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center border border-[var(--color-secondary)]/20 shadow-[inset_0_0_20px_rgba(255,113,101,0.05)]">
+        <div className="bento-item glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center border border-[var(--color-secondary)]/20 shadow-[inset_0_0_20px_rgba(255,113,101,0.05)]">
           <p className="text-on-surface-variant text-xs uppercase tracking-widest font-bold mb-4">SKUs Críticos</p>
-          <div className="text-3xl font-extrabold text-[var(--color-secondary)] font-headline drop-shadow-lg">02</div>
+          <div className="text-2xl font-extrabold text-[var(--color-secondary)] font-headline drop-shadow-lg">02</div>
           <div className="w-16 h-1.5 bg-[var(--color-secondary)]/20 rounded-full mt-6 overflow-hidden">
             <div className="w-1/2 h-full bg-[var(--color-secondary)] rounded-full shadow-[0_0_10px_rgba(255,113,101,0.8)]"></div>
           </div>
@@ -75,7 +75,7 @@ export function ProduccionDashboard() {
         {/* Inventory Monitor Table */}
         <div className="bento-item lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between">
-            <h4 className="text-2xl font-bold font-headline flex items-center gap-3">
+            <h4 className="text-xl font-bold font-headline flex items-center gap-3">
               <span className="material-symbols-outlined text-[var(--color-primary)] text-3xl">inventory_2</span>
               Monitor de Inventario
             </h4>
@@ -139,7 +139,7 @@ export function ProduccionDashboard() {
              
             <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-primary)]/10 blur-[80px] rounded-full pointer-events-none"></div>
 
-            <div className="flex-1 p-6 space-y-6 overflow-y-auto custom-scrollbar relative z-10">
+            <div className="flex-1 p-5 space-y-5 overflow-y-auto custom-scrollbar relative z-10">
               
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-2xl bg-[var(--color-primary)]/20 flex items-center justify-center flex-shrink-0 border border-[var(--color-primary)]/30">
@@ -169,7 +169,7 @@ export function ProduccionDashboard() {
 
             </div>
 
-            <div className="p-6 border-t border-[rgba(65,71,91,0.2)] bg-[var(--color-surface-container-low)]/80 relative z-10">
+            <div className="p-5 border-t border-[rgba(65,71,91,0.2)] bg-[var(--color-surface-container-low)]/80 relative z-10">
               <div className="relative group transition-all duration-400">
                 <input 
                   type="text" 
@@ -187,8 +187,8 @@ export function ProduccionDashboard() {
 
       {/* Financial Insights & Operational KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12">
-        <div className="bento-item md:col-span-2 glass-card p-10 rounded-2xl">
-          <h4 className="text-2xl font-bold font-headline mb-10 flex items-center gap-3">
+        <div className="bento-item md:col-span-2 glass-card p-8 rounded-2xl">
+          <h4 className="text-xl font-bold font-headline mb-10 flex items-center gap-3">
             <span className="material-symbols-outlined text-[var(--color-primary)] text-3xl">monitoring</span>
             KPIs de Análisis Financiero
           </h4>
@@ -196,7 +196,7 @@ export function ProduccionDashboard() {
             
             <div className="space-y-3">
               <p className="text-on-surface-variant text-[10px] uppercase tracking-[0.2em] font-bold">Eficiencia OpEx</p>
-              <div className="text-3xl font-extrabold text-on-surface font-headline">94.2%</div>
+              <div className="text-2xl font-extrabold text-on-surface font-headline">94.2%</div>
               <div className="flex items-center gap-1.5 text-[var(--color-tertiary)] text-[11px] uppercase tracking-widest font-bold bg-[var(--color-tertiary)]/10 w-fit px-2 py-1 rounded-md">
                 <span className="material-symbols-outlined text-sm">keyboard_arrow_up</span> 0.8%
               </div>
@@ -204,7 +204,7 @@ export function ProduccionDashboard() {
 
             <div className="space-y-3">
               <p className="text-on-surface-variant text-[10px] uppercase tracking-[0.2em] font-bold">Tasa de Quema (Inv)</p>
-              <div className="text-3xl font-extrabold text-on-surface font-headline flex items-end">
+              <div className="text-2xl font-extrabold text-on-surface font-headline flex items-end">
                 $1,240<span className="text-lg opacity-40 mb-1 ml-1">/d</span>
               </div>
               <div className="flex items-center gap-1.5 text-[var(--color-secondary)] text-[11px] uppercase tracking-widest font-bold bg-[var(--color-secondary)]/10 w-fit px-2 py-1 rounded-md">
@@ -214,7 +214,7 @@ export function ProduccionDashboard() {
 
             <div className="space-y-3">
               <p className="text-on-surface-variant text-[10px] uppercase tracking-[0.2em] font-bold">Margen Proyectado</p>
-              <div className="text-3xl font-extrabold text-on-surface font-headline">18.5%</div>
+              <div className="text-2xl font-extrabold text-on-surface font-headline">18.5%</div>
               <div className="flex items-center gap-1.5 text-[var(--color-tertiary)] text-[11px] uppercase tracking-widest font-bold bg-[var(--color-tertiary)]/10 w-fit px-2 py-1 rounded-md">
                 <span className="material-symbols-outlined text-sm">keyboard_arrow_up</span> 2.1%
               </div>
@@ -233,8 +233,8 @@ export function ProduccionDashboard() {
              <rect width="100%" height="100%" fill="url(#grid)" />
            </svg>
            <span className="material-symbols-outlined text-6xl text-[var(--color-primary)] opacity-20 relative z-0 group-hover:scale-110 transition-transform duration-1000">precision_manufacturing</span>
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-background)] via-transparent to-transparent p-8 flex flex-col justify-end pointer-events-none z-10">
-            <h5 className="font-extrabold text-xl font-headline text-white drop-shadow-lg">Estado Línea 04</h5>
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-background)] via-transparent to-transparent p-6 flex flex-col justify-end pointer-events-none z-10">
+            <h5 className="font-extrabold text-lg font-headline text-white drop-shadow-lg">Estado Línea 04</h5>
             <p className="text-[11px] text-on-surface font-bold uppercase tracking-widest mt-2 drop-shadow-md">Monitoreo Activo</p>
             <div className="mt-5 flex gap-3 items-center bg-[var(--color-surface-container)]/80 w-fit px-4 py-2 rounded-full backdrop-blur-md border border-[rgba(65,71,91,0.4)]">
               <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-tertiary)] animate-pulse shadow-[0_0_10px_rgba(155,255,206,1)]"></span>

@@ -74,12 +74,13 @@ h4,
 
 /* The Glass & Gradient Rule */
 .glass-card {
-  background: rgba(12, 19, 38, 0.6) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
-  border: 1px solid rgba(144, 171, 255, 0.05) !important;
+  border: 1px solid rgba(144, 171, 255, 0.08) !important;
   border-radius: 1rem !important;
   color: #dfe4fe !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
 }
 
 .glass-card {
@@ -100,7 +101,7 @@ h4,
 /* Slightly stronger card background on small screens for readability */
 @media (max-width: 640px) {
   .glass-card {
-    background: rgba(12, 19, 38, 0.85) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
   }
 }
 
@@ -342,7 +343,7 @@ tr.table-row,
     padding-right: 1rem !important;
   }
   .glass-card {
-    background: rgba(12, 19, 38, 0.92) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
     padding: 1rem !important;
     border-radius: 0.75rem !important;
   }
