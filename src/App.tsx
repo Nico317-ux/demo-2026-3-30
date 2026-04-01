@@ -25,13 +25,14 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Redirect root to login OUTSIDE of MainLayout to prevent component flicker */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        
         {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         
         {/* Private Dashboard Routes */}
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          
           <Route path="comercial" element={<ComercialDashboard />} />
           <Route path="comercial/analytics" element={<PlaceholderPage title="Analítica Comercial" />} />
           <Route path="comercial/strategy" element={<PlaceholderPage title="Estrategia Comercial" />} />

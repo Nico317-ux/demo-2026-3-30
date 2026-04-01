@@ -14,7 +14,7 @@ export function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useGSAP(() => {
-    // Initial entrance animation for layout components
+    // Entrance animations for layout components
     gsap.from(".main-sidebar", { x: -50, opacity: 0, duration: 1, ease: "power3.out", clearProps: "all" });
     gsap.from(".main-header", { y: -30, opacity: 0, duration: 1, delay: 0.2, ease: "power3.out", clearProps: "transform" });
     gsap.from(".main-content-area", { opacity: 0, duration: 1.5, delay: 0.4, ease: "power2.out" });
