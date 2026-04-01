@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { cn } from "../../utils/cn";
+import { LogoBrand } from "../shared/LogoBrand";
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -34,18 +35,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
       >
-        <div className="mb-12 pr-6 flex flex-col gap-1 items-start">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dim)] flex items-center justify-center text-white shadow-[0_0_15px_rgba(144,171,255,0.4)]">
-              <span className="material-symbols-outlined text-2xl">diamond</span>
-            </div>
-            <h1 className="text-2xl font-extrabold text-white font-headline tracking-tight">
-              SUPER A
-            </h1>
-          </div>
-          <p className="text-slate-400 text-[10px] font-bold tracking-[0.2em] uppercase mt-1 pl-13">
-            Plataforma Inteligente
-          </p>
+        <div className="mb-12 pr-6">
+          <LogoBrand size="md" />
         </div>
 
         <nav className="flex-1 space-y-2">

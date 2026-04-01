@@ -50,6 +50,11 @@ export function MainLayout() {
   return (
     <div ref={container} className="bg-mesh text-on-surface font-body min-h-screen selection:bg-[var(--color-primary)]/30 overflow-hidden relative">
 
+      {/* Decorative ambient backgrounds */}
+      <div className="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[180px] rounded-full -z-10 animate-pulse" style={{ animationDuration: '8s' }}></div>
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/10 blur-[150px] rounded-full -z-10 animate-pulse" style={{ animationDuration: '12s' }}></div>
+      <div className="fixed top-[30%] left-[40%] w-[30%] h-[30%] bg-tertiary/10 blur-[200px] rounded-full -z-10 animate-pulse" style={{ animationDuration: '15s' }}></div>
+
       {/* Custom Cursor Trail Elements */}
       <div ref={cursorRef} className="fixed top-0 left-0 w-3 h-3 rounded-full bg-[var(--color-primary)] mix-blend-screen pointer-events-none z-[9999] opacity-80 backdrop-blur-sm shadow-[0_0_15px_rgba(144,171,255,1)]"></div>
       <div ref={cursorFollowerRef} className="fixed top-0 left-0 w-48 h-48 bg-[var(--color-primary)]/20 rounded-full blur-[60px] pointer-events-none z-[9998] transition-opacity duration-300"></div>

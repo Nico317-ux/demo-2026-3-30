@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { cn } from "../../utils/cn";
 
 interface HeaderProps {
   onMenuToggle?: () => void;
@@ -6,6 +7,12 @@ interface HeaderProps {
 
 export function Header({ onMenuToggle }: HeaderProps) {
   const location = useLocation();
+
+  // Determine base path for dynamic links
+  const baseModule = location.pathname.split('/')[1] || 'comercial';
+  const isAnalytics = location.pathname.includes('/analytics');
+  const isStrategy = location.pathname.includes('/strategy');
+  const isDashboard = !isAnalytics && !isStrategy;
 
   return (
     <header className="fixed top-0 right-0 w-full md:w-[calc(100%-18rem)] h-20 z-40 bg-gradient-to-b from-slate-900 via-slate-900/80 to-transparent flex justify-between items-center px-4 md:px-10 pb-4">
@@ -30,23 +37,45 @@ export function Header({ onMenuToggle }: HeaderProps) {
         </div>
 
         <nav className="hidden lg:flex gap-8">
-          <Link to={location.pathname} className="text-blue-400 border-b-2 border-blue-400 pb-1 font-headline text-sm font-medium">
+          <Link 
+            to={`/${baseModule}`} 
+            className={cn(
+              "font-headline text-sm font-medium transition-all duration-400 pb-1",
+              isDashboard ? "text-blue-400 border-b-2 border-blue-400 text-glow" : "text-slate-400 hover:text-blue-300"
+            )}
+          >
             Panel Principal
           </Link>
-          <a href="#" className="text-slate-400 hover:text-blue-300 transition-colors duration-400 font-headline text-sm font-medium">Analítica</a>
-          <a href="#" className="text-slate-400 hover:text-blue-300 transition-colors duration-400 font-headline text-sm font-medium">Estrategia</a>
+          <Link 
+            to={`/${baseModule}/analytics`} 
+            className={cn(
+              "font-headline text-sm font-medium transition-all duration-400 pb-1",
+              isAnalytics ? "text-blue-400 border-b-2 border-blue-400 text-glow" : "text-slate-400 hover:text-blue-300"
+            )}
+          >
+            Analítica
+          </Link>
+          <Link 
+            to={`/${baseModule}/strategy`} 
+            className={cn(
+              "font-headline text-sm font-medium transition-all duration-400 pb-1",
+              isStrategy ? "text-blue-400 border-b-2 border-blue-400 text-glow" : "text-slate-400 hover:text-blue-300"
+            )}
+          >
+            Estrategia
+          </Link>
         </nav>
       </div>
 
       <div className="flex items-center gap-4 md:gap-6">
         <button className="text-slate-400 hover:text-primary transition-colors duration-400 relative">
           <span className="material-symbols-outlined">notifications</span>
-          <span className="absolute top-0 right-0 w-2 h-2 rounded-full bg-secondary"></span>
+          <span className="absolute top-0 right-0 w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(255,113,101,0.6)]"></span>
         </button>
         <button className="text-slate-400 hover:text-primary transition-colors duration-400">
           <span className="material-symbols-outlined">settings</span>
         </button>
-        <div className="h-10 w-10 flex items-center justify-center rounded-full border border-primary/20 overflow-hidden relative cursor-pointer hover:border-primary transition-colors duration-400 bg-surface-container-high text-on-surface">
+        <div className="h-10 w-10 flex items-center justify-center rounded-full border border-primary/20 overflow-hidden relative cursor-pointer hover:border-primary transition-colors duration-400 bg-surface-container-high text-on-surface shadow-[0_0_15px_rgba(77,128,255,0.2)]">
           <span className="material-symbols-outlined text-xl">person</span>
         </div>
       </div>

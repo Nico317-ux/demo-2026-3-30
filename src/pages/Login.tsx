@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { HeroBrandLockup } from "../components/shared/LogoBrand";
 
 gsap.registerPlugin(useGSAP);
 
@@ -86,22 +87,13 @@ export function Login() {
       </div>
 
       {/* Main Box */}
-      <main className="relative z-10 w-full max-w-md flex flex-col items-center">
+      <main className="relative z-10 w-full max-w-lg flex flex-col items-center">
         
         <div className="login-header flex flex-col items-center mb-10 w-full opacity-0">
-          <div className="mb-4 h-16 w-16 flex items-center justify-center bg-[var(--color-primary)]/10 rounded-2xl border border-[var(--color-primary)]/30 shadow-[0_0_20px_rgba(144,171,255,0.2)]">
-            <span className="material-symbols-outlined text-[var(--color-primary)] text-4xl drop-shadow-[0_0_15px_rgba(144,171,255,0.8)]">psychology</span>
-          </div>
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dim)] flex items-center justify-center text-white shadow-[0_0_20px_rgba(144,171,255,0.4)]">
-              <span className="material-symbols-outlined text-3xl">diamond</span>
-            </div>
-            <h1 className="text-3xl font-extrabold text-white font-headline tracking-tight">SUPER A</h1>
-          </div>
-          <p className="font-label text-sm text-on-surface-variant tracking-widest mt-1 uppercase text-center w-full">Plataforma de Inteligencia</p>
+          <HeroBrandLockup />
         </div>
 
-        <div className="glass-card w-full p-10 flex flex-col gap-8 opacity-0">
+        <div className="glass-card w-full max-w-md p-10 flex flex-col gap-8 opacity-0">
           <header className="stagger-item opacity-0">
             <h2 className="font-headline text-xl font-bold text-on-surface">Iniciar Sesión</h2>
             <p className="text-on-surface-variant text-sm mt-1">Acceso autorizado al núcleo neuronal</p>
